@@ -6,13 +6,15 @@
 
 QT       += core gui
 
-TARGET = stereo-vision-client
-TEMPLATE = app
+TARGET      = stereo-vision-client
+TEMPLATE    = app
 
 
 SOURCES += main.cpp\
-        gui.cpp
+           gui.cpp \
+           Engine/dataretriever.cpp
 
-HEADERS  += gui.h
+HEADERS  += gui.h \
+            Engine/dataretriever.h
 
 FORMS    += gui.ui
