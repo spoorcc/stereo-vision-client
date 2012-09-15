@@ -33,6 +33,6 @@ First of all install the proper software:
  * Leave the _Checkout directory_ field unchanged
  * Press _next_
  * You might be asked for some building parameters, just click next/ok
- * The project should be downloaded
+   * It's also possible that you will get a warning about a user file, it will ask if you want to discard it, which is a good idea, because it's my Ubuntu user file.
+ * The project should be downloaded.
  * When you press the play icon in the lower left corner the program will be build and your up and running.
-
