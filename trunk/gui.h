@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "Widgets/processstep.h"
+
 namespace Ui {
 class GUI;
 }
@@ -17,6 +19,13 @@ public:
     
 private:
     Ui::GUI *ui;
+
+    ProcessStep* _camera;
+    ProcessStep* _rectfication;
+    ProcessStep* _equalisation;
+
+    void addElements();
+    void printToConsole( QString message );
 };
 
 #endif // GUI_H
