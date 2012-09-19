@@ -3,7 +3,7 @@
 = Software needed =
 
 First of all install the proper software:
-  * *Qt SDK* from http://qt.nokia.com/downloads/
+  * *Qt SDK* from http://qt-project.org/downloads
   * *SVN client* 
     * http://www.Sliksvn.com/en/download (Windows)
     * sudo apt-get subversion (Ubuntu)
