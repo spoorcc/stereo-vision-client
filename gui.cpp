@@ -7,7 +7,6 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-
     _camera = new ProcessStep();
     _rectfication = new ProcessStep();
     _equalisation = new ProcessStep();
@@ -22,7 +21,7 @@ GUI::~GUI()
 
 void GUI::addElements()
 {
-    _camera->setName( "Camera" );
+    _camera->setName( "Camera's" );
     _rectfication->setName( "Rectification" );
     _equalisation->setName( "Equalisation" );
 

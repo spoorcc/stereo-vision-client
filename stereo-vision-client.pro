@@ -21,3 +21,5 @@ HEADERS  += gui.h \
 
 FORMS    += gui.ui \
     Widgets/processstep.ui
+
+OTHER_FILES +=
