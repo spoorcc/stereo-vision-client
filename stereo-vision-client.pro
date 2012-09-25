@@ -13,13 +13,13 @@ TEMPLATE    = app
 SOURCES += main.cpp\
            gui.cpp \
            Engine/dataretriever.cpp \
-    Widgets/processstep.cpp
+          Widgets/processstepWidget.cpp
 
 HEADERS  += gui.h \
             Engine/dataretriever.h \
-    Widgets/processstep.h
+    Widgets/processstepWidget.h
 
 FORMS    += gui.ui \
-    Widgets/processstep.ui
+    Widgets/processstepWidget.ui
 
 OTHER_FILES +=
