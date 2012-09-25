@@ -19,14 +19,18 @@ public:
 
     //Set-methods
     void setName( QString name );
+    virtual void update( AbstractParameter* parameter ) = 0;
 
     //Get-methods
+    QString name() const;
     virtual bool isBoolean() = 0;       //This methods must be specified in derived classes
     virtual bool isNumerical() = 0;     //This methods must be specified in derived classes
+
     
 signals:
     
     void valueChanged();
+    void illegalUpdate();
 
 public slots:
 

@@ -9,3 +9,8 @@ void AbstractParameter::setName(QString name)
 {
     _name = name;
 }
+
+QString AbstractParameter::name() const
+{
+    return _name;
+}

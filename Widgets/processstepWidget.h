@@ -11,6 +11,9 @@
 // Global includes
 #include <QWidget>
 
+// Local includes
+#include "DataTypes/processstep.h"
+
 namespace Ui {
     class ProcessStepWidget;
 }
@@ -20,7 +23,7 @@ class ProcessStepWidget : public QWidget
     Q_OBJECT
     
 public:
-    explicit ProcessStepWidget(QWidget *parent = 0);
+    explicit ProcessStepWidget( ProcessStep* processStep, QWidget *parent = 0);
     ~ProcessStepWidget();
 
     void setName(QString name);
