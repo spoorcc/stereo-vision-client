@@ -1,12 +1,21 @@
 #ifndef GUI_H
 #define GUI_H
 
+/*
+  Project:      Stereo-vision-client
+  Author:       Ben
+  Description:  The gui gives the user the abilty to see the information and interact with it.
+
+*/
+
+// Global includes
 #include <QMainWindow>
 
-#include "Widgets/processstep.h"
+//Local includes
+#include "Widgets/processstepWidget.h"
 
 namespace Ui {
-class GUI;
+    class GUI;
 }
 
 class GUI : public QMainWindow
@@ -20,9 +29,9 @@ public:
 private:
     Ui::GUI *ui;
 
-    ProcessStep* _camera;
-    ProcessStep* _rectfication;
-    ProcessStep* _equalisation;
+    ProcessStepWidget* _camera;
+    ProcessStepWidget* _rectfication;
+    ProcessStepWidget* _equalisation;
 
     void addElements();
     void printToConsole( QString message );

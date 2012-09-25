@@ -1,18 +1,18 @@
-#include "processstep.h"
-#include "ui_processstep.h"
+#include "processstepWidget.h"
+#include "ui_processstepWidget.h"
 
-ProcessStep::ProcessStep(QWidget *parent) :
+ProcessStepWidget::ProcessStepWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ProcessStep)
+    ui(new Ui::ProcessStepWidget)
 {
     ui->setupUi(this);
 }
 
-ProcessStep::~ProcessStep()
+ProcessStepWidget::~ProcessStepWidget()
 {
     delete ui;
 }
-void ProcessStep::setName(QString name)
+void ProcessStepWidget::setName(QString name)
 {
     ui->nameLBL->setText( name );
 }
