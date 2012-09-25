@@ -12,3 +12,25 @@ ParameterWidget::~ParameterWidget()
 {
     delete ui;
 }
+
+void ParameterWidget::setParameter(AbstractParameter *parameter)
+{
+    if( parameter->isBoolean() )
+    {
+        createBooleanWidget( parameter );
+    }
+    if( parameter->isNumerical() )
+    {
+        createNumericWidget( parameter );
+    }
+}
+
+void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
+{
+    ui->nameLBL->setText( ((BooleanParameter*) parameter)->name() );
+}
+
+void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
+{
+    ui->nameLBL->setText( ((NumericParameter*) parameter)->name() );
+}

@@ -10,6 +10,7 @@
 
 // Global includes
 #include <QMainWindow>
+#include <QTime>
 
 //Local includes
 #include "Widgets/processstepWidget.h"
@@ -25,16 +26,18 @@ class GUI : public QMainWindow
 public:
     explicit GUI(QWidget *parent = 0);
     ~GUI();
+
+public slots:
+    void addProcessStep( ProcessStep* processStep );
+    void printToConsole( QString sender, QString message );
+
+signals:
+    void needAllProcessSteps();
     
 private:
     Ui::GUI *ui;
 
-    ProcessStepWidget* _camera;
-    ProcessStepWidget* _rectfication;
-    ProcessStepWidget* _equalisation;
-
-    void addElements();
-    void printToConsole( QString message );
+    void print(QString message);
 };
 
 #endif // GUI_H

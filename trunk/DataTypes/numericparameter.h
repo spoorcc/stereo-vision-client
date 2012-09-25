@@ -16,6 +16,31 @@ class NumericParameter : public AbstractParameter
 {
 public:
     NumericParameter();
+
+    //Get methods
+    bool isBoolean() const;
+    bool isNumerical() const;
+
+    int minimum() const;
+    int init() const;
+    int value() const;
+    int maximum() const;
+
+public slots:
+
+    //Set methods
+    void setMinimum( int minimum );
+    void setInit( int init );
+    void setValue( int value );
+    void setMaximum( int maximum );
+
+    void update(AbstractParameter *parameter);
+
+private:
+    int _minimum;
+    int _init;
+    int _value;
+    int _maximum;
 };
 
 #endif // NUMERICPARAMETER_H

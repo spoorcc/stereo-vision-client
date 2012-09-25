@@ -7,11 +7,8 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-    _camera = new ProcessStepWidget();
-    _rectfication = new ProcessStepWidget();
-    _equalisation = new ProcessStepWidget();
-
-    addElements();
+    print("Requested processSteps");
+    emit needAllProcessSteps();
 }
 
 GUI::~GUI()
@@ -19,20 +16,20 @@ GUI::~GUI()
     delete ui;
 }
 
-void GUI::addElements()
+void GUI::addProcessStep(ProcessStep *processStep)
 {
-    _camera->setName( "Camera's" );
-    _rectfication->setName( "Rectification" );
-    _equalisation->setName( "Equalisation" );
+    ProcessStepWidget* processStepWidget = new ProcessStepWidget( processStep, this );
+    ui->AllProcessesTBX->addItem( processStepWidget, processStep->name() );
 
-    ui->processtepLO->addWidget(_camera,1,1);
-    ui->processtepLO->addWidget(_rectfication,1,2);
-    ui->processtepLO->addWidget(_equalisation,1,3);
-
-    printToConsole( "Added elements!" );
+    print( "Added step:" + processStep->name() );
+}
+void GUI::print( QString message )
+{
+    printToConsole("GUI", message);
 }
 
-void GUI::printToConsole( QString message )
+void GUI::printToConsole( QString sender,  QString message )
 {
-    ui->console->append( "[GUI] :" +  message );
+    QString time = QTime::currentTime().toString();
+    ui->console->append( time + " ["+ sender+ "] " +  message );
 }
