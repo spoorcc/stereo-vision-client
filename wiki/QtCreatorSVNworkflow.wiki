@@ -30,7 +30,7 @@ _Tools > Subversion > Update repository_ is the way to do this.
 
 If this results in local conflicts, you'll need to resolve those. 
 The easiest way is if you revert your file, update and add you changes (if they are still necessary).
-Otherwise, open up google, and search for svn resolve. Always consult with the author of the piece of code that conflicts with you code!  
+Otherwise, open up google ( http://ariejan.net/2007/07/04/how-to-resolve-subversion-conflicts/ ), and search for svn resolve. Always consult with the author of the piece of code that conflicts with you code!  
 
 ==Commit your changes==
 Make sure the program is still building and running before you commit!
