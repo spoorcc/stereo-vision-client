@@ -3,11 +3,11 @@
 
 #include <QWidget>
 
-class ProcessStep : public QWidget
+class ProcessStepWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ProcessStep(QWidget *parent = 0);
+    explicit ProcessStepWidget(QWidget *parent = 0);
     
 signals:
     
