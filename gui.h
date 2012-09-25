@@ -28,6 +28,7 @@ public:
     ~GUI();
 
 public slots:
+    void start();
     void addProcessStep( ProcessStep* processStep );
     void printToConsole( QString sender, QString message );
 

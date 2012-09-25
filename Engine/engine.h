@@ -23,9 +23,11 @@ class Engine : public QObject
 public:
     explicit Engine(QObject *parent = 0);
 
+    void init();
     int numberOfSteps() const;
     
 signals:
+    void ready();
     void printToConsole( QString sender, QString message );
     void addProcessStep( ProcessStep* processStep);
 

@@ -4,11 +4,13 @@ Engine::Engine(QObject *parent) :
     QObject(parent)
 {
     qRegisterMetaType< ProcessStep*  >( "ProcessStepPointer" );
+}
 
+void Engine::init()
+{
     initProcessSteps();
+    emit ready();
     emit printToConsole("Engine","initialised");
-
-    giveProcessSteps();
 }
 
 void Engine::initProcessSteps()
@@ -20,7 +22,7 @@ void Engine::initProcessSteps()
 
     ProcessStep* calibration = new ProcessStep("Calibration",4,this);
     ProcessStep* rectification = new ProcessStep("Rectification",5,this);
-    ProcessStep* stereoMatchnig = new ProcessStep("Stereo matching", 6, this);
+    ProcessStep* stereoMatching = new ProcessStep("Stereo matching", 6, this);
 
     _processSteps.append( camera0 );
     _processSteps.append( camera1 );
@@ -28,7 +30,7 @@ void Engine::initProcessSteps()
     _processSteps.append( camera3 );
     _processSteps.append( calibration );
     _processSteps.append( rectification );
-    _processSteps.append( stereoMatchnig );
+    _processSteps.append( stereoMatching );
 }
 
 void Engine::giveProcessSteps()
