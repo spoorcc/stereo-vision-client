@@ -7,13 +7,17 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-    print("Requested processSteps");
-    emit needAllProcessSteps();
+
 }
 
 GUI::~GUI()
 {
     delete ui;
+}
+void GUI::start()
+{
+    print("Requested processSteps");
+    emit needAllProcessSteps();
 }
 
 void GUI::addProcessStep(ProcessStep *processStep)
