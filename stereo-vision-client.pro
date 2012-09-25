@@ -18,7 +18,8 @@ SOURCES +=  main.cpp\
             DataTypes/abstractparameter.cpp \
             DataTypes/numericparameter.cpp \
     DataTypes/booleanparameter.cpp \
-    Widgets/parameterwidget.cpp
+    Widgets/parameterwidget.cpp \
+    DataTypes/processstep.cpp
 
 HEADERS  += gui.h \
             Engine/dataretriever.h \
@@ -27,7 +28,8 @@ HEADERS  += gui.h \
             DataTypes/abstractparameter.h \
             DataTypes/numericparameter.h \
     DataTypes/booleanparameter.h \
-    Widgets/parameterwidget.h
+    Widgets/parameterwidget.h \
+    DataTypes/processstep.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
