@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProcessStep</class>
- <widget class="QWidget" name="ProcessStep">
+ <class>ProcessStepWidget</class>
+ <widget class="QWidget" name="ProcessStepWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

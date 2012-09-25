@@ -1,4 +1,14 @@
+/*
+  Project:      Stereo-vision-client
+  Author:       Ben
+  Description:
+
+*/
+
+// Global includes
 #include <QtGui/QApplication>
+
+// Local includes
 #include "gui.h"
 
 int main(int argc, char *argv[])

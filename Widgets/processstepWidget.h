@@ -1,24 +1,32 @@
-#ifndef PROCESSSTEP_H
-#define PROCESSSTEP_H
+#ifndef PROCESSSTEPWIDGET_H
+#define PROCESSSTEPWIDGET_H
 
+/*
+  Project:      Stereo-vision-client
+  Author:       Ben
+  Description:  The processstepWidget is a object which displays information about a single processstep
+
+*/
+
+// Global includes
 #include <QWidget>
 
 namespace Ui {
-class ProcessStep;
+    class ProcessStepWidget;
 }
 
-class ProcessStep : public QWidget
+class ProcessStepWidget : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit ProcessStep(QWidget *parent = 0);
-    ~ProcessStep();
+    explicit ProcessStepWidget(QWidget *parent = 0);
+    ~ProcessStepWidget();
 
     void setName(QString name);
     
 private:
-    Ui::ProcessStep *ui;
+    Ui::ProcessStepWidget *ui;
 };
 
-#endif // PROCESSSTEP_H
+#endif // PROCESSSTEPWIDGET_H

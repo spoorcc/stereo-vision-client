@@ -7,9 +7,9 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-    _camera = new ProcessStep();
-    _rectfication = new ProcessStep();
-    _equalisation = new ProcessStep();
+    _camera = new ProcessStepWidget();
+    _rectfication = new ProcessStepWidget();
+    _equalisation = new ProcessStepWidget();
 
     addElements();
 }
