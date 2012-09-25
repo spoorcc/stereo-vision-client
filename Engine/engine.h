@@ -22,6 +22,7 @@ public:
     explicit Engine(QObject *parent = 0);
     
 signals:
+    void printToConsole( QString message );
     
 public slots:
     
