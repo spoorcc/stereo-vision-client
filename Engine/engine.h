@@ -11,6 +11,10 @@
 // Global includes
 #include <QObject>
 
+// Local includes
+#include "DataTypes/booleanparameter.h"
+#include "DataTypes/numericparameter.h"
+
 class Engine : public QObject
 {
     Q_OBJECT
