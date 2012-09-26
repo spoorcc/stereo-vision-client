@@ -1,12 +1,11 @@
 #include "numericparameter.h"
 
-NumericParameter::NumericParameter()
+NumericParameter::NumericParameter(QString name, int init, int min, int max)
 {
-}
-
-bool NumericParameter::isBoolean() const
-{
-    return false;
+    setName( name );
+    setInit( init );
+    setMinimum( min );
+    setMaximum( max );
 }
 
 bool NumericParameter::isNumerical() const

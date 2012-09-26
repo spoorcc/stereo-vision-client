@@ -1,17 +1,14 @@
 #include "booleanparameter.h"
 
-BooleanParameter::BooleanParameter()
+BooleanParameter::BooleanParameter(QString name, bool state)
 {
+    setName( name  );
+    set( state );
 }
 
 bool BooleanParameter::isBoolean() const
 {
     return true;
-}
-
-bool BooleanParameter::isNumerical() const
-{
-    return false;
 }
 
 //Get methods;

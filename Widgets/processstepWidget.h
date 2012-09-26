@@ -13,6 +13,7 @@
 
 // Local includes
 #include "DataTypes/processstep.h"
+#include "Widgets/parameterwidget.h"
 
 namespace Ui {
     class ProcessStepWidget;
@@ -30,6 +31,9 @@ public:
     
 private:
     Ui::ProcessStepWidget *ui;
+
+    void setParameters( ProcessStep* processStep );
+    void createParameter( AbstractParameter* parameter );
 };
 
 #endif // PROCESSSTEPWIDGET_H

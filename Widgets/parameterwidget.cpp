@@ -27,10 +27,10 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
 
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
-    ui->nameLBL->setText( ((BooleanParameter*) parameter)->name() );
+    ui->nameLBL->setText( "Boolean " + ((BooleanParameter*) parameter)->name() );
 }
 
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 {
-    ui->nameLBL->setText( ((NumericParameter*) parameter)->name() );
+    ui->nameLBL->setText( "Numberic " + ((NumericParameter*) parameter)->name() );
 }

@@ -23,9 +23,8 @@ public:
 
     //Get-methods
     QString name() const;
-    virtual bool isBoolean() = 0;       //This methods must be specified in derived classes
-    virtual bool isNumerical() = 0;     //This methods must be specified in derived classes
-
+    virtual bool isBoolean() const;       //This methods must be specified in derived classes
+    virtual bool isNumerical() const;     //This methods must be specified in derived classes
     
 signals:
     

@@ -24,6 +24,16 @@ void Engine::initProcessSteps()
     ProcessStep* rectification = new ProcessStep("Rectification",5,this);
     ProcessStep* stereoMatching = new ProcessStep("Stereo matching", 6, this);
 
+    BooleanParameter* oneShot = new BooleanParameter("OneShot",true);
+    BooleanParameter* enabled = new BooleanParameter("Enabled");
+    NumericParameter* hSize = new NumericParameter( "hSize", 480, 240, 1080 );
+    NumericParameter* vSize = new NumericParameter( "vSize", 640, 320, 1920 );
+
+    camera0->addParameter( oneShot );
+    camera0->addParameter( enabled );
+    camera0->addParameter( hSize );
+    camera0->addParameter( vSize );
+
     _processSteps.append( camera0 );
     _processSteps.append( camera1 );
     _processSteps.append( camera2 );
