@@ -14,7 +14,9 @@ void Engine::init()
 }
 
 void Engine::initProcessSteps()
-{
+{    
+    //TODO: Eventually this should be done from a xml-file for more flexability
+
     ProcessStep* camera0 = new ProcessStep("Camera 0",0,this);
     ProcessStep* camera1 = new ProcessStep("Camera 1",1,this);
     ProcessStep* camera2 = new ProcessStep("Camera 2",2,this);
