@@ -14,10 +14,9 @@
 class BooleanParameter : public AbstractParameter
 {
 public:
-    BooleanParameter();
+    BooleanParameter(QString name, bool state = false);
 
     bool isBoolean() const;
-    bool isNumerical() const;
 
     //Get methods
     bool isEnabled() const;

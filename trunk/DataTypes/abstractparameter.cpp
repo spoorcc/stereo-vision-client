@@ -14,3 +14,13 @@ QString AbstractParameter::name() const
 {
     return _name;
 }
+
+bool AbstractParameter::isBoolean() const
+{
+    return false;
+}
+
+bool AbstractParameter::isNumerical() const
+{
+    return false;
+}

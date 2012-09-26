@@ -15,10 +15,9 @@
 class NumericParameter : public AbstractParameter
 {
 public:
-    NumericParameter();
+    NumericParameter( QString name, int init = 1, int min = 0, int max = 2 );
 
     //Get methods
-    bool isBoolean() const;
     bool isNumerical() const;
 
     int minimum() const;
