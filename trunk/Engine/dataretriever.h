@@ -11,6 +11,7 @@
 // Global includes
 #include <QObject>
 #include <QImage>
+#include <QtNetwork/QUdpSocket>
 
 class DataRetriever : public QObject
 {
@@ -25,6 +26,11 @@ public slots:
     void connectToServer( void );
     void sendImage( QImage image );
 
+private:
+    QUdpSocket _udpSocket;
+
+    void readPendingDatagrams();
+    void processDatagram( QByteArray datagram );
     
 };
 
