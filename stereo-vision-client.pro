@@ -19,7 +19,8 @@ SOURCES +=  main.cpp\
             DataTypes/booleanparameter.cpp \
             Widgets/parameterwidget.cpp \
             DataTypes/processstep.cpp \
-    Engine/dataTransciever.cpp
+    Engine/dataTransciever.cpp \
+    Widgets/connecttoserverdialog.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -29,10 +30,12 @@ HEADERS  += gui.h \
             DataTypes/booleanparameter.h \
             Widgets/parameterwidget.h \
             DataTypes/processstep.h \
-    Engine/dataTransciever.h
+    Engine/dataTransciever.h \
+    Widgets/connecttoserverdialog.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
-            Widgets/parameterwidget.ui
+            Widgets/parameterwidget.ui \
+    Widgets/connecttoserverdialog.ui
 
 OTHER_FILES +=

@@ -28,6 +28,7 @@ void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
     }
     else
     {
+        print("Connection failed");
         emit connectionFailed();
     }
 }
