@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     DataTransciever dataTransciever;
     GUI gui;
 
+    dataTransciever.connect( &gui, SIGNAL(connectToServer(QHostAddress,quint16)), SLOT(connectToServer(QHostAddress,quint16)));
+
     engine.connect( &gui, SIGNAL( needAllProcessSteps() ), SLOT( giveProcessSteps() ) );
 
     gui.connect( &engine, SIGNAL( ready() ), SLOT( start() ));

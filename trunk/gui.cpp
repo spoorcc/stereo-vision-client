@@ -37,3 +37,25 @@ void GUI::printToConsole( QString sender,  QString message )
     QString time = QTime::currentTime().toString();
     ui->console->append( time + " ["+ sender+ "] " +  message );
 }
+
+void GUI::connectDialogAccepted(QHostAddress address, quint16 port)
+{
+    print("Giving command to connect to transciever at " + address.toString() + " on port " + QString::number( port ) );
+    emit connectToServer( address, port );
+}
+
+void GUI::connectDialogRefused()
+{
+    print("Connect to server dialog closed");
+}
+
+void GUI::on_actionConnect_triggered()
+{
+    print("Opening connect to server dialog");
+    ConnectToServerDialog* dialog = new ConnectToServerDialog( QHostAddress("127.0.0.1"),7755);
+
+    this->connect( dialog, SIGNAL( connectToServer(QHostAddress,quint16) ) , this, SLOT( connectDialogAccepted(QHostAddress,quint16) ) );
+    this->connect( dialog, SIGNAL( rejected() ), this,  SLOT(connectDialogRefused()) );
+
+    dialog->show();
+}

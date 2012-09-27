@@ -14,6 +14,7 @@
 
 //Local includes
 #include "Widgets/processstepWidget.h"
+#include "Widgets/connecttoserverdialog.h"
 
 namespace Ui {
     class GUI;
@@ -31,10 +32,16 @@ public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );
     void printToConsole( QString sender, QString message );
+    void connectDialogAccepted( QHostAddress address, quint16 port );
+    void connectDialogRefused();
 
 signals:
     void needAllProcessSteps();
+    void connectToServer( QHostAddress address, quint16 port );
     
+private slots:
+    void on_actionConnect_triggered();
+
 private:
     Ui::GUI *ui;
 
