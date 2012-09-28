@@ -8,16 +8,17 @@
 
 */
 
+#define CONFIG_PATH /conf/processStep.xml
+
 // Global includes
 #include <QObject>
 #include <QMetaType>
 
 // Local includes
-#include "DataTypes/booleanparameter.h"
-#include "DataTypes/numericparameter.h"
-#include "DataTypes/selectparameter.h"
-
+#include "DataTypes/allparametertypes.h"
 #include "DataTypes/processstep.h"
+
+#include "configreader.h"
 
 class Engine : public QObject
 {

@@ -31,9 +31,14 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
 
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
+    // Set the name of the parameter
     ui->nameLBL->setText( "Boolean " + ((BooleanParameter*) parameter)->name() );
+
+    //Create a checkbox and add one
     QCheckBox* checkBox = new QCheckBox (this);
     ui->horizontalLayout->addWidget(checkBox);
+
+    //For better layout, create a spacer
     QSpacerItem* horizontalSpacer = new QSpacerItem (10,10, QSizePolicy::Expanding);
     ui->horizontalLayout->addSpacerItem(horizontalSpacer);
 }
