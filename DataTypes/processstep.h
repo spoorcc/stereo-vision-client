@@ -21,10 +21,12 @@ class ProcessStep : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProcessStep(QString name, int number, QObject *parent = 0);
+    explicit ProcessStep(QString name, int number, QString group, QObject *parent = 0);
     
     //Get methods
     QString name();
+    QString group();
+
     AbstractParameter* parameter( QString name );
     AbstractParameter* parameter( int i );
     int numberOfParameters() const;
@@ -45,6 +47,7 @@ public slots:
 private:
     QString _name;
     int _stepNumber;
+    QString _group;
 
     QList< AbstractParameter* > _parameters;
 

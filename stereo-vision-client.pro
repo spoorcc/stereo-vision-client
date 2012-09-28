@@ -20,7 +20,8 @@ SOURCES +=  main.cpp\
             Widgets/parameterwidget.cpp \
             DataTypes/processstep.cpp \
     Engine/dataTransciever.cpp \
-    Widgets/connecttoserverdialog.cpp
+    Widgets/connecttoserverdialog.cpp \
+    DataTypes/selectparameter.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -31,7 +32,8 @@ HEADERS  += gui.h \
             Widgets/parameterwidget.h \
             DataTypes/processstep.h \
     Engine/dataTransciever.h \
-    Widgets/connecttoserverdialog.h
+    Widgets/connecttoserverdialog.h \
+    DataTypes/selectparameter.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \

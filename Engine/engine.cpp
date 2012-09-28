@@ -17,11 +17,11 @@ void Engine::initProcessSteps()
 {    
     //TODO: Eventually this should be done from a xml-file for more flexability
 
-    ProcessStep* cameras = new ProcessStep("Camera 0",0,this);
+    ProcessStep* cameras = new ProcessStep("Camera 0",0,"CameraConfig", this);
 
-    ProcessStep* calibration = new ProcessStep("Calibration",4,this);
-    ProcessStep* rectification = new ProcessStep("Rectification",5,this);
-    ProcessStep* stereoMatching = new ProcessStep("Stereo matching", 6, this);
+    ProcessStep* calibration = new ProcessStep("Calibration",4,"Camera Calibration", this);
+    ProcessStep* rectification = new ProcessStep("Rectification",5,"Camera Calibration", this);
+    ProcessStep* stereoMatching = new ProcessStep("Stereo matching", 6, "Result", this);
 
     BooleanParameter* oneShot = new BooleanParameter("OneShot",true);
     BooleanParameter* enabled = new BooleanParameter("Enabled");

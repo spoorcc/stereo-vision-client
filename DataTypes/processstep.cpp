@@ -1,15 +1,20 @@
 #include "processstep.h"
 
-ProcessStep::ProcessStep(QString name, int number, QObject *parent) :
+ProcessStep::ProcessStep(QString name, int number, QString group, QObject *parent) :
     QObject(parent)
 {
         _name = name;
         _stepNumber = number;
+        _group = group;
 }
 
 QString ProcessStep::name()
 {
     return _name;
+}
+QString ProcessStep::group()
+{
+    return _group;
 }
 
 AbstractParameter* ProcessStep::parameter(QString name)

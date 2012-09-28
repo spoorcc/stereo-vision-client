@@ -29,6 +29,7 @@ signals:
 public slots:
     //Connection methods
     void connectToServer( QHostAddress hostAdress, quint16 port = 7755 );
+    void readPendingDatagrams(); //Ugly code, it exposes this public method to the world
 
     //Send methods
     void sendImage( QImage image );
@@ -37,7 +38,7 @@ public slots:
 private:
     QUdpSocket* _udpSocket;
 
-    void readPendingDatagrams();
+
     void processDatagram( QByteArray datagram );
 
     void print( QString message );
