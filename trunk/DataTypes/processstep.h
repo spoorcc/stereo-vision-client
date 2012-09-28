@@ -12,10 +12,7 @@
 #include <QObject>
 
 //Local includes
-#include "abstractparameter.h"
-#include "numericparameter.h"
-#include "booleanparameter.h"
-#include "selectparameter.h"
+#include "DataTypes/allparametertypes.h"
 
 class ProcessStep : public QObject
 {

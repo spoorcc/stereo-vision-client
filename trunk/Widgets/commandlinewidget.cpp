@@ -29,9 +29,6 @@ void CommandLineWidget::sendCommand()
     {
         emit executeCommand("CMD", ui->commandLE->text());
         ui->commandLE->clear();
-
     }
-
-
 }
 

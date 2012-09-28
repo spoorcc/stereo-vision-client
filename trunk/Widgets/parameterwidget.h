@@ -14,9 +14,7 @@
 #include <QSpacerItem>
 
 //Local includes
-#include "DataTypes/booleanparameter.h"
-#include "DataTypes/numericparameter.h"
-#include "DataTypes/selectparameter.h"
+#include "DataTypes/allparametertypes.h"
 
 namespace Ui {
 class ParameterWidget;

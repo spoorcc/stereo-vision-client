@@ -25,7 +25,6 @@ void Engine::initProcessSteps()
 
     BooleanParameter* oneShot = new BooleanParameter("OneShot",true);
     BooleanParameter* enabled = new BooleanParameter("Enabled");
-    BooleanParameter* maurice = new BooleanParameter("Maurice betaalt de koffie",true);
 
     NumericParameter* hSize = new NumericParameter( "hSize", 480, 240, 1080 );
     NumericParameter* vSize = new NumericParameter( "vSize", 640, 320, 1920 );
