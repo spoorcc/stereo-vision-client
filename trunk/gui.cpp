@@ -7,6 +7,9 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
+    commandLineWidget = new CommandLineWidget(this);
+    this->connect(commandLineWidget,SIGNAL(executeCommand(QString, QString)),SLOT(printToConsole(QString,QString)));
+    ui->consoleCommandLO->addWidget(commandLineWidget);
 
 }
 
