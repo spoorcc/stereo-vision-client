@@ -16,6 +16,8 @@
 #include "Widgets/processstepWidget.h"
 #include "Widgets/connecttoserverdialog.h"
 
+#include "Widgets/commandlinewidget.h"
+
 namespace Ui {
     class GUI;
 }
@@ -45,6 +47,7 @@ private slots:
 private:
     Ui::GUI *ui;
 
+    CommandLineWidget* commandLineWidget;
     void print(QString message);
 };
 

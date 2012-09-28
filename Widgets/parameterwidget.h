@@ -10,6 +10,8 @@
 
 //Global includes
 #include <QWidget>
+#include <QCheckBox>
+#include <QSpacerItem>
 
 //Local includes
 #include "DataTypes/booleanparameter.h"
