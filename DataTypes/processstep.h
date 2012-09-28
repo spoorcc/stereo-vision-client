@@ -15,6 +15,7 @@
 #include "abstractparameter.h"
 #include "numericparameter.h"
 #include "booleanparameter.h"
+#include "selectparameter.h"
 
 class ProcessStep : public QObject
 {
@@ -36,6 +37,8 @@ public slots:
     //Set methods
     void addParameter( BooleanParameter* parameter );
     void addParameter( NumericParameter* parameter );
+    void addParameter( SelectParameter* parameter );
+
     void changeParameter( AbstractParameter* parameter );
     void parameterChanged();
 
@@ -46,6 +49,7 @@ private:
     QList< AbstractParameter* > _parameters;
 
     void addParameter( AbstractParameter* parameter );
+
 };
 
 #endif // PROCESSSTEP_H

@@ -23,6 +23,10 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
     {
         createNumericWidget( parameter );
     }
+    if( parameter->isSelect() )
+    {
+        createSelectWidget( parameter );
+    }
 }
 
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
@@ -33,4 +37,8 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 {
     ui->nameLBL->setText( "Numberic " + ((NumericParameter*) parameter)->name() );
+}
+void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
+{
+    ui->nameLBL->setText( "Select " + ( (SelectParameter*) parameter)->name() );
 }

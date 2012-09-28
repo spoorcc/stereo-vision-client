@@ -15,6 +15,8 @@
 // Local includes
 #include "DataTypes/booleanparameter.h"
 #include "DataTypes/numericparameter.h"
+#include "DataTypes/selectparameter.h"
+
 #include "DataTypes/processstep.h"
 
 class Engine : public QObject
