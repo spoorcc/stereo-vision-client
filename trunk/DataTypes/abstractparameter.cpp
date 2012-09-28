@@ -24,3 +24,8 @@ bool AbstractParameter::isNumerical() const
 {
     return false;
 }
+
+bool AbstractParameter::isSelect() const
+{
+    return false;
+}

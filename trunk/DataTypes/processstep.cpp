@@ -48,6 +48,11 @@ void ProcessStep::addParameter(NumericParameter *parameter)
 {
     addParameter( (AbstractParameter*) parameter );
 }
+void ProcessStep::addParameter(SelectParameter *parameter)
+{
+    addParameter( (AbstractParameter*) parameter );
+}
+
 void ProcessStep::addParameter(AbstractParameter *parameter)
 {
         _parameters.append( parameter );

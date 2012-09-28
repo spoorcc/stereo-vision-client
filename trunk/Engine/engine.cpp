@@ -17,10 +17,7 @@ void Engine::initProcessSteps()
 {    
     //TODO: Eventually this should be done from a xml-file for more flexability
 
-    ProcessStep* camera0 = new ProcessStep("Camera 0",0,this);
-    ProcessStep* camera1 = new ProcessStep("Camera 1",1,this);
-    ProcessStep* camera2 = new ProcessStep("Camera 2",2,this);
-    ProcessStep* camera3 = new ProcessStep("Camera 3",3,this);
+    ProcessStep* cameras = new ProcessStep("Camera 0",0,this);
 
     ProcessStep* calibration = new ProcessStep("Calibration",4,this);
     ProcessStep* rectification = new ProcessStep("Rectification",5,this);
@@ -28,18 +25,33 @@ void Engine::initProcessSteps()
 
     BooleanParameter* oneShot = new BooleanParameter("OneShot",true);
     BooleanParameter* enabled = new BooleanParameter("Enabled");
+    BooleanParameter* maurice = new BooleanParameter("Maurice betaalt de koffie",true);
+
     NumericParameter* hSize = new NumericParameter( "hSize", 480, 240, 1080 );
     NumericParameter* vSize = new NumericParameter( "vSize", 640, 320, 1920 );
 
-    camera0->addParameter( oneShot );
-    camera0->addParameter( enabled );
-    camera0->addParameter( hSize );
-    camera0->addParameter( vSize );
+    SelectParameter* cameraSelection = new SelectParameter( "Select camera's");
+    cameraSelection->addOption( "Camera 1 & 2");
+    cameraSelection->addOption( "Camera 1 & 3");
+    cameraSelection->addOption( "Camera 1 & 4");
+    cameraSelection->addOption( "Camera 2 & 3");
+    cameraSelection->addOption( "Camera 2 & 4");
+    cameraSelection->addOption( "Camera 3 & 4");
 
-    _processSteps.append( camera0 );
-    _processSteps.append( camera1 );
-    _processSteps.append( camera2 );
-    _processSteps.append( camera3 );
+    cameraSelection->addOption( "Camera 5 & 6");
+    cameraSelection->addOption( "Camera 5 & 7");
+    cameraSelection->addOption( "Camera 5 & 8");
+    cameraSelection->addOption( "Camera 6 & 7");
+    cameraSelection->addOption( "Camera 6 & 8");
+    cameraSelection->addOption( "Camera 7 & 8");
+
+    cameras->addParameter( cameraSelection );
+    cameras->addParameter( oneShot );
+    cameras->addParameter( enabled );
+    cameras->addParameter( hSize );
+    cameras->addParameter( vSize );
+
+    _processSteps.append( cameras );
     _processSteps.append( calibration );
     _processSteps.append( rectification );
     _processSteps.append( stereoMatching );

@@ -14,6 +14,7 @@
 //Local includes
 #include "DataTypes/booleanparameter.h"
 #include "DataTypes/numericparameter.h"
+#include "DataTypes/selectparameter.h"
 
 namespace Ui {
 class ParameterWidget;
@@ -26,6 +27,7 @@ class ParameterWidget : public QWidget
 public:
     explicit ParameterWidget(QWidget *parent = 0);
     ~ParameterWidget();
+
 public slots:
     void setParameter( AbstractParameter* parameter );
     
@@ -35,6 +37,7 @@ signals:
 private:
     void createBooleanWidget( AbstractParameter* parameter );
     void createNumericWidget( AbstractParameter* parameter );
+    void createSelectWidget( AbstractParameter* parameter );
 
     Ui::ParameterWidget *ui;
 };

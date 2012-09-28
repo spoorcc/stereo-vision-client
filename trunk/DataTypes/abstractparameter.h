@@ -4,7 +4,9 @@
 /*
   Project:      Stereo-vision-client
   Author:       Ben
-  Description:  This class is an abstract class and can therefore not be instantiated.It contains the methods, signals and slots that both numerical as boolean parameters have in common.
+  Description:  This class is an abstract class and can therefore not be instantiated.
+                It contains the methods, signals and slots that both numerical
+                as boolean parameters have in common.
 
 */
 
@@ -25,6 +27,7 @@ public:
     QString name() const;
     virtual bool isBoolean() const;       //This methods must be specified in derived classes
     virtual bool isNumerical() const;     //This methods must be specified in derived classes
+    virtual bool isSelect() const;
     
 signals:
     
