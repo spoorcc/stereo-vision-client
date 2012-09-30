@@ -11,6 +11,7 @@
 //Global includes
 #include <QWidget>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QSpacerItem>
 
 //Local includes
@@ -38,6 +39,8 @@ private:
     void createBooleanWidget( AbstractParameter* parameter );
     void createNumericWidget( AbstractParameter* parameter );
     void createSelectWidget( AbstractParameter* parameter );
+
+    void addSpacer();
 
     Ui::ParameterWidget *ui;
 };
