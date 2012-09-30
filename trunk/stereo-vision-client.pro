@@ -46,4 +46,5 @@ FORMS    += gui.ui \
     Widgets/connecttoserverdialog.ui \
     Widgets/commandlinewidget.ui
 
-OTHER_FILES +=
+OTHER_FILES += \
+    Config/ProcessSteps.xml

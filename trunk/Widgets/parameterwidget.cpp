@@ -38,9 +38,7 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
     QCheckBox* checkBox = new QCheckBox (this);
     ui->horizontalLayout->addWidget(checkBox);
 
-    //For better layout, create a spacer
-    QSpacerItem* horizontalSpacer = new QSpacerItem (10,10, QSizePolicy::Expanding);
-    ui->horizontalLayout->addSpacerItem(horizontalSpacer);
+    addSpacer();
 }
 
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
@@ -50,4 +48,22 @@ void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
 {
     ui->nameLBL->setText( "Select " + ( (SelectParameter*) parameter)->name() );
+
+    //Create a combobox
+    QComboBox* comboBox = new QComboBox(this);
+
+    for( int i = 0; i < ((SelectParameter*) parameter)->count(); i++ )
+    {
+        comboBox->addItem( ((SelectParameter*) parameter)->option(i) );
+    }
+
+    ui->horizontalLayout->addWidget( comboBox );
+
+    addSpacer();
+}
+void ParameterWidget::addSpacer()
+{
+    //For better layout, create a spacer
+    QSpacerItem* horizontalSpacer = new QSpacerItem (10,10, QSizePolicy::Expanding);
+    ui->horizontalLayout->addSpacerItem(horizontalSpacer);
 }
