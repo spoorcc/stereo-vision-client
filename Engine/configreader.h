@@ -10,6 +10,9 @@
 
 // Global includes
 #include <QObject>
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QMap>
 
 // Local includes
 #include "DataTypes/allparametertypes.h"
@@ -20,7 +23,7 @@ class ConfigReader : public QObject
     Q_OBJECT
 public:
     explicit ConfigReader(QObject *parent = 0);
-    
+
 signals:
     void startedParsing();
     void invalidFilePath();
@@ -32,8 +35,14 @@ signals:
 public slots:
     void parseXmlFile( QString path );
 
-private:
+private:    
+    void parseProcessStep(QXmlStreamReader &xml);
 
+    BooleanParameter* parseBooleanParameter(QXmlStreamReader &xml);
+    NumericParameter* parseNumericParameter(QXmlStreamReader &xml );
+    SelectParameter*  parseSelectParameter( QXmlStreamReader &xml );
+
+    bool checkAttribute(QXmlStreamAttributes &attributes, QString attributeType, QString attributeValue);
 };
 
 #endif // CONFIGREADER_H

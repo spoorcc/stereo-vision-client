@@ -28,7 +28,7 @@ public:
 
     void init();
     int numberOfSteps() const;
-    
+
 signals:
     void ready();
     void printToConsole( QString sender, QString message );
@@ -37,10 +37,15 @@ signals:
 public slots:
     void giveProcessSteps();
 
+private slots:
+    void addParsedProcessStep( ProcessStep* processStep );
+    void parsingFailed();
+
 private:
     void initProcessSteps();
 
     QList< ProcessStep* > _processSteps;
+    ConfigReader* _configReader;
     
 };
 
