@@ -17,6 +17,7 @@
 #include "Widgets/connecttoserverdialog.h"
 
 #include "Widgets/commandlinewidget.h"
+#include "Widgets/previewwindow.h"
 
 namespace Ui {
     class GUI;
@@ -47,7 +48,8 @@ private slots:
 private:
     Ui::GUI *ui;
 
-    CommandLineWidget* commandLineWidget;
+    CommandLineWidget* _commandLineWidget;
+    PreviewWindow* _previewWindow;
     void print(QString message);
 };
 
