@@ -28,6 +28,7 @@ public:
     ~ProcessStepWidget();
 
     void setName(QString name);
+    void setColor( QColor color );
     
 private:
     Ui::ProcessStepWidget *ui;

@@ -15,6 +15,7 @@ ParameterWidget::~ParameterWidget()
 
 void ParameterWidget::setParameter(AbstractParameter *parameter)
 {
+    ui->nameLBL->setToolTip( parameter->description() );
     if( parameter->isBoolean() )
     {
         createBooleanWidget( parameter );
@@ -51,6 +52,7 @@ void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
 
     //Create a combobox
     QComboBox* comboBox = new QComboBox(this);
+    comboBox->setToolTip( parameter->description() );
 
     for( int i = 0; i < ((SelectParameter*) parameter)->count(); i++ )
     {
@@ -67,3 +69,4 @@ void ParameterWidget::addSpacer()
     QSpacerItem* horizontalSpacer = new QSpacerItem (10,10, QSizePolicy::Expanding);
     ui->horizontalLayout->addSpacerItem(horizontalSpacer);
 }
+

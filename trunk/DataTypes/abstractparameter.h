@@ -21,10 +21,13 @@ public:
 
     //Set-methods
     void setName( QString name );
+    void setDesciption( QString description );
     virtual void update( AbstractParameter* parameter ) = 0;
 
     //Get-methods
     QString name() const;
+    QString description() const;
+
     virtual bool isBoolean() const;       //This methods must be specified in derived classes
     virtual bool isNumerical() const;     //This methods must be specified in derived classes
     virtual bool isSelect() const;
@@ -38,6 +41,7 @@ public slots:
 
 private:
     QString _name;
+    QString _description;
     
 };
 

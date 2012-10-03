@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding= "UTF-8"?>
 <stereo-vision>
     <processstep name="Cameras" group="Camera configuration">
-        <parameter name="hSize" type="numeric" min="320" init="640" max="1920" ></parameter>
+        <parameter name="hSize" type="numeric" min="320" init="640" max="1920" >
+            <description>Determines the horizontal size of the camera image</description>
+        </parameter>
         <parameter name="vSize" type="numeric" min="240" init="480" max="1080" ></parameter>
     </processstep>
 
@@ -11,9 +13,11 @@
 
     <processstep name="Rectification" group="Camera calibration">
         <parameter name="Enable" type="boolean" init="enabled">
+            <description>Enable the rectification step</description>
         </parameter>
 
         <parameter name="Camera Selection" type="selectable">
+            <description>The camera pair can be selected here</description>
             <option>Camera 1 and 2</option>
             <option>Camera 1 and 3</option>
             <option>Camera 1 and 4</option>

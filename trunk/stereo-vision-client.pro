@@ -23,7 +23,8 @@ SOURCES +=  main.cpp\
             Widgets/connecttoserverdialog.cpp \
             DataTypes/selectparameter.cpp \
             Widgets/commandlinewidget.cpp \
-    Engine/configreader.cpp
+    Engine/configreader.cpp \
+    Widgets/previewwindow.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -38,13 +39,15 @@ HEADERS  += gui.h \
             DataTypes/selectparameter.h \
             Widgets/commandlinewidget.h \
     Engine/configreader.h \
-    DataTypes/allparametertypes.h
+    DataTypes/allparametertypes.h \
+    Widgets/previewwindow.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
             Widgets/parameterwidget.ui \
     Widgets/connecttoserverdialog.ui \
-    Widgets/commandlinewidget.ui
+    Widgets/commandlinewidget.ui \
+    Widgets/previewwindow.ui
 
 OTHER_FILES += \
     Config/ProcessSteps.xml

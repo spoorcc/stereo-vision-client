@@ -133,9 +133,19 @@ BooleanParameter* ConfigReader::parseBooleanParameter( QXmlStreamReader& xml)
         value = true;
     }
 
-    xml.readNext();
-
     BooleanParameter* parameter = new BooleanParameter(name, value);
+
+    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "parameter"))
+    {
+        if(xml.tokenType() == QXmlStreamReader::StartElement)
+        {
+            if(xml.name() == "description")
+            {
+                parameter->setDesciption( xml.readElementText() );
+            }
+        }
+        xml.readNext();
+    }
 
     return parameter;
 }
@@ -154,9 +164,20 @@ NumericParameter *ConfigReader::parseNumericParameter( QXmlStreamReader& xml )
     QString init = xml.attributes().value("init").toString();
     QString max  = xml.attributes().value("max").toString();
 
-    xml.readNext();
-
     NumericParameter* parameter = new NumericParameter(name, init.toInt(), min.toInt(), max.toInt() );
+
+    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "parameter"))
+    {
+        if(xml.tokenType() == QXmlStreamReader::StartElement)
+        {
+            if(xml.name() == "description")
+            {
+                parameter->setDesciption( xml.readElementText() );
+            }
+        }
+        xml.readNext();
+    }
+
     return parameter;
 
 }
@@ -182,6 +203,10 @@ SelectParameter* ConfigReader::parseSelectParameter( QXmlStreamReader& xml )
             if(xml.name() == "option")
             {
                parameter->addOption( xml.readElementText() );
+            }
+            if(xml.name() == "description")
+            {
+                parameter->setDesciption( xml.readElementText() );
             }
         }
         xml.readNext();

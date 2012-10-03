@@ -21,8 +21,18 @@ void ProcessStepWidget::setName(QString name)
     ui->nameLBL->setText( name );
 }
 
+void ProcessStepWidget::setColor(QColor color)
+{
+    QPalette palette = ui->nameLBL->palette();
+    palette.setColor( QPalette::Window, color );
+    ui->nameLBL->setPalette( palette );
+}
+
 void ProcessStepWidget::setParameters(ProcessStep *processStep)
 {
+    QColor color = Qt::red;
+
+    this->setColor( color );
     for( int i = 0; i < processStep->numberOfParameters(); i++)
     {
         createParameter( processStep->parameter(i) );
@@ -33,5 +43,5 @@ void ProcessStepWidget::createParameter(AbstractParameter *parameter)
 {
     ParameterWidget* parWidget = new ParameterWidget( this );
     parWidget->setParameter( parameter );
-    ui->verticalLayout->addWidget( parWidget );
+    ui->parameterLayout->addWidget( parWidget );
 }
