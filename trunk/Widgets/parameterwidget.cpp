@@ -44,7 +44,17 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 {
-    ui->nameLBL->setText( "Numberic " + ((NumericParameter*) parameter)->name() );
+    ui->nameLBL->setText( "Numeric " + ((NumericParameter*) parameter)->name() );
+
+    //Create a spinbox
+
+    QSpinBox* spinBox = new QSpinBox(this);
+    spinBox->setMaximum( ((NumericParameter*)parameter)->maximum() );
+    spinBox->setMinimum( ((NumericParameter*)parameter)->minimum() );
+    spinBox->setValue( ((NumericParameter*)parameter)->init());
+    ui->horizontalLayout->addWidget(spinBox);
+
+    addSpacer();
 }
 void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
 {

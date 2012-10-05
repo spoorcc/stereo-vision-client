@@ -13,6 +13,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QSpacerItem>
+#include <QSpinBox>
 
 //Local includes
 #include "DataTypes/allparametertypes.h"
