@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding= "UTF-8"?>
 <stereo-vision>
-    <processstep name="Cameras" group="Camera configuration">
+    <processstep name="Cameras" group="Camera configuration" color="green">
 
         <parameter name="Camera Selection" type="selectable">
             <description>The camera pair can be selected here</description>
@@ -35,23 +35,27 @@
 
     </processstep>
 
-    <processstep name="Equalisation" group="Camera calibration">
+    <processstep name="Equalisation" group="Camera calibration" color="yellow">
         <parameter name="Enable" type="boolean" init="disabled"></parameter>
     </processstep>
 
-    <processstep name="Rectification" group="Camera calibration">
+    <processstep name="Rectification" group="Camera calibration" color="red">
         <parameter name="Enable" type="boolean" init="enabled">
             <description>Enable the rectification step</description>
         </parameter>
+
         <parameter name="Quickmode" type="boolean" init="enabled">
             <description>Enable the rectification step</description>
         </parameter>
+
         <parameter name="Test1" type="boolean" init="enabled">
             <description>Enable the rectification step</description>
         </parameter>
+
         <parameter name="Test2" type="boolean" init="enabled">
             <description>Enable the rectification step</description>
         </parameter>
+
         <parameter name="Test3" type="boolean" init="enabled">
             <description>Enable the rectification step</description>
         </parameter>

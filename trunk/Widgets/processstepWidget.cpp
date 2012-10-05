@@ -28,7 +28,7 @@ void ProcessStepWidget::setColor(QColor color)
 
 void ProcessStepWidget::setParameters(ProcessStep *processStep)
 {
-    QColor color = Qt::green;
+    QColor color = QColor( processStep->color() );
 
     this->setColor( color );
     for( int i = 0; i < processStep->numberOfParameters(); i++)

@@ -18,11 +18,12 @@ class ProcessStep : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProcessStep(QString name, int number, QString group, QObject *parent = 0);
+    explicit ProcessStep(QString name, int number, QString group, QString color = "white", QObject *parent = 0);
     
     //Get methods
     QString name();
     QString group();
+    QString color();
 
     AbstractParameter* parameter( QString name );
     AbstractParameter* parameter( int i );
@@ -45,6 +46,7 @@ private:
     QString _name;
     int _stepNumber;
     QString _group;
+    QString _color;
 
     QList< AbstractParameter* > _parameters;
 

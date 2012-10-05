@@ -6,8 +6,13 @@ Engine::Engine(QObject *parent) :
     qRegisterMetaType< ProcessStep*  >( "ProcessStepPointer" );
 
     _configReader = new ConfigReader(this);
+
     this->connect( _configReader, SIGNAL(parsedNewProcessStep(ProcessStep*)), SLOT(addParsedProcessStep(ProcessStep*)));
     this->connect( _configReader, SIGNAL(parsingFailed(QString)), SLOT(parsingFailed(QString)));
+
+    _commandLineParser = new CommandLineParser(this);
+
+
 }
 
 void Engine::init()
