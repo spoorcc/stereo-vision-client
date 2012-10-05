@@ -13,6 +13,11 @@
 #include "Engine/engine.h"
 #include "Engine/dataTransciever.h"
 
+#ifndef _WIN32
+    #ifndef __linux__
+        #error You are using a mac, it is not iStereoVision, go sue somebody!
+    #endif
+#endif
 
 int main(int argc, char *argv[])
 {

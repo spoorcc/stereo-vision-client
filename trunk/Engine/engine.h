@@ -22,8 +22,8 @@
 
 #ifdef _WIN32
     #define CONFIG_FILE "D:\\QTgui\\trunk\\Config\\ProcessSteps.xml"
-#else
-    #define CONFIG_FILE "home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml"
+#elif __linux
+    #define CONFIG_FILE "/home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml"
 #endif
 
 class Engine : public QObject
