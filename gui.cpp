@@ -7,16 +7,17 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-    _commandLineWidget = new CommandLineWidget(this);
-    this->connect(_commandLineWidget,SIGNAL(executeCommand(QString, QString)),SLOT(printToConsole(QString,QString)));
-    ui->consoleCommandLO->addWidget(_commandLineWidget);
 
+    //Add the commandlind widget to the GUI
+    _commandLineWidget = new CommandLineWidget(this);
+    this->connect( _commandLineWidget, SIGNAL( executeCommand( QString, QString) ), SLOT( printToConsole( QString, QString) ) );
+    ui->consoleCommandLO->addWidget( _commandLineWidget );
+
+    //Add the previewwindow to the GUI
     _previewWindow = new PreviewWindow( this );
     ui->previewWindowLO->addWidget( _previewWindow );
 
     this->setWindowTitle( "Stereo vision client" );
-    this->setWindowState( Qt::WindowMaximized );
-
 }
 
 GUI::~GUI()

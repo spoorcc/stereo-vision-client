@@ -19,6 +19,7 @@
 #include "DataTypes/processstep.h"
 
 #include "configreader.h"
+#include "commandlineparser.h"
 
 #ifdef _WIN32
     #define CONFIG_FILE "D:\\QTgui\\trunk\\Config\\ProcessSteps.xml"
@@ -52,7 +53,8 @@ private:
 
     QList< ProcessStep* > _processSteps;
     ConfigReader* _configReader;
-    
+    CommandLineParser* _commandLineParser;
+
 };
 
 Q_DECLARE_METATYPE( ProcessStep* )
