@@ -16,7 +16,7 @@ public:
     ~CommandLineWidget();
 
 signals:
-    void executeCommand(QString sender, QString command);
+    void executeCommand( QString command);
     
 private slots:
     void on_commandPB_clicked();

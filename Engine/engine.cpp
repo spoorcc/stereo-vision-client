@@ -11,7 +11,7 @@ Engine::Engine(QObject *parent) :
     this->connect( _configReader, SIGNAL(parsingFailed(QString)), SLOT(parsingFailed(QString)));
 
     _commandLineParser = new CommandLineParser(this);
-
+    this->connect( _commandLineParser, SIGNAL(commandParseError(QString)),SLOT(commandParseError(QString)));
 
 }
 
@@ -35,6 +35,11 @@ void Engine::giveProcessSteps()
     }
 }
 
+void Engine::parseCommand(QString command)
+{
+    _commandLineParser->parseCommand( command );
+}
+
 void Engine::addParsedProcessStep(ProcessStep *processStep)
 {
     _processSteps.append( processStep );
@@ -43,4 +48,8 @@ void Engine::addParsedProcessStep(ProcessStep *processStep)
 void Engine::parsingFailed( QString message)
 {
     emit printToConsole("Engine", "Parsing failed :" + message);
+}
+void Engine::commandParseError( QString message )
+{
+    emit printToConsole("Engine", message );
 }

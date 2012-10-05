@@ -43,10 +43,13 @@ signals:
 
 public slots:
     void giveProcessSteps();
+    void parseCommand( QString command );
 
 private slots:
     void addParsedProcessStep( ProcessStep* processStep );
     void parsingFailed(QString message);
+
+    void commandParseError(QString message);
 
 private:
     void initProcessSteps();

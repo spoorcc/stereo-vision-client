@@ -10,7 +10,7 @@ GUI::GUI(QWidget *parent) :
 
     //Add the commandlind widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
-    this->connect( _commandLineWidget, SIGNAL( executeCommand( QString, QString) ), SLOT( printToConsole( QString, QString) ) );
+    this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
     ui->consoleCommandLO->addWidget( _commandLineWidget );
 
     //Add the previewwindow to the GUI
@@ -74,4 +74,32 @@ void GUI::on_actionConnect_triggered()
     this->connect( dialog, SIGNAL( rejected() ), this,  SLOT(connectDialogRefused()) );
 
     dialog->show();
+}
+void GUI::commandEnteredInCommandLine(QString command)
+{
+    if( isGuiCommand(command) )
+    {
+        return;
+    }
+    else
+    {
+        emit parseCommand( command );
+    }
+}
+bool GUI::isGuiCommand(QString command)
+{
+    if( QString::compare(command, "clc") == 0)
+    {
+        ui->console->clear();
+        printToConsole("GUI", "Cleared console");
+        return true;
+    }
+    if( QString::compare(command, "poep") == 0)
+    {
+        printToConsole("Easter Egg", "Poep aan jou!");
+        return true;
+    }
+
+    return false;
+
 }

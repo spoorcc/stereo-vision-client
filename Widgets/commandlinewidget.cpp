@@ -27,7 +27,7 @@ void CommandLineWidget::sendCommand()
 {
     if (ui->commandLE->text().count() > 0)
     {
-        emit executeCommand("CMD", ui->commandLE->text());
+        emit executeCommand( ui->commandLE->text() );
         ui->commandLE->clear();
     }
 }
