@@ -7,6 +7,7 @@ ProcessStepWidget::ProcessStepWidget(ProcessStep *processStep, QWidget *parent) 
 {
     ui->setupUi(this);
 
+    ui->parameterLayout->setAlignment(Qt::AlignTop);
     ui->nameLBL->setAlignment(Qt::AlignCenter);
     ui->nameLBL->setMinimumWidth(120);
     _styleSheet = "font: 15pt";
