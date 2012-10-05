@@ -14,7 +14,7 @@ void ConfigReader::parseXmlFile( QString path )
     //Try to open it
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        emit parsingFailed();
+        emit parsingFailed( "Couldn't open file " + path);
         return;
     }
 
@@ -45,7 +45,7 @@ void ConfigReader::parseXmlFile( QString path )
     /* Error handling. */
     if(xml.hasError())
     {
-        emit parsingFailed();
+        emit parsingFailed( "There was error in the xml file");
     }
 
     /* Removes any device() or data from the reader
