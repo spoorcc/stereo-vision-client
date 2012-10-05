@@ -34,6 +34,12 @@ void GUI::addProcessStep(ProcessStep *processStep)
     ProcessStepWidget* processStepWidget = new ProcessStepWidget( processStep, this );
     ui->AllProcessesTBX->addItem( processStepWidget, processStep->name() );
 
+
+    if( ui->AllProcessesTBX->itemText(0) == "" )
+    {
+        ui->AllProcessesTBX->removeItem( 0 );
+    }
+
     print( "Added step:" + processStep->name() );
 }
 void GUI::print( QString message )
