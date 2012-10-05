@@ -24,7 +24,8 @@ SOURCES +=  main.cpp\
             DataTypes/selectparameter.cpp \
             Widgets/commandlinewidget.cpp \
     Engine/configreader.cpp \
-    Widgets/previewwindow.cpp
+    Widgets/previewwindow.cpp \
+    Engine/commandlineparser.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -40,7 +41,8 @@ HEADERS  += gui.h \
             Widgets/commandlinewidget.h \
     Engine/configreader.h \
     DataTypes/allparametertypes.h \
-    Widgets/previewwindow.h
+    Widgets/previewwindow.h \
+    Engine/commandlineparser.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
