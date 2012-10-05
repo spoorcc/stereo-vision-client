@@ -41,9 +41,13 @@ public slots:
 signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
+    void parseCommand( QString message );
     
 private slots:
     void on_actionConnect_triggered();
+    void commandEnteredInCommandLine(QString command);
+
+    bool isGuiCommand(QString command);
 
 private:
     Ui::GUI *ui;

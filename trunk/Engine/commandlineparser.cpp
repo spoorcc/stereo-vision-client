@@ -17,7 +17,7 @@ void CommandLineParser::parseCommand(QString command)
 
     if( commandParts.count() != 3)
     {
-        emit commandParseError( "Error parsing command:  \n Command should be structured like following: <processStep> <parameter> <value>" );
+        emit commandParseError( "\n\n Error parsing command:  \n Command should be structured like following: <processStep> <parameter> <value>" );
         return;
     }
 

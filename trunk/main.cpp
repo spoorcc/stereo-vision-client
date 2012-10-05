@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     dataTransciever.connect( &gui, SIGNAL(connectToServer(QHostAddress,quint16)), SLOT(connectToServer(QHostAddress,quint16)));
 
     engine.connect( &gui, SIGNAL( needAllProcessSteps() ), SLOT( giveProcessSteps() ) );
+    engine.connect( &gui, SIGNAL( parseCommand(QString)), SLOT( parseCommand(QString) ));
 
     gui.connect( &engine, SIGNAL( ready() ), SLOT( start() ));
     gui.connect( &engine, SIGNAL( addProcessStep(ProcessStep*) ), SLOT( addProcessStep(ProcessStep*) ) );
