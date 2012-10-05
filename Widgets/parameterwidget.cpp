@@ -33,7 +33,7 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
     // Set the name of the parameter
-    ui->nameLBL->setText( "Boolean " + ((BooleanParameter*) parameter)->name() );
+    ui->nameLBL->setText( ((BooleanParameter*) parameter)->name() );
 
     //Create a checkbox and add one
     QCheckBox* checkBox = new QCheckBox (this);
@@ -44,7 +44,7 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 {
-    ui->nameLBL->setText( "Numeric " + ((NumericParameter*) parameter)->name() );
+    ui->nameLBL->setText( ((NumericParameter*) parameter)->name() );
 
     //Create a spinbox
 
@@ -58,7 +58,7 @@ void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 }
 void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
 {
-    ui->nameLBL->setText( "Select " + ( (SelectParameter*) parameter)->name() );
+    ui->nameLBL->setText( ( (SelectParameter*) parameter)->name() );
 
     //Create a combobox
     QComboBox* comboBox = new QComboBox(this);
