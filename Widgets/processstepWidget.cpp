@@ -23,14 +23,12 @@ void ProcessStepWidget::setName(QString name)
 
 void ProcessStepWidget::setColor(QColor color)
 {
-    QPalette palette = ui->nameLBL->palette();
-    palette.setColor( QPalette::Window, color );
-    ui->nameLBL->setPalette( palette );
+    ui->nameLBL->setStyleSheet("QLabel { background-color: "+color.name()+"; }");
 }
 
 void ProcessStepWidget::setParameters(ProcessStep *processStep)
 {
-    QColor color = Qt::red;
+    QColor color = Qt::green;
 
     this->setColor( color );
     for( int i = 0; i < processStep->numberOfParameters(); i++)
