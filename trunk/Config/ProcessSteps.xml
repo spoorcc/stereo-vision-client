@@ -35,7 +35,7 @@
 
     </processstep>
 
-    <processstep name="Equalisation" group="Camera calibration" color="yellow">
+    <processstep name="Equalisation" group="Camera calibration" color="blue">
         <parameter name="Enable" type="boolean" init="disabled"></parameter>
     </processstep>
 

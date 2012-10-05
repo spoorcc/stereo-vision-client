@@ -32,6 +32,9 @@ public:
     
 private:
     Ui::ProcessStepWidget *ui;
+    QString _styleSheet;
+
+
 
     void setParameters( ProcessStep* processStep );
     void createParameter( AbstractParameter* parameter );
