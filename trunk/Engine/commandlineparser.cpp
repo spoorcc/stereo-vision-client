@@ -26,5 +26,5 @@ void CommandLineParser::parseCommand(QString command)
 }
 bool CommandLineParser::isGuiCommand( QString command )
 {
-
+    return false;
 }

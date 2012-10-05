@@ -20,6 +20,12 @@
 
 #include "configreader.h"
 
+#ifdef _WIN32
+    #define CONFIG_FILE "D:\\QTgui\\trunk\\Config\\ProcessSteps.xml"
+#else
+    #define CONFIG_FILE "home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml"
+#endif
+
 class Engine : public QObject
 {
     Q_OBJECT
@@ -39,7 +45,7 @@ public slots:
 
 private slots:
     void addParsedProcessStep( ProcessStep* processStep );
-    void parsingFailed();
+    void parsingFailed(QString message);
 
 private:
     void initProcessSteps();

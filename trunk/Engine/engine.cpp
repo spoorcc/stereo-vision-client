@@ -7,7 +7,7 @@ Engine::Engine(QObject *parent) :
 
     _configReader = new ConfigReader(this);
     this->connect( _configReader, SIGNAL(parsedNewProcessStep(ProcessStep*)), SLOT(addParsedProcessStep(ProcessStep*)));
-    this->connect( _configReader, SIGNAL(parsingFailed()), SLOT(parsingFailed()));
+    this->connect( _configReader, SIGNAL(parsingFailed(QString)), SLOT(parsingFailed(QString)));
 }
 
 void Engine::init()
@@ -19,7 +19,7 @@ void Engine::init()
 
 void Engine::initProcessSteps()
 {    
-    _configReader->parseXmlFile( "/home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml" );
+    _configReader->parseXmlFile( CONFIG_FILE );
 }
 
 void Engine::giveProcessSteps()
@@ -35,7 +35,7 @@ void Engine::addParsedProcessStep(ProcessStep *processStep)
     _processSteps.append( processStep );
     emit printToConsole("Engine", "Initialised process step " + processStep->name() );
 }
-void Engine::parsingFailed()
+void Engine::parsingFailed( QString message)
 {
-    emit printToConsole("Engine", "Parsing failed");
+    emit printToConsole("Engine", "Parsing failed :" + message);
 }
