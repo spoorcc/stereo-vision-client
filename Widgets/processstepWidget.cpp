@@ -7,6 +7,9 @@ ProcessStepWidget::ProcessStepWidget(ProcessStep *processStep, QWidget *parent) 
 {
     ui->setupUi(this);
 
+    ui->nameLBL->setAlignment(Qt::AlignCenter);
+    ui->nameLBL->setMinimumWidth(120);
+    _styleSheet = "font: 15pt";
     setName( processStep->name() );
     setParameters( processStep );
 
@@ -23,7 +26,7 @@ void ProcessStepWidget::setName(QString name)
 
 void ProcessStepWidget::setColor(QColor color)
 {
-    ui->nameLBL->setStyleSheet("QLabel { background-color: "+color.name()+"; }");
+    ui->nameLBL->setStyleSheet("QLabel { background-color: "+color.name()+"; "+_styleSheet +"}");
 }
 
 void ProcessStepWidget::setParameters(ProcessStep *processStep)
