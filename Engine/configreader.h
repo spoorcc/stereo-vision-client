@@ -28,7 +28,7 @@ signals:
     void startedParsing();
     void invalidFilePath();
 
-    void parsingFailed( QString message );
+    void configParsingFailed( QString message );
     void parsingSuccesfull();
     void parsedNewProcessStep( ProcessStep* step );
 
