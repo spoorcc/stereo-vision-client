@@ -47,9 +47,9 @@ public slots:
 
 private slots:
     void addParsedProcessStep( ProcessStep* processStep );
-    void parsingFailed(QString message);
+    void configParsingFailed(QString message);
 
-    void commandParseError(QString message);
+    void commandParseStatus(QString message);
 
 private:
     void initProcessSteps();

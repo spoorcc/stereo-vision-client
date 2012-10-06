@@ -13,15 +13,12 @@ public:
 signals:
 
     void commandParseError( QString errorMessage );
-
-    void commandGUI( QString command );
+    void commandParseSucces( QString succes );
     void parameterForServer( QString processStep, QString parameter, QString value );
 
 public slots:
     void parseCommand( QString command );
 
-private slots:
-    bool isGuiCommand(QString command);
 };
 
 #endif // COMMANDLINEPARSER_H
