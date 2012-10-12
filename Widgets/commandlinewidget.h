@@ -27,6 +27,8 @@ private slots:
 
 private:
     Ui::CommandLineWidget *ui;
+
+    void focusInEvent(QFocusEvent *);
 };
 
 #endif // COMMANDLINEWIDGET_H
