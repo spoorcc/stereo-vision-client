@@ -100,6 +100,14 @@ bool GUI::isGuiCommand(QString command)
         return true;
     }
 
+    if( QString::compare( command, "Fullscreen",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "Maximize",Qt::CaseInsensitive ) == 0 ||
+        QString::compare( command, "FLSCR",Qt::CaseInsensitive ) == 0 )
+    {
+        this->setWindowState(Qt::WindowFullScreen);
+        printToConsole("GUI", "Window maximised");
+        return true;
+    }
     return false;
 
 }
