@@ -9,13 +9,12 @@ GUI::GUI(QWidget *parent) :
     ui->setupUi(this);
 
     //Add the windowicon
-    this->setWindowIcon(QIcon(":/Graphics/StereoVision.ico"));
+    this->setWindowIcon(QIcon(":/Graphics/StereoVision.png"));
 
     //Add the commandlind widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
     this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
     ui->consoleCommandLO->addWidget( _commandLineWidget );
-
     //Add the previewwindow to the GUI
     _previewWindow = new PreviewWindow( this );
     ui->previewWindowLO->addWidget( _previewWindow );
