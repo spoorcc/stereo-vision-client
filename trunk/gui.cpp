@@ -123,6 +123,22 @@ bool GUI::isGuiCommand(QString command)
         printToConsole("GUI", "Window maximized");
         return true;
     }
+
+    if( QString::compare( command, "Close",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "Terminate",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "I love apple",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "exit",Qt::CaseInsensitive ) == 0 )
+    {
+        this->close();
+        return true;
+    }
+
+    if( QString::compare( command, "Connect to server",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "Server Connect",Qt::CaseInsensitive ) == 0 )
+    {
+        this->on_actionConnect_triggered();
+        return true;
+    }
     return false;
 
 }
