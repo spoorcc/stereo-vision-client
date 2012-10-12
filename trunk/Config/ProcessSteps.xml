@@ -16,12 +16,10 @@
             <option>Camera 6 and 7</option>
             <option>Camera 6 and 8</option>
             <option>Camera 7 and 8</option>
-            <option> Alex </option>
+
         </parameter>
 
-        <parameter name="Tristan" type="boolean" init="enabled">
-            <description> This is a description </description>
-            </parameter>
+
 
         <parameter name="Shot mode" type="selectable">
             <option>Single shot mode</option>
@@ -33,6 +31,16 @@
         </parameter>
 
         <parameter name="vSize" type="numeric" min="240" init="480" max="1080" ></parameter>
+
+        <stream type="output" >
+            <substream> Output A </substream>
+            <substream> Output B </substream>
+        </stream>
+
+        <stream type="input" >
+            <substream> Input A </substream>
+            <substream> Input B </substream>
+        </stream>
 
     </processstep>
 

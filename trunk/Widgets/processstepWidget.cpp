@@ -11,8 +11,21 @@ ProcessStepWidget::ProcessStepWidget(ProcessStep *processStep, QWidget *parent) 
     ui->nameLBL->setAlignment(Qt::AlignCenter);
     ui->nameLBL->setMinimumWidth(120);
     _styleSheet = "font: 15pt;border-style: outset; border-width: 2px; border-radius: 10px; border-color: black;";
+
+    _inputStreamWidget = new StreamSelectWidget(this);
+    _outputStreamWidget = new StreamSelectWidget (this);
+
+    _inputStreamWidget->setAsInput();
+    _outputStreamWidget->setAsOutput();
+
+    _inputStreamWidget->setStreams( processStep->inputStreams() );
+    _outputStreamWidget->setStreams( processStep->outputStreams() );
+
+    ui->parameterLayout->addWidget( _inputStreamWidget );
     setName( processStep->name() );
     setParameters( processStep );
+    ui->parameterLayout->addWidget( _outputStreamWidget);
+
 
 }
 
