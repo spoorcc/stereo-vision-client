@@ -129,7 +129,7 @@ BooleanParameter* ConfigReader::parseBooleanParameter( QXmlStreamReader& xml)
 
     if( QString::compare( init, "enabled") == 0 ||
         QString::compare( init, "enable" ) == 0 ||
-        QString::compare( init, "true"))
+        QString::compare( init, "true")== 0)
     {
         value = true;
     }
