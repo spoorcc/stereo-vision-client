@@ -22,7 +22,8 @@
 #include "commandlineparser.h"
 
 #ifdef _WIN32
-    #define CONFIG_FILE "D:\\QTgui\\trunk\\Config\\ProcessSteps.xml"
+    //#define CONFIG_FILE "D:\\QTgui\\trunk\\Config\\ProcessSteps.xml"
+    #define CONFIG_FILE "D:\\Documents\\School\\Avans\\4.1_MESD\\StereoVisionQT\\Config\\ProcessSteps.xml"
 #elif __linux
     #define CONFIG_FILE "/home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml"
 #endif

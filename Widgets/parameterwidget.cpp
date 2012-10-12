@@ -34,11 +34,10 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
     // Set the name of the parameter
     ui->nameLBL->setText( ((BooleanParameter*) parameter)->name() );
-
     //Create a checkbox and add one
     QCheckBox* checkBox = new QCheckBox (this);
+    checkBox->setChecked( ((BooleanParameter*) parameter)->isEnabled() );
     ui->horizontalLayout->addWidget(checkBox);
-
     addSpacer();
 }
 
