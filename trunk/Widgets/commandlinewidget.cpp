@@ -6,6 +6,8 @@ CommandLineWidget::CommandLineWidget(QWidget *parent) :
     ui(new Ui::CommandLineWidget)
 {
     ui->setupUi(this);
+    ui->commandLE->setFocus();
+
 }
 
 CommandLineWidget::~CommandLineWidget()

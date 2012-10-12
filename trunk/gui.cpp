@@ -7,7 +7,8 @@ GUI::GUI(QWidget *parent) :
     ui(new Ui::GUI)
 {
     ui->setupUi(this);
-
+    //Add the windowicon
+    this->setWindowIcon(QIcon(":/Graphics/StereoVision.ico"));
     //Add the commandlind widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
     this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
