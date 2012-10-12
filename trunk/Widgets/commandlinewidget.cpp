@@ -6,7 +6,7 @@ CommandLineWidget::CommandLineWidget(QWidget *parent) :
     ui(new Ui::CommandLineWidget)
 {
     ui->setupUi(this);
-    ui->commandLE->setFocus();
+    this->setFocusPolicy( Qt::StrongFocus );
 
 }
 
@@ -33,4 +33,8 @@ void CommandLineWidget::sendCommand()
         ui->commandLE->clear();
     }
 }
-
+void CommandLineWidget::focusInEvent(QFocusEvent *)
+{
+    //If the commandline widget gets focus itgives focus to the line edit
+    ui->commandLE->setFocus();
+}

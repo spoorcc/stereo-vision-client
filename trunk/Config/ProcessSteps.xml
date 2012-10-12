@@ -16,6 +16,7 @@
             <option>Camera 6 and 7</option>
             <option>Camera 6 and 8</option>
             <option>Camera 7 and 8</option>
+            <option> Alex </option>
         </parameter>
 
         <parameter name="Tristan" type="boolean" init="enabled">
