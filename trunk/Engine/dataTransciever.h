@@ -8,6 +8,8 @@
 
 */
 
+#define DATAGRAMSIZE 512
+
 // Global includes
 #include <QObject>
 #include <QImage>
@@ -33,13 +35,16 @@ public slots:
 
     //Send methods
     void sendImage( QImage image );
-    void sendCommand( int command );
+    void sendCommand( QString processtep, QString parameter, QString value );
 
 private:
     QUdpSocket* _udpSocket;
 
 
     void processDatagram( QByteArray datagram );
+    void writeData( QByteArray datagram );
+
+    QByteArray createDatagram( QString processStep, QString parameter, QString value);
 
     void print( QString message );
 };

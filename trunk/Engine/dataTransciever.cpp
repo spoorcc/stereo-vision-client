@@ -36,11 +36,22 @@ void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 //Data commands
 void DataTransciever::sendImage( QImage image )
 {
+    QByteArray announceImage = QByteArray("<image>");
+    writeData( announceImage );
 
+    for( int i = 0; i < image.height(); i++ )
+    {
+        // !!!!-- Probably highly dangerous code --!!!! ////
+        QByteArray scanLine = QByteArray( (char*) image.scanLine(i) );
+        writeData( scanLine );
+    }
+
+    QByteArray closeImage = QByteArray("</image>");
+    writeData( closeImage );
 }
-void DataTransciever::sendCommand( int command )
+void DataTransciever::sendCommand( QString processtep, QString parameter, QString value )
 {
-
+    writeData( createDatagram( processtep, parameter, value) );
 }
 void DataTransciever::readPendingDatagrams()
 {
@@ -59,9 +70,25 @@ void DataTransciever::readPendingDatagrams()
 
 void DataTransciever::processDatagram(QByteArray datagram)
 {
+    //FIXME: Just for debugging
     //Get data from the datagram
+    print( QString::number( datagram.toInt() ));
 
 
+}
+
+void DataTransciever::writeData(QByteArray datagram)
+{
+    _udpSocket->write( datagram );
+}
+
+
+QByteArray DataTransciever::createDatagram(QString processStep, QString parameter, QString value)
+{
+    QString message = QString( processStep + " " + parameter + " " + value );
+    QByteArray datagram = QByteArray( message.toAscii() );
+
+    return datagram;
 }
 
 void DataTransciever::print(QString message)
