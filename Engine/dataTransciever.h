@@ -40,7 +40,6 @@ public slots:
 private:
     QUdpSocket* _udpSocket;
 
-
     void processDatagram( QByteArray datagram );
     void writeData( QByteArray datagram );
 

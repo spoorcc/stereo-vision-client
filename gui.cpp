@@ -147,6 +147,7 @@ bool GUI::isGuiCommand(QString command)
     }
 
     if( QString::compare( command, "Connect to server",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "c2s",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Server Connect",Qt::CaseInsensitive ) == 0 )
     {
         this->on_actionConnect_triggered();
