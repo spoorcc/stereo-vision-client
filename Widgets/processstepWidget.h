@@ -14,6 +14,7 @@
 // Local includes
 #include "DataTypes/processstep.h"
 #include "Widgets/parameterwidget.h"
+#include "Widgets/streamselectwidget.h"
 
 namespace Ui {
     class ProcessStepWidget;
@@ -33,8 +34,8 @@ public:
 private:
     Ui::ProcessStepWidget *ui;
     QString _styleSheet;
-
-
+    StreamSelectWidget* _inputStreamWidget;
+    StreamSelectWidget* _outputStreamWidget;
 
     void setParameters( ProcessStep* processStep );
     void createParameter( AbstractParameter* parameter );

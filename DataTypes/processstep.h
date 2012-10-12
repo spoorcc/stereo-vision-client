@@ -10,6 +10,7 @@
 
 // Global includes
 #include <QObject>
+#include <QStringList>
 
 //Local includes
 #include "DataTypes/allparametertypes.h"
@@ -25,6 +26,9 @@ public:
     QString group();
     QString color();
 
+    QStringList inputStreams();
+    QStringList outputStreams();
+
     AbstractParameter* parameter( QString name );
     AbstractParameter* parameter( int i );
     int numberOfParameters() const;
@@ -39,6 +43,8 @@ public slots:
     void addParameter( NumericParameter* parameter );
     void addParameter( SelectParameter* parameter );
 
+    void addStream( QString streamname, bool isInput);
+
     void changeParameter( AbstractParameter* parameter );
     void parameterChanged();
 
@@ -47,6 +53,9 @@ private:
     int _stepNumber;
     QString _group;
     QString _color;
+
+    QStringList _inputStreams;
+    QStringList _outputStreams;
 
     QList< AbstractParameter* > _parameters;
 

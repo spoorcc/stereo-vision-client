@@ -23,6 +23,18 @@ QString ProcessStep::color()
     return _color;
 }
 
+QStringList ProcessStep::inputStreams()
+{
+    return _inputStreams;
+}
+
+
+QStringList ProcessStep::outputStreams()
+{
+    return _outputStreams;
+}
+
+
 AbstractParameter* ProcessStep::parameter(QString name)
 {
     foreach( AbstractParameter* parameter, _parameters )
@@ -64,6 +76,19 @@ void ProcessStep::addParameter(SelectParameter *parameter)
     addParameter( (AbstractParameter*) parameter );
 }
 
+void ProcessStep::addStream(QString streamname, bool isInput)
+{
+    if (isInput)
+    {
+        _inputStreams.append(streamname);
+
+    }
+    else
+    {
+        _outputStreams.append(streamname);
+    }
+}
+
 void ProcessStep::addParameter(AbstractParameter *parameter)
 {
         _parameters.append( parameter );
@@ -87,7 +112,6 @@ void ProcessStep::parameterChanged()
 {
     emit changedParameter();
 }
-
 
 
 

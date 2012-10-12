@@ -99,6 +99,44 @@ void ConfigReader::parseProcessStep( QXmlStreamReader& xml)
                     step->addParameter( this->parseSelectParameter( xml ) );
                 }
             }
+            if (xml.name()== "stream")
+            {
+                QXmlStreamAttributes streamAttributes = xml.attributes();
+
+                if( checkAttribute(streamAttributes, QString("type"), QString("input")))
+                {
+                    xml.readNext();
+
+                    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "stream"))
+                    {
+                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        {
+                            if(xml.name() == "substream")
+                            {
+                               step->addStream(xml.readElementText(), true);
+                            }
+                        }
+                        xml.readNext();
+                    }
+                }
+
+                if( checkAttribute(streamAttributes, QString("type"), QString("output")))
+                {
+                    xml.readNext();
+
+                    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "stream"))
+                    {
+                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        {
+                            if(xml.name() == "substream")
+                            {
+                               step->addStream(xml.readElementText(), false);
+                            }
+                        }
+                        xml.readNext();
+                    }
+                }
+            }
         }
         if(xml.tokenType() == QXmlStreamReader::Invalid )
         {
