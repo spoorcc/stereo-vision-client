@@ -101,11 +101,26 @@ bool GUI::isGuiCommand(QString command)
     }
 
     if( QString::compare( command, "Fullscreen",Qt::CaseInsensitive) == 0 ||
-        QString::compare( command, "Maximize",Qt::CaseInsensitive ) == 0 ||
-        QString::compare( command, "FLSCR",Qt::CaseInsensitive ) == 0 )
+        QString::compare( command, "FLSCRN",Qt::CaseInsensitive ) == 0 )
     {
         this->setWindowState(Qt::WindowFullScreen);
-        printToConsole("GUI", "Window maximised");
+        printToConsole("GUI", "Window fullscreen");
+        return true;
+    }
+
+    if( QString::compare( command, "Minimize",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "MNMZ",Qt::CaseInsensitive ) == 0 )
+    {
+        this->setWindowState(Qt::WindowMinimized);
+        printToConsole("GUI", "Window minimized");
+        return true;
+    }
+
+    if( QString::compare( command, "Maximize",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
+    {
+        this->setWindowState(Qt::WindowMaximized);
+        printToConsole("GUI", "Window maximized");
         return true;
     }
     return false;
