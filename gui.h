@@ -31,6 +31,7 @@ public:
     explicit GUI(QWidget *parent = 0);
     ~GUI();
 
+
 public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );
@@ -55,6 +56,7 @@ private:
     CommandLineWidget* _commandLineWidget;
     PreviewWindow* _previewWindow;
     void print(QString message);
+    void printLastCommand(QString command, bool succesfull = true);
 };
 
 #endif // GUI_H

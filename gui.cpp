@@ -57,6 +57,21 @@ void GUI::printToConsole( QString sender,  QString message )
     ui->console->append( time + " ["+ sender+ "] " +  message );
 }
 
+void GUI::printLastCommand( QString command, bool succesfull)
+{
+    if(succesfull)
+    {
+        command.prepend("<font color=\"green\">>>");
+    }
+    else
+    {
+        command.prepend("<font color=\"red\">>>");
+    }
+    command.append("</font>");
+    ui->console->append(command);
+
+}
+
 void GUI::connectDialogAccepted(QHostAddress address, quint16 port)
 {
     print("Giving command to connect to transciever at " + address.toString() + " on port " + QString::number( port ) );
@@ -91,21 +106,21 @@ void GUI::commandEnteredInCommandLine(QString command)
 }
 bool GUI::isGuiCommand(QString command)
 {
-    if( QString::compare(command, "clc") == 0)
+    if( QString::compare(command, "clc") == 0 ||
+        QString::compare(command, "clear") == 0 ||
+        QString::compare(command, "console clear") == 0)
     {
         ui->console->clear();
+        printLastCommand(command);
         printToConsole("GUI", "Cleared console");
         return true;
     }
-    if( QString::compare(command, "poep") == 0)
-    {
-        printToConsole("Easter Egg", "Poep aan jou!");
-        return true;
-    }
+
 
     if( QString::compare( command, "Fullscreen",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "FLSCRN",Qt::CaseInsensitive ) == 0 )
     {
+        printLastCommand(command);
         this->setWindowState(Qt::WindowFullScreen);
         printToConsole("GUI", "Window fullscreen");
         return true;
@@ -114,6 +129,7 @@ bool GUI::isGuiCommand(QString command)
     if( QString::compare( command, "Minimize",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "MNMZ",Qt::CaseInsensitive ) == 0 )
     {
+        printLastCommand(command);
         this->setWindowState(Qt::WindowMinimized);
         printToConsole("GUI", "Window minimized");
         return true;
@@ -122,14 +138,17 @@ bool GUI::isGuiCommand(QString command)
     if( QString::compare( command, "Maximize",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
     {
+        printLastCommand(command);
         this->setWindowState(Qt::WindowMaximized);
         printToConsole("GUI", "Window maximized");
         return true;
     }
 
     if( QString::compare( command, "Maximize",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "Maximise",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
     {
+        printLastCommand(command);
         this->setWindowState(Qt::WindowMaximized);
         printToConsole("GUI", "Window maximized");
         return true;
@@ -139,6 +158,7 @@ bool GUI::isGuiCommand(QString command)
     if( QString::compare( command, "Close",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Terminate",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "I love apple",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "apple",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "exit",Qt::CaseInsensitive ) == 0 )
     {
         this->close();
@@ -149,21 +169,53 @@ bool GUI::isGuiCommand(QString command)
         QString::compare( command, "c2s",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Server Connect",Qt::CaseInsensitive ) == 0 )
     {
+        printLastCommand(command);
         this->on_actionConnect_triggered();
         return true;
     }
     if( QString::compare( command, "ORLY?",Qt::CaseInsensitive) == 0)
     {
+        printLastCommand(command);
         printToConsole("Easter Egg", "YARLY!");
         return true;
     }
     if( QString::compare( command, "HERP?",Qt::CaseInsensitive) == 0)
     {
+        printLastCommand(command);
         printToConsole("Easter Egg", "DERP!");
         return true;
     }
+    if( QString::compare(command, "poep") == 0)
+    {
+        printLastCommand(command);
+        printToConsole("Easter Egg", "Poep aan jou!");
+        return true;
+    }
 
+    // Select Tab
 
+    QStringList commandParts = command.split(" ");
+
+    if( QString::compare( commandParts.at(0),"TAB") == 0)
+    {
+        for(int i = 0; i < ui->AllProcessesTBX->count();i++)
+        {
+            if( QString::compare( commandParts.at(1),ui->AllProcessesTBX->itemText(i), Qt::CaseInsensitive) == 0)
+            {
+                ui->AllProcessesTBX->setCurrentIndex(i);
+                printLastCommand(command);
+                printToConsole("Interface", "" + ui->AllProcessesTBX->itemText(i) + " tab selected");
+                return true;
+            }
+            else if(i == ui->AllProcessesTBX->count() - 1 )
+            {
+                printLastCommand(command,false);
+                printToConsole("Interface", "Invalid tab");
+            }
+        }
+
+        return true;
+    }
     return false;
 
 }
