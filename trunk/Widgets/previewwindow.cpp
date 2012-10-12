@@ -7,15 +7,35 @@ PreviewWindow::PreviewWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    _scene = new QGraphicsScene( this );
+    createScene();
 
     ui->previewWindowGV->setScene( _scene );
-    _scene->addSimpleText( QString("No images loaded") );
+
 }
 
 PreviewWindow::~PreviewWindow()
 {
     delete ui;
+}
+
+void PreviewWindow::createScene()
+{
+    _scene = new QGraphicsScene( this );
+
+
+    int sceneHeight = _scene->height();
+    int sceneWidth = _scene->width();
+
+    int width = sceneWidth/4;
+    int height = sceneHeight/2;
+
+    for( int i = 0; i < 8; i++ )
+    {
+        _scene->addRect( ( i%4 ) * width, (i/4)* height, width, height  );
+        QGraphicsSimpleTextItem* frameLabel = _scene->addSimpleText( QString("Frame " + QString::number(i) ) );
+        frameLabel->setPos(  ( i%4 ) * width, (i/4)* height  );
+    }
+
 }
 
 void PreviewWindow::addImage( QPixmap image )

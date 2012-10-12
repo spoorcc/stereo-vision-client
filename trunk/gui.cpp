@@ -192,7 +192,20 @@ bool GUI::isGuiCommand(QString command)
         return true;
     }
 
+    if( QString::compare( command, "credits",Qt::CaseInsensitive) == 0)
+    {
+        printLastCommand(command);
+        printToConsole("The Almighty", "Android Crew");
+        printToConsole("The Cranky", "Nick van Tilborg");
+        printToConsole("The Drunk", "Bjeurn de Ruiter");
+        printToConsole("The EXCELLent", "Maurice Nijkamp");
+        printToConsole("The Nerdy", "Ben Spoor");
+        printToConsole("The Hotty", "Tristan Frijters");
+        return true;
+    }
+
     // Select Tab
+
 
     QStringList commandParts = command.split(" ");
 

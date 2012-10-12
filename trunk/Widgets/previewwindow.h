@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsScene>
+#include <QGraphicsSimpleTextItem>
 
 namespace Ui {
 class PreviewWindow;
@@ -17,12 +18,15 @@ public:
     ~PreviewWindow();
     
     void displayTwoImages(QPixmap image, QPixmap image2);
+
 private:
     Ui::PreviewWindow *ui;
     QGraphicsScene* _scene;
+    int _numberOfWindows;
 
     void addImage(QPixmap image);
     void clearAll();
+    void createScene();
 };
 
 #endif // PREVIEWWINDOW_H
