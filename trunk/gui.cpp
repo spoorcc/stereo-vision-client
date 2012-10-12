@@ -128,6 +128,15 @@ bool GUI::isGuiCommand(QString command)
         return true;
     }
 
+    if( QString::compare( command, "Maximize",Qt::CaseInsensitive) == 0 ||
+        QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
+    {
+        this->setWindowState(Qt::WindowMaximized);
+        printToConsole("GUI", "Window maximized");
+        return true;
+    }
+
+
     if( QString::compare( command, "Close",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Terminate",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "I love apple",Qt::CaseInsensitive) == 0 ||
@@ -143,6 +152,18 @@ bool GUI::isGuiCommand(QString command)
         this->on_actionConnect_triggered();
         return true;
     }
+    if( QString::compare( command, "ORLY?",Qt::CaseInsensitive) == 0)
+    {
+        printToConsole("Easter Egg", "YARLY!");
+        return true;
+    }
+    if( QString::compare( command, "HERP?",Qt::CaseInsensitive) == 0)
+    {
+        printToConsole("Easter Egg", "DERP!");
+        return true;
+    }
+
+
     return false;
 
 }
