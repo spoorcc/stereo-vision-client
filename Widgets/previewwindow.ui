@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>605</width>
+    <height>443</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,9 +44,33 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="modeCB">
+       <item>
+        <property name="text">
+         <string>Single view</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dual view</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Quad view</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Octo view</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="configPB">
        <property name="text">
-        <string>Config</string>
+        <string>Preview mode</string>
        </property>
       </widget>
      </item>

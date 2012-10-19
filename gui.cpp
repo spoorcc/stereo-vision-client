@@ -38,10 +38,18 @@ void GUI::addProcessStep(ProcessStep *processStep)
     ProcessStepWidget* processStepWidget = new ProcessStepWidget( processStep, this );
     ui->AllProcessesTBX->addItem( processStepWidget, processStep->name() );
 
-
     if( ui->AllProcessesTBX->itemText(0) == "" )
     {
         ui->AllProcessesTBX->removeItem( 0 );
+    }
+
+    QStringList streamList = processStep->inputStreams();
+    streamList.append( processStep->outputStreams() );
+
+    foreach( QString stream, streamList)
+    {
+        stream.prepend( processStep->name() + " - ");
+        _previewWindow->addVideoStream( stream );
     }
 
     print( "Added step:" + processStep->name() );
