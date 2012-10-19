@@ -57,7 +57,7 @@
             <description>Enable the rectification step</description>
         </parameter>
 
-        <parameter name="Test1" type="boolean" init="disebled">
+        <parameter name="Test1" type="boolean" init="disabled">
             <description>Enable the rectification step</description>
         </parameter>
 

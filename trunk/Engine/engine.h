@@ -50,7 +50,7 @@ private slots:
     void addParsedProcessStep( ProcessStep* processStep );
     void configParsingFailed(QString message);
 
-    void commandParseStatus(QString message);
+    void commandParseStatus(QString message, bool succesfull);
 
 private:
     void initProcessSteps();

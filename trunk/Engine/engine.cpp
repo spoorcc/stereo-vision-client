@@ -11,8 +11,7 @@ Engine::Engine(QObject *parent) :
     this->connect( _configReader, SIGNAL(configParsingFailed(QString)), SLOT(configParsingFailed(QString)));
 
     _commandLineParser = new CommandLineParser(this);
-    this->connect( _commandLineParser, SIGNAL(commandParseError(QString)),SLOT(commandParseStatus(QString)));
-    this->connect( _commandLineParser, SIGNAL(commandParseSucces(QString)), SLOT(commandParseStatus(QString)) );
+    this->connect( _commandLineParser, SIGNAL(lastCommand(QString,bool)),SLOT(commandParseStatus(QString,bool)));
 
 }
 
@@ -50,7 +49,17 @@ void Engine::configParsingFailed( QString message)
 {
     emit printToConsole("Engine", "Parsing failed :" + message);
 }
-void Engine::commandParseStatus( QString message )
+void Engine::commandParseStatus( QString message, bool succesfull )
 {
+    if(succesfull)
+    {
+        message.prepend("<font color=\"green\">>>");
+    }
+    else
+    {
+        message.prepend("<font color=\"red\">>>");
+    }
+    message.append("</font>");
+
     emit printToConsole("Engine", message );
 }
