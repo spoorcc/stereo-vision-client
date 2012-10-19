@@ -62,7 +62,9 @@ void GUI::print( QString message )
 void GUI::printToConsole( QString sender,  QString message )
 {
     QString time = QTime::currentTime().toString();
-    ui->console->append( time + " ["+ sender+ "] " +  message );
+    QString entry = QString( time + " ["+ sender+ "] " +  message );
+    ui->console->append( entry );
+    emit makeEntry( entry );
 }
 
 void GUI::printLastCommand( QString command, bool succesfull)
@@ -244,5 +246,11 @@ bool GUI::isGuiCommand(QString command)
         return true;
     }
     return false;
+
+}
+
+void GUI::on_saveLogToFileBTN_clicked()
+{
+    emit saveLog();
 
 }

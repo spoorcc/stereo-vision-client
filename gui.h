@@ -43,12 +43,16 @@ signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
     void parseCommand( QString message );
-    
+    void makeEntry(QString entry);
+    void saveLog();
+
 private slots:
     void on_actionConnect_triggered();
     void commandEnteredInCommandLine(QString command);
 
     bool isGuiCommand(QString command);
+
+    void on_saveLogToFileBTN_clicked();
 
 private:
     Ui::GUI *ui;
