@@ -6,8 +6,8 @@
 #include <QRect>
 #include <QComboBox>
 
-#define PREVIEWCHANNELWIDTH  320
-#define PREVIEWCHANNELHEIGTH 240
+#define PREVIEWCHANNELWIDTH  160
+#define PREVIEWCHANNELHEIGTH 120
 
 class SinglePreviewChannelItem : public QGraphicsItem
 {
