@@ -27,29 +27,21 @@ void PreviewWindow::createScene()
 
     _scene->setSceneRect( 0, 0, 4 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH );
 
-    int sceneHeight = _scene->height();
-    int sceneWidth  = _scene->width();
-
-    int width = sceneWidth / 4;
-    int height = sceneHeight/ 2;
-
     for( int i = 0; i < 8; i++ )
     {
         SinglePreviewChannelItem* previewChannel = new SinglePreviewChannelItem();
 
-
-
         previewChannel->setChannelNumber( i );
-        previewChannel->setPos(( i%2 )* width + (i/4) * 2 * width, ( (i/2)* height) %sceneHeight) ;
+        previewChannel->setPos(( i%2 )* PREVIEWCHANNELWIDTH + (i/4) * 2 * PREVIEWCHANNELWIDTH, ( (i/2)* PREVIEWCHANNELHEIGTH) % (2 * PREVIEWCHANNELHEIGTH)) ;
 
         _previewChannels.append( previewChannel );
 
         _scene->addItem( previewChannel );
 
-        QPointF absPos = previewChannel->pos();
-        QPointF relPos = QPointF( 100, 10);
-
         QComboBox* streamSelectCB = new QComboBox();
+        streamSelectCB->setBaseSize(PREVIEWCHANNELWIDTH/2,PREVIEWCHANNELHEIGTH/6);
+        QPointF absPos = previewChannel->pos();
+        QPointF relPos = QPointF( PREVIEWCHANNELWIDTH/4, PREVIEWCHANNELHEIGTH/6);
 
         _videoStreamCB.append( streamSelectCB );
 
