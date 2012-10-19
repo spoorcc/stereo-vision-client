@@ -10,6 +10,7 @@ Whenever a command has a part in it in between `< >` that should be replaced by 
 == GUI ==
 
  || *maximize*   || Maximizes the window ||
+ || *minimize*   || Minimizes the window ||
  || *fullscreen* || Sets the window to fullscreen ||
  || *close*      || Exits the program ||
  || *TAB `<tabName>`* || Changes view to tab `<tabName>` ||
