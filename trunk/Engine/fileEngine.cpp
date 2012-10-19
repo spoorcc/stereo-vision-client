@@ -3,9 +3,9 @@
 FileEngine::FileEngine(QObject *parent) :
     QObject(parent)
 {
-    _destination = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
+    _destination = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) + "\\StereoVisionLog\\";
     _fileName = "Log";
-    _fileExtension ="txt";
+    _fileExtension ="html";
 }
 
 void FileEngine::openFile(QString destination)
@@ -26,17 +26,29 @@ void FileEngine::makeEntry(QString entry)
 
 void FileEngine::saveLog()
 {
-    QDir::setCurrent( _destination );
+    QDir::setCurrent( _destination);
     QString fileName = ( _fileName + timeStamp() + "." + _fileExtension );
     QFile file( fileName );
-     if (file.open(QFile::WriteOnly | QFile::Truncate))
+
+     emit printToConsole("Interface", "Trying to save log in: " + _destination + " with name: " + fileName +  " and clear memory");
+
+    if (file.open(QFile::WriteOnly | QFile::Truncate ))
      {
          QTextStream out(&file);
+         out << "<html>";
          foreach( QString logLine, _log )
          {
-            out << logLine;
+             out << logLine + "<br>";
          }
+         out << "<//html>";
+         out.flush();
+         _log.clear();
+         emit printToConsole("Interface", "Saved log in: " + _destination + " with name: " + fileName +  " and cleared memory");
      }
+    else
+    {
+        emit printToConsole("Interface", "Couldn't save log in: " + _destination + " with name: " + fileName +  " and clear memory");
+    }
      file.close();
 }
 
@@ -54,5 +66,5 @@ void FileEngine::checkForOverload()
 
 QString FileEngine::timeStamp()
 {
-    return QString(QDate::currentDate().toString("yyMMdd") + "@" + QTime::currentTime().toString("hh:mm:ss"));
+    return QString(QDate::currentDate().toString( "yyMMdd" ) + "ed" + QTime::currentTime().toString( "hhmmss" ));
 }

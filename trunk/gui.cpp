@@ -61,8 +61,8 @@ void GUI::print( QString message )
 
 void GUI::printToConsole( QString sender,  QString message )
 {
-    QString time = QTime::currentTime().toString();
-    QString entry = QString( time + " ["+ sender+ "] " +  message );
+    QString time = "<b>" + QTime::currentTime().toString() + "</b>" ;
+    QString entry = QString( "<font face=\"Comic Sans MS\">" + time + " ["+ sender+ "] " +  message ) + "</font>";
     ui->console->append( entry );
     emit makeEntry( entry );
 }
@@ -78,8 +78,7 @@ void GUI::printLastCommand( QString command, bool succesfull)
         command.prepend("<font color=\"red\">>>");
     }
     command.append("</font>");
-    ui->console->append(command);
-
+    printToConsole("Command", command);
 }
 
 void GUI::connectDialogAccepted(QHostAddress address, quint16 port)
@@ -223,8 +222,6 @@ bool GUI::isGuiCommand(QString command)
     }
 
     // Select Tab
-
-
     QStringList commandParts = command.split(" ");
 
     if( QString::compare( commandParts.at(0),"TAB") == 0)
@@ -244,15 +241,12 @@ bool GUI::isGuiCommand(QString command)
                 printToConsole("Interface", "Invalid tab");
             }
         }
-
         return true;
     }
     return false;
-
 }
 
 void GUI::on_saveLogToFileBTN_clicked()
 {
     emit saveLog();
-
 }

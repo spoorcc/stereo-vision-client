@@ -38,9 +38,9 @@ int main( int argc, char *argv[] )
  gui.connect( &engine, SIGNAL( addProcessStep( ProcessStep* ) ) , SLOT( addProcessStep( ProcessStep* ) ) ) ;
 
  fileEngine.connect( &gui, SIGNAL( makeEntry( QString ) ) , SLOT( makeEntry( QString ) ) ) ;
-
  fileEngine.connect( &gui, SIGNAL( saveLog() ) , SLOT( saveLog() ) ) ;
 
+ gui.connect( &fileEngine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.connect( &engine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.connect( &dataTransciever, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.show() ;

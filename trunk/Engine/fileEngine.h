@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QStringlist>
 #include <QTextStream>
+#include <QChar>
 #include <QDesktopServices>
 #include <QFile>
 #include <QDir>
@@ -19,6 +20,7 @@ public:
 
 signals:
     void logSaved(QString destination);
+    void printToConsole( QString sender, QString message );
 
 public slots:
     void openFile(QString destination);
