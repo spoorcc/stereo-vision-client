@@ -23,8 +23,7 @@ void SinglePreviewChannelItem::paint(QPainter *painter, const QStyleOptionGraphi
     switch( _mode ){
 
     case config:
-        painter->drawText( textPos, QString::number( _channelNumber ) + " config" );
-
+        painter->drawText( textPos, QString::number( _channelNumber ) + " Config" );
         break;
     case preview:
         painter->drawText( textPos, QString::number( _channelNumber ) + " Preview" );

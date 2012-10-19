@@ -26,7 +26,6 @@ void CommandLineParser::parseCommand(QString command)
             emit lastCommand("Error parsing command:  <br>Command should be structured like following:<br> Set &lt;processStep&gt; &lt;parameter&gt; &lt;value&gt;",false);
         }
     }
-
     if (QString::compare( commandParts.at(0), "save",Qt::CaseInsensitive) == 0 )
     {
         if (QString::compare( commandParts.at(1), "preview",Qt::CaseInsensitive) == 0 )
