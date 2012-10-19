@@ -11,7 +11,17 @@ void CommandLineParser::parseCommand(QString command)
 
     if (QString::compare( commandParts.at(0), "Preview",Qt::CaseInsensitive) == 0 )
     {
-
+        if( commandParts.count() == 4)
+        {
+            emit lastCommand(" Previewing " + commandParts.at(2) + " of processStep " + commandParts.at(1) + " on channel " + commandParts.at(3) , true);
+            return;
+        }
+        else
+        {
+            QString message = "Error parsing command:  <br>Command should be structured like following:";
+            message.append(" <br> preview &lt;processStep&gt; &lt;streamname&gt; &lt;channelNumber&gt;");
+            emit lastCommand(message,false);
+        }
     }
 
     if( QString::compare( commandParts.at(0), "Set", Qt::CaseInsensitive) == 0 )
@@ -23,7 +33,9 @@ void CommandLineParser::parseCommand(QString command)
         }
         else
         {
-            emit lastCommand("Error parsing command:  <br>Command should be structured like following:<br> Set &lt;processStep&gt; &lt;parameter&gt; &lt;value&gt;",false);
+            QString message = "Error parsing command:  <br>Command should be structured like following:";
+            message.append(" <br> Set &lt;processStep&gt; &lt;parameter&gt; &lt;value&gt;");
+            emit lastCommand(message,false);
         }
     }
     if (QString::compare( commandParts.at(0), "save",Qt::CaseInsensitive) == 0 )
