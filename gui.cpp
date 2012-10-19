@@ -199,6 +199,12 @@ bool GUI::isGuiCommand(QString command)
         printToConsole("Easter Egg", "Poep aan jou!");
         return true;
     }
+    if( QString::compare(command, "save tonight",Qt::CaseInsensitive) == 0)
+    {
+        printLastCommand(command);
+        printToConsole("Easter Egg", "and fight the break of dawn!");
+        return true;
+    }
 
     if( QString::compare( command, "credits",Qt::CaseInsensitive) == 0)
     {
