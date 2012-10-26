@@ -17,19 +17,16 @@ public:
     explicit CommandLineWidget(QWidget *parent = 0);
     ~CommandLineWidget();
 
-
-
 signals:
     void executeCommand( QString command);
     
 private slots:
-    void setOldCommand();
-
     void on_commandPB_clicked();
-
     void on_commandLE_returnPressed();
 
     void sendCommand();
+    void setOldCommand();
+    void addCommandToHistory();
 
 private:
 
