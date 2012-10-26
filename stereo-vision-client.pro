@@ -25,7 +25,10 @@ SOURCES +=  main.cpp\
             Widgets/commandlinewidget.cpp \
             Engine/configreader.cpp \
             Widgets/previewwindow.cpp \
-            Engine/commandlineparser.cpp
+            Engine/commandlineparser.cpp \
+    Widgets/streamselectwidget.cpp \
+    Widgets/singlepreviewchannelitem.cpp \
+    Engine/fileEngine.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -42,14 +45,19 @@ HEADERS  += gui.h \
             Engine/configreader.h \
             DataTypes/allparametertypes.h \
             Widgets/previewwindow.h \
-            Engine/commandlineparser.h
+            Engine/commandlineparser.h \
+    Widgets/streamselectwidget.h \
+    Widgets/singlepreviewchannelitem.h \
+    Engine/fileEngine.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
             Widgets/parameterwidget.ui \
             Widgets/connecttoserverdialog.ui \
             Widgets/commandlinewidget.ui \
-            Widgets/previewwindow.ui
+            Widgets/previewwindow.ui \
+    Widgets/streamselectwidget.ui
 
 OTHER_FILES += \
-            Config/ProcessSteps.xml
+            Config/ProcessSteps.xml \
+    Graphics/StereoVision.ico
