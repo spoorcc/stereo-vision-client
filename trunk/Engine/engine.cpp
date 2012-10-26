@@ -6,13 +6,15 @@ Engine::Engine(QObject *parent) :
     qRegisterMetaType< ProcessStep*  >( "ProcessStepPointer" );
 
     _configReader = new ConfigReader(this);
+    _configReader->setObjectName("configReader");
 
     this->connect( _configReader, SIGNAL(parsedNewProcessStep(ProcessStep*)), SLOT(addParsedProcessStep(ProcessStep*)));
     this->connect( _configReader, SIGNAL(configParsingFailed(QString)), SLOT(configParsingFailed(QString)));
 
     _commandLineParser = new CommandLineParser(this);
+    _commandLineParser->setObjectName("commandLineParser");
     this->connect( _commandLineParser, SIGNAL(lastCommand(QString,bool)),SLOT(commandParseStatus(QString,bool)));
-
+    this->connect( _commandLineParser, SIGNAL(sendCommandToServer(QString)), SLOT(sendCommandForServer(QString)));
 }
 
 void Engine::init()
@@ -62,4 +64,9 @@ void Engine::commandParseStatus( QString message, bool succesfull )
     message.append("</font>");
 
     emit printToConsole("Engine", message );
+}
+
+void Engine::sendCommandForServer(QString command)
+{
+    emit commandForServer( command );
 }

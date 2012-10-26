@@ -14,6 +14,8 @@ PreviewWindow::PreviewWindow(QWidget *parent) :
     ui->previewWindowGV->setScene( _scene );
     ui->previewWindowGV->show();
 
+   // this->connect( _previewChannels.first(), SIGNAL())
+
 }
 
 PreviewWindow::~PreviewWindow()
@@ -223,4 +225,13 @@ void PreviewWindow::addVideoStream(QString streamName)
     {
         streamSelectCB->addItem( streamName );
     }
+}
+/*void PreviewWindow::keyEventListener( QKeyEvent event)
+{
+    qDebug() << event;
+}*/
+
+void PreviewWindow::on_previewWindowGV_customContextMenuRequested(const QPoint &pos)
+{
+    qDebug() << "Mouseclick";
 }

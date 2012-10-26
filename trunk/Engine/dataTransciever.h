@@ -35,7 +35,7 @@ public slots:
 
     //Send methods
     void sendImage( QImage image );
-    void sendCommand( QString processtep, QString parameter, QString value );
+    void sendCommand( QString command );
 
 private:
     QUdpSocket* _udpSocket;
@@ -43,7 +43,7 @@ private:
     void processDatagram( QByteArray datagram );
     void writeData( QByteArray datagram );
 
-    QByteArray createDatagram( QString processStep, QString parameter, QString value);
+    QByteArray createDatagram( QString command );
 
     void print( QString message );
 };

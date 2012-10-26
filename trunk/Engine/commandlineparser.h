@@ -17,6 +17,8 @@ signals:
     void commandParseSucces( QString succes );
     void parameterForServer( QString processStep, QString parameter, QString value );
 
+    void sendCommandToServer( QString command );
+
 public slots:
     void parseCommand( QString command );
 

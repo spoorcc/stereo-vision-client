@@ -12,14 +12,17 @@ DataTransciever::DataTransciever(QObject *parent) :  QObject(parent)
     _udpSocket = new QUdpSocket(this);
 
     //Try to connect to local udp stream
-    connectToServer( QHostAddress::LocalHost);
     connect( _udpSocket, SIGNAL( readyRead() ), this, SLOT( readPendingDatagrams() ));
 }
 
 //Connection methods
 void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 {
-    bool succes = _udpSocket->bind( hostAdress, port );
+    _udpSocket->connectToHost( hostAdress, port);
+    sendCommand( "poep" );
+
+    int succes = _udpSocket->state();
+
 
     if(succes)
     {
@@ -49,9 +52,9 @@ void DataTransciever::sendImage( QImage image )
     QByteArray closeImage = QByteArray("</image>");
     writeData( closeImage );
 }
-void DataTransciever::sendCommand( QString processtep, QString parameter, QString value )
+void DataTransciever::sendCommand( QString command )
 {
-    writeData( createDatagram( processtep, parameter, value) );
+    writeData( createDatagram( command) );
 }
 void DataTransciever::readPendingDatagrams()
 {
@@ -83,10 +86,9 @@ void DataTransciever::writeData(QByteArray datagram)
 }
 
 
-QByteArray DataTransciever::createDatagram(QString processStep, QString parameter, QString value)
+QByteArray DataTransciever::createDatagram(QString command)
 {
-    QString message = QString( processStep + " " + parameter + " " + value );
-    QByteArray datagram = QByteArray( message.toAscii() );
+    QByteArray datagram = QByteArray( command.toAscii() );
 
     return datagram;
 }
