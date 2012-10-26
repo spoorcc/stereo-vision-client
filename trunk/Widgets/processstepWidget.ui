@@ -51,8 +51,11 @@ p, li { white-space: pre-wrap; }
    </item>
    <item>
     <layout class="QGridLayout" name="parameterLayout">
-     <property name="spacing">
+     <property name="horizontalSpacing">
       <number>3</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>0</number>
      </property>
     </layout>
    </item>
