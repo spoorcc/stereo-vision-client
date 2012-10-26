@@ -4,7 +4,7 @@
 #define MAXLOGENTRIES 10000
 
 #include <QObject>
-#include <QStringlist>
+#include <QStringList>
 #include <QTextStream>
 #include <QChar>
 #include <QDesktopServices>

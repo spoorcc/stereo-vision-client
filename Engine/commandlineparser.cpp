@@ -55,5 +55,26 @@ void CommandLineParser::parseCommand(QString command)
             emit lastCommand("Error parsing command: <br>Save must always be followed by either &quot;preview&quot; or &quot;log&quot;" ,false);
         }
     }
+
+    if (QString::compare( commandParts.at(0), "s2s",Qt::CaseInsensitive) == 0 )
+    {
+        command.clear();
+
+        for( int i = 1; i < commandParts.size(); i++ )
+        {
+            if( i == commandParts.size() - 1)
+            {
+                command.append( commandParts.at(i) );
+            }
+            else
+            {
+                command.append( commandParts.at(i) + " " );
+            }
+        }
+
+        emit lastCommand("Sending to server  """ + command + """", true );
+        emit sendCommandToServer( command );
+        return;
+    }
     emit lastCommand(command,false);
 }

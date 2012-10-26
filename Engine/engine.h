@@ -41,6 +41,7 @@ signals:
     void ready();
     void printToConsole( QString sender, QString message );
     void addProcessStep( ProcessStep* processStep);
+    void commandForServer( QString command );
 
 public slots:
     void giveProcessSteps();
@@ -51,6 +52,8 @@ private slots:
     void configParsingFailed(QString message);
 
     void commandParseStatus(QString message, bool succesfull);
+
+    void sendCommandForServer( QString command );
 
 private:
     void initProcessSteps();

@@ -30,6 +30,8 @@ public:
 private slots:
     void on_configPB_clicked();
 
+    void on_previewWindowGV_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::PreviewWindow *ui;
     QGraphicsScene* _scene;

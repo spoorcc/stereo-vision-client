@@ -28,15 +28,15 @@ void ConnectToServerDialog::setupContraints()
     ui->ipByte3SP->setMinimum( 0 );
     ui->ipByte4SP->setMinimum( 0 );
 
-    ui->ipByte1SP->setValue( 127 );
-    ui->ipByte2SP->setValue( 0 );
-    ui->ipByte3SP->setValue( 0 );
-    ui->ipByte4SP->setValue( 1 );
+    ui->ipByte1SP->setValue( 145 );
+    ui->ipByte2SP->setValue( 48 );
+    ui->ipByte3SP->setValue( 115 );
+    ui->ipByte4SP->setValue( 191 );
 
     //Por constraints
     ui->portSP->setMinimum( 0 );
     ui->portSP->setMaximum( 65535 );
-    ui->portSP->setValue( 7755 );
+    ui->portSP->setValue( 49679 );
 }
 
 void ConnectToServerDialog::on_buttonBox_accepted()

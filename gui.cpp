@@ -62,7 +62,7 @@ void GUI::print( QString message )
 void GUI::printToConsole( QString sender,  QString message )
 {
     QString time = "<b>" + QTime::currentTime().toString() + "</b>" ;
-    QString entry = QString( "<font face=\"Comic Sans MS\">" + time + " ["+ sender+ "] " +  message ) + "</font>";
+    QString entry = QString( time + " ["+ sender+ "] " +  message );
     ui->console->append( entry );
     emit makeEntry( entry );
 }
