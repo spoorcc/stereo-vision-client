@@ -8,7 +8,7 @@ CommandLineWidget::CommandLineWidget(QWidget *parent) :
     ui->setupUi(this);
     this->setFocusPolicy( Qt::StrongFocus );
     ui->commandLE->installEventFilter(this);
-    _commandIndex = 0;
+    _commandIndex = -1;
 
 }
 
@@ -37,20 +37,24 @@ bool CommandLineWidget::eventFilter(QObject* obj, QEvent* event)
             if (keyEvent->key() == Qt::Key_Up)
             {
                  _commandIndex++;
+
                  if(_commandIndex > _commandHistory.count())
                  {
                      _commandIndex = _commandHistory.count();
                  }
+
                  setOldCommand();
                  return true;
             }
             else if(keyEvent->key() == Qt::Key_Down)
             {
                 _commandIndex--;
+
                 if(_commandIndex < 0)
                 {
                     _commandIndex = 0;
                 }
+
                 setOldCommand();
                 return true;
             }
@@ -62,6 +66,15 @@ bool CommandLineWidget::eventFilter(QObject* obj, QEvent* event)
 
 void CommandLineWidget::setOldCommand()
 {
+    if( _commandIndex < 0)
+    {
+        return;
+    }
+    if( _commandIndex >= _commandHistory.count())
+    {
+        return;
+    }
+
     ui->commandLE->setText( _commandHistory.at( _commandIndex));
 }
 
@@ -70,13 +83,17 @@ void CommandLineWidget::sendCommand()
     if (ui->commandLE->text().count() > 0)
     {
         emit executeCommand( ui->commandLE->text() );
+
+        _commandHistory.prepend( ui->commandLE->text() );
         ui->commandLE->clear();
-        _commandHistory.prepend(ui->commandLE->text());
+
         if (_commandHistory.size()>100)
         {
             _commandHistory.pop_back();
         }
     }
+
+    _commandIndex = -1;
 }
 void CommandLineWidget::focusInEvent(QFocusEvent *)
 {
