@@ -9,7 +9,7 @@ GUI::GUI(QWidget *parent) :
     ui->setupUi(this);
 
     //Add the windowicon
-    this->setWindowIcon(QIcon("D:\\QtGui\\StereoVision.png"));
+    this->setWindowIcon(QIcon(":/Icons/StereoVision.png"));
 
     //Add the commandlind widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
