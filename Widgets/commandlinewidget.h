@@ -2,6 +2,8 @@
 #define COMMANDLINEWIDGET_H
 
 #include <QWidget>
+#include <QEvent>
+#include <QKeyEvent>
 
 namespace Ui {
 class CommandLineWidget;
@@ -15,10 +17,14 @@ public:
     explicit CommandLineWidget(QWidget *parent = 0);
     ~CommandLineWidget();
 
+
+
 signals:
     void executeCommand( QString command);
     
 private slots:
+    void setOldCommand();
+
     void on_commandPB_clicked();
 
     void on_commandLE_returnPressed();
@@ -26,8 +32,12 @@ private slots:
     void sendCommand();
 
 private:
+
+    int _commandIndex;
+    QStringList _commandHistory;
     Ui::CommandLineWidget *ui;
 
+    bool eventFilter(QObject *obj, QEvent *event);
     void focusInEvent(QFocusEvent *);
 };
 
