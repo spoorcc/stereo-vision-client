@@ -19,6 +19,10 @@
 
         </parameter>
 
+        <parameter name="Shot mode2" type="selectable">
+            <option>Single shot mode</option>
+            <option>Continous mode</option>
+        </parameter>
 
 
         <parameter name="Shot mode" type="selectable">
