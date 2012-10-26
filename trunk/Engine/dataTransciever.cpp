@@ -97,3 +97,4 @@ void DataTransciever::print(QString message)
 {
     emit printToConsole("DataTransceiver",message);
 }
+
