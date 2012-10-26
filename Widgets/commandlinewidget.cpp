@@ -80,8 +80,17 @@ void CommandLineWidget::setOldCommand()
 void CommandLineWidget::addCommandToHistory()
 {
     //Check if command already exists
+    QString newCommand = ui->commandLE->text();
+    QString command;
 
-
+    for(int i = 0; i < _commandHistory.count() ; i++ )
+    {
+        command = _commandHistory.at(i);
+        if( newCommand == command)
+        {
+           _commandHistory.removeAt(i);
+        }
+    }
 
     _commandHistory.prepend( ui->commandLE->text() );
 
