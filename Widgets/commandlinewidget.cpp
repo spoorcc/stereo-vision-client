@@ -77,6 +77,19 @@ void CommandLineWidget::setOldCommand()
 
     ui->commandLE->setText( _commandHistory.at( _commandIndex));
 }
+void CommandLineWidget::addCommandToHistory()
+{
+    //Check if command already exists
+
+
+
+    _commandHistory.prepend( ui->commandLE->text() );
+
+    if (_commandHistory.size()>100)
+    {
+        _commandHistory.pop_back();
+    }
+}
 
 void CommandLineWidget::sendCommand()
 {
@@ -84,13 +97,9 @@ void CommandLineWidget::sendCommand()
     {
         emit executeCommand( ui->commandLE->text() );
 
-        _commandHistory.prepend( ui->commandLE->text() );
-        ui->commandLE->clear();
+        addCommandToHistory();
 
-        if (_commandHistory.size()>100)
-        {
-            _commandHistory.pop_back();
-        }
+        ui->commandLE->clear();
     }
 
     _commandIndex = -1;
