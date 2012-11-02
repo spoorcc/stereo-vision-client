@@ -188,6 +188,7 @@ void CommandLineWidget::parseCommand()
         return;
     }
     commandParseStatus( lastCommand(),false);
+    emit commandForGui( lastCommand() );
 }
 bool CommandLineWidget::equals( QString string1, QString string2, Qt::CaseSensitivity sensitivity)
 {
