@@ -19,6 +19,8 @@
 #include "Widgets/commandlinewidget.h"
 #include "Widgets/previewwindow.h"
 
+#include "Engine/commandlineparser.h"
+
 namespace Ui {
     class GUI;
 }
@@ -35,13 +37,16 @@ public:
 public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );
+
     void printToConsole( QString sender, QString message );
+
     void connectDialogAccepted( QHostAddress address, quint16 port );
     void connectDialogRefused();
 
 signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
+    void commandForServer( QString command );
     void parseCommand( QString message );
     void makeEntry(QString entry);
     void saveLog();
@@ -49,18 +54,24 @@ signals:
 private slots:
     void on_actionConnect_triggered();
     void commandEnteredInCommandLine(QString command);
+    void commandParsedAndChecked( QString command );
 
     bool isGuiCommand(QString command);
 
     void on_saveLogToFileBTN_clicked();
 
+    void print(QString message);
+    void printLastCommand(QString command, bool succesfull = true);
+
+    void set( QString processStep, QString parameter, QString value );
+
 private:
     Ui::GUI *ui;
 
     CommandLineWidget* _commandLineWidget;
-    PreviewWindow* _previewWindow;
-    void print(QString message);
-    void printLastCommand(QString command, bool succesfull = true);
+    CommandLineParser* _commandLineParser;
+    PreviewWindow* _previewWindow;    
+
 };
 
 #endif // GUI_H

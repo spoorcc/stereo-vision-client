@@ -58,5 +58,20 @@ void ProcessStepWidget::createParameter(AbstractParameter *parameter)
 {
     ParameterWidget* parWidget = new ParameterWidget( this );
     parWidget->setParameter( parameter );
+    parWidget->setObjectName( parameter->name() );
     ui->parameterLayout->addWidget( parWidget );
+}
+void ProcessStepWidget::setParameter(QString parameter, QString value)
+{
+    for( int i = 0; i < ui->parameterLayout->count(); i++ )
+    {
+        if( ui->parameterLayout->itemAt(i)->widget()->objectName() == parameter )
+        {
+            QWidget* parameterWidget = (QWidget*) ui->parameterLayout->itemAt(i)->widget();
+            qDebug() << ui->nameLBL->text() << parameter << value;
+            ((ParameterWidget*) parameterWidget)->setValue( value );
+            return;
+        }
+    }
+    emit invalidUpdate( "No such parameter " + parameter );
 }

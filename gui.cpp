@@ -14,7 +14,11 @@ GUI::GUI(QWidget *parent) :
     //Add the commandlind widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
     this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
+    this->connect( _commandLineWidget, SIGNAL( printToConsole(QString, QString)), SLOT( printToConsole(QString, QString) ));
+    this->connect( _commandLineWidget, SIGNAL(set(QString,QString,QString)), SLOT(set(QString,QString,QString)));
+    this->connect( _commandLineWidget, SIGNAL(sendCommandToServer(QString)), SLOT(commandParsedAndChecked(QString)));
     ui->consoleCommandLO->addWidget( _commandLineWidget );
+
     //Add the previewwindow to the GUI
     _previewWindow = new PreviewWindow( this );
     ui->previewWindowLO->addWidget( _previewWindow );
@@ -36,6 +40,7 @@ void GUI::start()
 void GUI::addProcessStep(ProcessStep *processStep)
 {
     ProcessStepWidget* processStepWidget = new ProcessStepWidget( processStep, this );
+    processStepWidget->setObjectName( processStep->name() );
     ui->AllProcessesTBX->addItem( processStepWidget, processStep->name() );
 
     if( ui->AllProcessesTBX->itemText(0) == "" )
@@ -81,6 +86,20 @@ void GUI::printLastCommand( QString command, bool succesfull)
     printToConsole("Command", command);
 }
 
+void GUI::set(QString processStep, QString parameter, QString value)
+{
+    for( int i = 0; i < ui->AllProcessesTBX->count(); i++ )
+    {
+        if( ui->AllProcessesTBX->widget(i)->objectName() == processStep )
+        {
+            QWidget* processStepWidget =  ui->AllProcessesTBX->widget(i);
+            ((ProcessStepWidget*) processStepWidget)->setParameter( parameter, value);
+            return;
+        }
+    }
+    printLastCommand("No such processStep " + processStep, false);
+}
+
 void GUI::connectDialogAccepted(QHostAddress address, quint16 port)
 {
     print("Giving command to connect to transciever at " + address.toString() + " on port " + QString::number( port ) );
@@ -112,6 +131,11 @@ void GUI::commandEnteredInCommandLine(QString command)
     {
         emit parseCommand( command );
     }
+}
+
+void GUI::commandParsedAndChecked(QString command)
+{
+    emit commandForServer( command );
 }
 bool GUI::isGuiCommand(QString command)
 {

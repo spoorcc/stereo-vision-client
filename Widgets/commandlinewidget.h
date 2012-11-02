@@ -17,16 +17,30 @@ public:
     explicit CommandLineWidget(QWidget *parent = 0);
     ~CommandLineWidget();
 
+
 signals:
     void executeCommand( QString command);
+
+    void sendCommandToServer( QString command );
+    void set( QString processStep, QString parameter, QString value);
+
+    void printToConsole( QString sender, QString message );
     
 private slots:
     void on_commandPB_clicked();
-    void on_commandLE_returnPressed();
 
     void sendCommand();
     void setOldCommand();
     void addCommandToHistory();
+
+    void parseCommand();
+
+    QString lastCommand();
+
+    bool equals(QString string1, QString string2, Qt::CaseSensitivity sensitivity = Qt::CaseInsensitive);
+    bool firstPartIs(QString command);
+
+    void commandParseStatus(QString message, bool succesfull);
 
 private:
 

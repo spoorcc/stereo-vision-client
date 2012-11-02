@@ -9,24 +9,43 @@
 
 DataTransciever::DataTransciever(QObject *parent) :  QObject(parent)
 {
-    _udpSocket = new QUdpSocket(this);
+    _udpSendSocket = new QUdpSocket(this);
+    _udpReceiveSocket = new QUdpSocket(this);
 
     //Try to connect to local udp stream
-    connect( _udpSocket, SIGNAL( readyRead() ), this, SLOT( readPendingDatagrams() ));
+    connect( _udpReceiveSocket, SIGNAL( readyRead() ), this, SLOT( readPendingDatagrams() ));
 }
 
 //Connection methods
 void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 {
-    _udpSocket->connectToHost( hostAdress, port);
-    sendCommand( "poep" );
+    _udpSendSocket->close();
+    _udpReceiveSocket->close();
 
-    int succes = _udpSocket->state();
+    QList<QHostAddress > addressList = QNetworkInterface::allAddresses();
 
+    QStringList serverIpAddressParts = hostAdress.toString().split(".");
 
+    foreach( QHostAddress clientAddress, addressList )
+    {
+        QStringList clientIpAddressParts = clientAddress.toString().split(".");
+
+        if( serverIpAddressParts.at(0) == clientIpAddressParts.at(0) )
+        {
+            _udpReceiveSocket->bind( clientAddress , port );
+            break;
+        }
+    }
+
+    //_udpReceiveSocket->bind( QHostAddress::Any , port );
+    _udpSendSocket->connectToHost( hostAdress, port, QIODevice::WriteOnly );
+
+    int succes = _udpSendSocket->state();
+
+    print( QString("State: %1").arg( succes ) );
     if(succes)
     {
-        print("Connected succesfully to" + hostAdress.toString() + " on port " + QString::number(port) );
+        print("Connected succesfully to" + _udpSendSocket->peerAddress().toString() + " on port " + QString::number( _udpSendSocket->localPort() ) );
         emit connectionSucces();
     }
     else
@@ -39,34 +58,37 @@ void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 //Data commands
 void DataTransciever::sendImage( QImage image )
 {
-    QByteArray announceImage = QByteArray("<image>");
-    writeData( announceImage );
+   // QByteArray announceImage = QByteArray("<image>");
+   // writeData( announceImage );
 
     for( int i = 0; i < image.height(); i++ )
     {
         // !!!!-- Probably highly dangerous code --!!!! ////
         QByteArray scanLine = QByteArray( (char*) image.scanLine(i) );
-        writeData( scanLine );
+        writeData( scanLine, RAW_IMAGE );
     }
 
-    QByteArray closeImage = QByteArray("</image>");
-    writeData( closeImage );
+    //QByteArray closeImage = QByteArray("</image>");
+   // writeData( closeImage );
 }
 void DataTransciever::sendCommand( QString command )
 {
-    writeData( createDatagram( command) );
+    writeData( createDatagram( command), COMMAND );
 }
 void DataTransciever::readPendingDatagrams()
 {
-    while (_udpSocket->hasPendingDatagrams() )
+    print("Reading message");
+
+    while ( _udpReceiveSocket->hasPendingDatagrams() )
     {
         QByteArray datagram;
-        datagram.resize( _udpSocket->pendingDatagramSize() );
+        datagram.resize( _udpReceiveSocket->pendingDatagramSize() );
         QHostAddress sender;
         quint16 senderPort;
 
-        _udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        _udpReceiveSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
 
+        print( QString("Parsing message from %1 on port %2").arg( sender.toString() ).arg( senderPort ) );
         processDatagram( datagram );
     }
 }
@@ -75,14 +97,16 @@ void DataTransciever::processDatagram(QByteArray datagram)
 {
     //FIXME: Just for debugging
     //Get data from the datagram
-    print( QString::number( datagram.toInt() ));
-
+    QString message = QString( datagram );
+    print( QString( "Recieved: " + message) );
 
 }
 
-void DataTransciever::writeData(QByteArray datagram)
+void DataTransciever::writeData(QByteArray datagram, MessageType type )
 {
-    _udpSocket->write( datagram );
+    datagram.prepend( type );
+    datagram.append( QString::null );
+    _udpSendSocket->write( datagram );
 }
 
 
