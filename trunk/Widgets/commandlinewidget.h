@@ -25,6 +25,8 @@ signals:
     void set( QString processStep, QString parameter, QString value);
 
     void printToConsole( QString sender, QString message );
+
+    void commandForGui( QString command );
     
 private slots:
     void on_commandPB_clicked();

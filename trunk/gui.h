@@ -56,7 +56,7 @@ private slots:
     void commandEnteredInCommandLine(QString command);
     void commandParsedAndChecked( QString command );
 
-    bool isGuiCommand(QString command);
+    bool getGuiCommand(QString command);
 
     void on_saveLogToFileBTN_clicked();
 

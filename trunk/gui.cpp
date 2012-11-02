@@ -17,6 +17,7 @@ GUI::GUI(QWidget *parent) :
     this->connect( _commandLineWidget, SIGNAL( printToConsole(QString, QString)), SLOT( printToConsole(QString, QString) ));
     this->connect( _commandLineWidget, SIGNAL(set(QString,QString,QString)), SLOT(set(QString,QString,QString)));
     this->connect( _commandLineWidget, SIGNAL(sendCommandToServer(QString)), SLOT(commandParsedAndChecked(QString)));
+    this->connect( _commandLineWidget, SIGNAL(commandForGui(QString)), SLOT(getGuiCommand(QString)));
     ui->consoleCommandLO->addWidget( _commandLineWidget );
 
     //Add the previewwindow to the GUI
@@ -123,7 +124,7 @@ void GUI::on_actionConnect_triggered()
 }
 void GUI::commandEnteredInCommandLine(QString command)
 {
-    if( isGuiCommand(command) )
+    if( getGuiCommand(command) )
     {
         return;
     }
@@ -137,7 +138,7 @@ void GUI::commandParsedAndChecked(QString command)
 {
     emit commandForServer( command );
 }
-bool GUI::isGuiCommand(QString command)
+bool GUI::getGuiCommand(QString command)
 {
     if( QString::compare(command, "clc") == 0 ||
         QString::compare(command, "clear") == 0 ||
