@@ -15,8 +15,12 @@
 #include <QSpacerItem>
 #include <QSpinBox>
 
+#include <QDebug>
+
 //Local includes
 #include "DataTypes/allparametertypes.h"
+
+enum parameterWidgetType{ BOOLEAN, NUMERICAL, SELECTABLE, UNKWOWN };
 
 namespace Ui {
 class ParameterWidget;
@@ -31,7 +35,8 @@ public:
     ~ParameterWidget();
 
 public slots:
-    void setParameter( AbstractParameter* parameter );
+    void setValue( QString value );
+    void setParameter(AbstractParameter *parameter);
     
 signals:
     void valueChanged();
@@ -41,9 +46,15 @@ private:
     void createNumericWidget( AbstractParameter* parameter );
     void createSelectWidget( AbstractParameter* parameter );
 
+    void setBooleanValue(QString value);
+    void setNumericalValue(QString value);
+    void setSelectableValue(QString value);
+
     void addSpacer();
 
     Ui::ParameterWidget *ui;
+
+    parameterWidgetType _type;
 };
 
 #endif // PARAMETERWIDGET_H

@@ -18,7 +18,6 @@ public:
     explicit StreamSelectWidget(QWidget *parent = 0);
     ~StreamSelectWidget();
     
-
     void setStreams(QStringList streams);
 
     void setAsInput();

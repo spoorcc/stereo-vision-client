@@ -6,6 +6,7 @@ ParameterWidget::ParameterWidget(QWidget *parent) :
     ui(new Ui::ParameterWidget)
 {
     ui->setupUi(this);
+    _type = UNKWOWN;
 }
 
 ParameterWidget::~ParameterWidget()
@@ -30,13 +31,82 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
     }
 }
 
+void ParameterWidget::setValue(QString value)
+{
+    //FInd type
+    qDebug() << "Updating value to " << value;
+
+    switch( _type )
+    {
+    case BOOLEAN:
+        setBooleanValue( value );
+        break;
+    case NUMERICAL:
+        setNumericalValue( value );
+        break;
+    case SELECTABLE:
+        setSelectableValue( value );
+        break;
+    default:
+        break;
+    }
+}
+void ParameterWidget::setBooleanValue( QString value )
+{
+    QCheckBox* checkBox = ui->horizontalLayout->findChild< QCheckBox* >();
+
+    if( checkBox == 0 )
+    {
+        return;
+    }
+
+    QStringList validSetStatements;
+    validSetStatements.append("true");
+    validSetStatements.append("enable");
+    validSetStatements.append("check");
+
+    foreach( QString statement, validSetStatements )
+    {
+        if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
+        {
+            checkBox->setChecked( true );
+        }
+    }
+
+    QStringList validUnSetStatements;
+    validUnSetStatements.append("false");
+    validUnSetStatements.append("disable");
+    validUnSetStatements.append("uncheck");
+
+    foreach( QString statement, validUnSetStatements )
+    {
+        if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
+        {
+            checkBox->setChecked( false );
+        }
+    }
+
+    checkBox->update();
+}
+void ParameterWidget::setNumericalValue( QString value )
+{
+
+}
+void ParameterWidget::setSelectableValue( QString value )
+{
+
+}
+
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
+    _type = BOOLEAN;
+
     // Set the name of the parameter
     ui->nameLBL->setText( ((BooleanParameter*) parameter)->name() );
 
     //Create a checkbox and add one
     QCheckBox* checkBox = new QCheckBox (this);
+    checkBox->setObjectName("booleanParameter");
     checkBox->setChecked( ((BooleanParameter*) parameter)->isEnabled() );
     ui->horizontalLayout->addWidget(checkBox);
 
@@ -45,11 +115,14 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 
 void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 {
+    _type = NUMERICAL;
+
     ui->nameLBL->setText( ((NumericParameter*) parameter)->name() );
 
     //Create a spinbox
 
     QSpinBox* spinBox = new QSpinBox(this);
+    spinBox->setObjectName("numericParameter");
     spinBox->setMaximum( ((NumericParameter*)parameter)->maximum() );
     spinBox->setMinimum( ((NumericParameter*)parameter)->minimum() );
     spinBox->setValue( ((NumericParameter*)parameter)->init());
@@ -59,10 +132,13 @@ void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
 }
 void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
 {
+    _type = SELECTABLE;
+
     ui->nameLBL->setText( ( (SelectParameter*) parameter)->name() );
 
     //Create a combobox
     QComboBox* comboBox = new QComboBox(this);
+    comboBox->setObjectName("selectableParameter");
     comboBox->setToolTip( parameter->description() );
 
     for( int i = 0; i < ((SelectParameter*) parameter)->count(); i++ )

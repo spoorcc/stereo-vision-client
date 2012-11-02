@@ -10,6 +10,7 @@
 
 // Global includes
 #include <QWidget>
+#include <QDebug>
 
 // Local includes
 #include "DataTypes/processstep.h"
@@ -31,6 +32,11 @@ public:
     void setName(QString name);
     void setColor( QColor color );
     
+    void setParameter(QString parameter, QString value);
+
+signals:
+    void invalidUpdate( QString message );
+
 private:
     Ui::ProcessStepWidget *ui;
     QString _styleSheet;
