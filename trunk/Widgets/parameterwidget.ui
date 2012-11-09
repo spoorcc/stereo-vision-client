@@ -46,6 +46,9 @@
      </property>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="parameterLO"/>
+   </item>
   </layout>
  </widget>
  <resources/>
