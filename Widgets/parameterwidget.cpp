@@ -34,7 +34,7 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
 void ParameterWidget::setValue(QString value)
 {
     //FInd type
-    qDebug() << "Updating value to " << value;
+    qDebug() << ui->nameLBL->text() << "Updating value to " << value;
 
     switch( _type )
     {
@@ -53,7 +53,10 @@ void ParameterWidget::setValue(QString value)
 }
 void ParameterWidget::setBooleanValue( QString value )
 {
-    QCheckBox* checkBox = ui->horizontalLayout->findChild< QCheckBox* >();
+
+    QList< QObject* > allCheckBoxes = ui->parameterLO->children();
+    //QCheckBox* checkBox = ui->horizontalLayout->findChild< QCheckBox* >("booleanParameter");
+    QCheckBox* checkBox = (QCheckBox*) ui->horizontalLayout->children().last();
 
     if( checkBox == 0 )
     {
@@ -108,7 +111,7 @@ void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
     QCheckBox* checkBox = new QCheckBox (this);
     checkBox->setObjectName("booleanParameter");
     checkBox->setChecked( ((BooleanParameter*) parameter)->isEnabled() );
-    ui->horizontalLayout->addWidget(checkBox);
+    ui->parameterLO->addWidget(checkBox);
 
     addSpacer();
 }
@@ -126,7 +129,7 @@ void ParameterWidget::createNumericWidget(AbstractParameter *parameter)
     spinBox->setMaximum( ((NumericParameter*)parameter)->maximum() );
     spinBox->setMinimum( ((NumericParameter*)parameter)->minimum() );
     spinBox->setValue( ((NumericParameter*)parameter)->init());
-    ui->horizontalLayout->addWidget(spinBox);
+    ui->parameterLO->addWidget(spinBox);
 
     addSpacer();
 }
@@ -146,7 +149,7 @@ void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
         comboBox->addItem( ((SelectParameter*) parameter)->option(i) );
     }
 
-    ui->horizontalLayout->addWidget( comboBox );
+    ui->parameterLO->addWidget( comboBox );
 
     addSpacer();
 }
@@ -154,6 +157,6 @@ void ParameterWidget::addSpacer()
 {
     //For better layout, create a spacer
     QSpacerItem* horizontalSpacer = new QSpacerItem (10,10, QSizePolicy::Expanding);
-    ui->horizontalLayout->addSpacerItem(horizontalSpacer);
+    ui->parameterLO->addSpacerItem(horizontalSpacer);
 }
 

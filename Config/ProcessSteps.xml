@@ -38,6 +38,7 @@
         <stream type="input" >
             <substream> Input A </substream>
             <substream> Input B </substream>
+            <substream> Input C </substream>
         </stream>
 
     </processstep>
