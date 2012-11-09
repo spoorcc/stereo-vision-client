@@ -62,7 +62,8 @@ OTHER_FILES += \
             Config/ProcessSteps.xml \
     Graphics/StereoVision.ico \
     Graphics/StereoVisionIcon.rc \
-    Graphics/StereoVision.png
+    Graphics/StereoVision.png \
+    Documentation/CommandList.html
 
 RESOURCES += \
     Graphics/Graphics.qrc
