@@ -70,8 +70,10 @@ private:
 
     CommandLineWidget* _commandLineWidget;
     CommandLineParser* _commandLineParser;
-    PreviewWindow* _previewWindow;    
+    PreviewWindow* _previewWindow;
 
-};
+    QTextStream _stream;
+    QString _line;
+  };
 
 #endif // GUI_H
