@@ -60,4 +60,9 @@ FORMS    += gui.ui \
 
 OTHER_FILES += \
             Config/ProcessSteps.xml \
-    Graphics/StereoVision.ico
+    Graphics/StereoVision.ico \
+    Graphics/StereoVisionIcon.rc \
+    Graphics/StereoVision.png
+
+RESOURCES += \
+    Graphics/Graphics.qrc

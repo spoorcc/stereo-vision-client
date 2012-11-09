@@ -3,7 +3,7 @@
 FileEngine::FileEngine(QObject *parent) :
     QObject(parent)
 {
-    _destination = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) + "\\StereoVisionLog\\";
+    _destination = QDesktopServices::ApplicationsLocation+ "\\StereoVisionLog\\";
     _fileName = "Log";
     _fileExtension ="html";
 }
