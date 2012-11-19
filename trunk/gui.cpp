@@ -15,9 +15,9 @@ GUI::GUI(QWidget *parent) :
     _commandLineWidget = new CommandLineWidget(this);
     this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
     this->connect( _commandLineWidget, SIGNAL( printToConsole(QString, QString)), SLOT( printToConsole(QString, QString) ));
-    this->connect( _commandLineWidget, SIGNAL(set(QString,QString,QString)), SLOT(set(QString,QString,QString)));
-    this->connect( _commandLineWidget, SIGNAL(sendCommandToServer(QString)), SLOT(commandParsedAndChecked(QString)));
-    this->connect( _commandLineWidget, SIGNAL(commandForGui(QString)), SLOT(getGuiCommand(QString)));
+    this->connect( _commandLineWidget, SIGNAL( set(QString,QString,QString)), SLOT(setValueOnGUI(QString,QString,QString)));
+    this->connect( _commandLineWidget, SIGNAL( sendCommandToServer(QString)), SLOT(commandParsedAndChecked(QString)));
+    this->connect( _commandLineWidget, SIGNAL( commandForGui(QString)), SLOT(getGuiCommand(QString)));
     ui->consoleCommandLO->addWidget( _commandLineWidget );
 
     //Add the previewwindow to the GUI
@@ -58,6 +58,7 @@ void GUI::addProcessStep(ProcessStep *processStep)
         _previewWindow->addVideoStream( stream );
     }
 
+    this->connect( processStepWidget, SIGNAL(valueChanged(QString,QString,QString)),SLOT(valueChangedOnGUI(QString,QString,QString)));
     print( "Added step:" + processStep->name() );
 }
 void GUI::print( QString message )
@@ -87,7 +88,7 @@ void GUI::printLastCommand( QString command, bool succesfull)
     printToConsole("Command", command);
 }
 
-void GUI::set(QString processStep, QString parameter, QString value)
+void GUI::setValueOnGUI(QString processStep, QString parameter, QString value)
 {
     for( int i = 0; i < ui->AllProcessesTBX->count(); i++ )
     {
@@ -99,6 +100,12 @@ void GUI::set(QString processStep, QString parameter, QString value)
         }
     }
     printLastCommand("No such processStep " + processStep, false);
+}
+
+void GUI::valueChangedOnGUI(QString processStep, QString parameter, QString value)
+{
+    printLastCommand( QString("Sent new value to server %1 %2 %3").arg(processStep, parameter,value), true);
+    emit setValueOnServer( processStep, parameter, value);
 }
 
 void GUI::connectDialogAccepted(QHostAddress address, quint16 port)

@@ -39,7 +39,7 @@ public slots:
     void setParameter(AbstractParameter *parameter);
     
 signals:
-    void valueChanged();
+    void valueChanged(QString name, QString value);
 
 private:
     void createBooleanWidget( AbstractParameter* parameter );

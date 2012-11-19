@@ -59,6 +59,7 @@ void ProcessStepWidget::createParameter(AbstractParameter *parameter)
     ParameterWidget* parWidget = new ParameterWidget( this );
     parWidget->setParameter( parameter );
     parWidget->setObjectName( parameter->name() );
+    this->connect( parWidget, SIGNAL(valueChanged(QString,QString)), SLOT(valueChangedOfChild(QString,QString)));
     ui->parameterLayout->addWidget( parWidget );
 }
 void ProcessStepWidget::setParameter(QString parameter, QString value)
@@ -74,4 +75,8 @@ void ProcessStepWidget::setParameter(QString parameter, QString value)
         }
     }
     emit invalidUpdate( "No such parameter " + parameter );
+}
+void ProcessStepWidget::valueChangedOfChild( QString name, QString value)
+{
+    emit valueChanged( ui->nameLBL->text(), name, value);
 }

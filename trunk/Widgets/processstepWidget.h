@@ -34,8 +34,13 @@ public:
     
     void setParameter(QString parameter, QString value);
 
+
 signals:
     void invalidUpdate( QString message );
+    void valueChanged( QString processStepName, QString parameterName, QString value);
+
+private slots:
+    void valueChangedOfChild(QString name, QString value);
 
 private:
     Ui::ProcessStepWidget *ui;

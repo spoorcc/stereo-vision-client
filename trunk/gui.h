@@ -47,6 +47,7 @@ signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
     void commandForServer( QString command );
+    void setValueOnServer( QString processStep, QString parameter, QString value);
     void parseCommand( QString message );
     void makeEntry(QString entry);
     void saveLog();
@@ -63,7 +64,8 @@ private slots:
     void print(QString message);
     void printLastCommand(QString command, bool succesfull = true);
 
-    void set( QString processStep, QString parameter, QString value );
+    void setValueOnGUI( QString processStep, QString parameter, QString value );
+    void valueChangedOnGUI( QString processStep, QString parameter, QString value);
 
 private:
     Ui::GUI *ui;
