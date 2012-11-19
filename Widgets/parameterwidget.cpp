@@ -53,10 +53,7 @@ void ParameterWidget::setValue(QString value)
 }
 void ParameterWidget::setBooleanValue( QString value )
 {
-
-    QList< QObject* > allCheckBoxes = ui->parameterLO->children();
-    //QCheckBox* checkBox = ui->horizontalLayout->findChild< QCheckBox* >("booleanParameter");
-    QCheckBox* checkBox = (QCheckBox*) ui->horizontalLayout->children().last();
+    QCheckBox* checkBox = findChild< QCheckBox* >("booleanParameter");
 
     if( checkBox == 0 )
     {
@@ -64,28 +61,26 @@ void ParameterWidget::setBooleanValue( QString value )
     }
 
     QStringList validSetStatements;
-    validSetStatements.append("true");
-    validSetStatements.append("enable");
-    validSetStatements.append("check");
+    validSetStatements << "true" << "enable" << "check" << "enabled";
 
     foreach( QString statement, validSetStatements )
     {
         if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
         {
             checkBox->setChecked( true );
+            emit valueChanged( ui->nameLBL->text(), "true");
         }
     }
 
     QStringList validUnSetStatements;
-    validUnSetStatements.append("false");
-    validUnSetStatements.append("disable");
-    validUnSetStatements.append("uncheck");
+    validUnSetStatements << "false" << "disable" << "disabled" << "uncheck";
 
     foreach( QString statement, validUnSetStatements )
     {
         if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
         {
             checkBox->setChecked( false );
+            emit valueChanged( ui->nameLBL->text(), "false");
         }
     }
 
@@ -93,10 +88,44 @@ void ParameterWidget::setBooleanValue( QString value )
 }
 void ParameterWidget::setNumericalValue( QString value )
 {
+    QSpinBox* spinBox = findChild< QSpinBox* >("numericParameter");
+
+    if( spinBox == 0)
+    {
+        return;
+    }
+
+    int newValue = value.toInt();
+
+    if( newValue >= spinBox->minimum() && newValue <= spinBox->maximum() )
+    {
+        spinBox->setValue( newValue );
+        emit valueChanged( ui->nameLBL->text(), value);
+    }
+
+    spinBox->update();
 
 }
 void ParameterWidget::setSelectableValue( QString value )
 {
+    QComboBox* comboBox = findChild< QComboBox* >("selectableParameter");
+
+    if( comboBox == 0)
+    {
+        return;
+    }
+    int index = comboBox->findText( value );
+
+    if( index == -1)
+    {
+        return;
+    }
+    else
+    {
+        comboBox->setCurrentIndex( index );
+        emit valueChanged( ui->nameLBL->text(), value);
+    }
+    comboBox->update();
 
 }
 
