@@ -33,9 +33,6 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
 
 void ParameterWidget::setValue(QString value)
 {
-    //FInd type
-    qDebug() << ui->nameLBL->text() << "Updating value to " << value;
-
     switch( _type )
     {
     case BOOLEAN:
@@ -48,6 +45,7 @@ void ParameterWidget::setValue(QString value)
         setSelectableValue( value );
         break;
     default:
+        illegalUpdate( "Parameter widget is of unknown type");
         break;
     }
 }
@@ -57,34 +55,44 @@ void ParameterWidget::setBooleanValue( QString value )
 
     if( checkBox == 0 )
     {
+        emit illegalUpdate( "No checkbox was found to set");
         return;
     }
 
     QStringList validSetStatements;
-    validSetStatements << "true" << "enable" << "check" << "enabled";
+    validSetStatements << "true" << "enable" << "check" << "enabled" << "1" << "t";
 
     foreach( QString statement, validSetStatements )
     {
         if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
         {
-            checkBox->setChecked( true );
-            emit valueChanged( ui->nameLBL->text(), "true");
+            if( !checkBox->isChecked() )
+            {
+                checkBox->setChecked( true );
+                emit valueChanged( ui->nameLBL->text(), "true");
+            }
+            return;
         }
     }
 
     QStringList validUnSetStatements;
-    validUnSetStatements << "false" << "disable" << "disabled" << "uncheck";
+    validUnSetStatements << "false" << "disable" << "disabled" << "uncheck" << "0" << "f";
 
     foreach( QString statement, validUnSetStatements )
     {
         if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
         {
-            checkBox->setChecked( false );
-            emit valueChanged( ui->nameLBL->text(), "false");
+            if( checkBox->isChecked() )
+            {
+                checkBox->setChecked( false );
+                emit valueChanged( ui->nameLBL->text(), "false");
+            }
+            return;
         }
     }
 
-    checkBox->update();
+    emit illegalUpdate( value + " is not a valid (un)set statement" );
+    //checkBox->update();
 }
 void ParameterWidget::setNumericalValue( QString value )
 {
@@ -97,10 +105,17 @@ void ParameterWidget::setNumericalValue( QString value )
 
     int newValue = value.toInt();
 
-    if( newValue >= spinBox->minimum() && newValue <= spinBox->maximum() )
+    if( newValue >= spinBox->minimum() && newValue <= spinBox->maximum()  )
     {
-        spinBox->setValue( newValue );
-        emit valueChanged( ui->nameLBL->text(), value);
+        if(newValue != spinBox->value() )
+        {
+            spinBox->setValue( newValue );
+            emit valueChanged( ui->nameLBL->text(), value);
+        }
+    }
+    else
+    {
+        emit illegalUpdate( QString("Value: %1 is out of range [ %2 -> %3 ]").arg(newValue).arg(spinBox->minimum()).arg( spinBox->maximum() ) );
     }
 
     spinBox->update();
@@ -112,21 +127,23 @@ void ParameterWidget::setSelectableValue( QString value )
 
     if( comboBox == 0)
     {
+        emit illegalUpdate( "No combobox was found");
         return;
     }
     int index = comboBox->findText( value );
 
-    if( index == -1)
+    if( index == -1 )
     {
+        emit illegalUpdate( "Option \""+value+"\" is not found");
         return;
     }
-    else
+    else if(index != comboBox->currentIndex() )
     {
         comboBox->setCurrentIndex( index );
         emit valueChanged( ui->nameLBL->text(), value);
     }
-    comboBox->update();
 
+    comboBox->update();
 }
 
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)

@@ -73,7 +73,19 @@ void ConfigReader::parseProcessStep( QXmlStreamReader& xml)
     QString group = QString( attributes.value("group").toString() );
     QString color = QString( attributes.value("color").toString() );
 
-    ProcessStep* step = new ProcessStep( name, 0, group, color );
+    QColor colorToSet;
+    QStringList rgb = color.split(",");
+
+    if( rgb.count() == 3)
+    {
+        colorToSet = QColor( rgb.at(0).toInt(), rgb.at(1).toInt(), rgb.at(2).toInt() );
+    }
+    else
+    {
+        colorToSet = QColor( color );
+    }
+
+    ProcessStep* step = new ProcessStep( name, 0, group, colorToSet );
 
     //Read until end of processtep
     while(!(xml.tokenType() == QXmlStreamReader::EndElement &&

@@ -17,7 +17,6 @@ public:
     explicit CommandLineWidget(QWidget *parent = 0);
     ~CommandLineWidget();
 
-
 signals:
     void executeCommand( QString command);
 
@@ -49,6 +48,8 @@ private:
     int _commandIndex;
     QStringList _commandHistory;
     Ui::CommandLineWidget *ui;
+
+    QStringList splitCommandInArguments(QString command);
 
     bool eventFilter(QObject *obj, QEvent *event);
     void focusInEvent(QFocusEvent *);

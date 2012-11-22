@@ -66,6 +66,7 @@ private slots:
 
     void setValueOnGUI( QString processStep, QString parameter, QString value );
     void valueChangedOnGUI( QString processStep, QString parameter, QString value);
+    void illegalUpdateOnGUI( QString message );
 
 private:
     Ui::GUI *ui;

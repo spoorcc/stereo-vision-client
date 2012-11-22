@@ -2,6 +2,7 @@
 #define SINGLEPREVIEWCHANNELITEM_H
 
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QRect>
 #include <QComboBox>
@@ -24,6 +25,7 @@ public:
 
     int channelNumber();
     void setMode(SinglePreviewChannelItem::Mode mode);
+
 signals:
     
 public slots:
@@ -32,6 +34,8 @@ private:
     QRect _size;
     int _channelNumber;
     SinglePreviewChannelItem::Mode _mode;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // SINGLEPREVIEWCHANNELITEM_H

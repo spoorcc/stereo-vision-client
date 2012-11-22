@@ -59,6 +59,7 @@ void GUI::addProcessStep(ProcessStep *processStep)
     }
 
     this->connect( processStepWidget, SIGNAL(valueChanged(QString,QString,QString)),SLOT(valueChangedOnGUI(QString,QString,QString)));
+    this->connect( processStepWidget, SIGNAL(illegalUpdate(QString)),SLOT(illegalUpdateOnGUI(QString)));
     print( "Added step:" + processStep->name() );
 }
 void GUI::print( QString message )
@@ -108,6 +109,11 @@ void GUI::valueChangedOnGUI(QString processStep, QString parameter, QString valu
     emit setValueOnServer( processStep, parameter, value);
 }
 
+void GUI::illegalUpdateOnGUI(QString message)
+{
+    printLastCommand( message, false);
+}
+
 void GUI::connectDialogAccepted(QHostAddress address, quint16 port)
 {
     print("Giving command to connect to transciever at " + address.toString() + " on port " + QString::number( port ) );
@@ -137,7 +143,7 @@ void GUI::commandEnteredInCommandLine(QString command)
     }
     else
     {
-        emit parseCommand( command );
+       // emit parseCommand( command );
     }
 }
 
@@ -152,7 +158,7 @@ bool GUI::getGuiCommand(QString command)
         QString::compare(command, "console clear") == 0)
     {
         ui->console->clear();
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("GUI", "Cleared console");
         return true;
     }
@@ -161,7 +167,7 @@ bool GUI::getGuiCommand(QString command)
     if( QString::compare( command, "Fullscreen",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "FLSCRN",Qt::CaseInsensitive ) == 0 )
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         this->setWindowState(Qt::WindowFullScreen);
         printToConsole("GUI", "Window fullscreen");
         return true;
@@ -171,7 +177,7 @@ bool GUI::getGuiCommand(QString command)
         QString::compare( command, "min",Qt::CaseInsensitive ) == 0 ||
         QString::compare( command, "MNMZ",Qt::CaseInsensitive ) == 0 )
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         this->setWindowState(Qt::WindowMinimized);
         printToConsole("GUI", "Window minimized");
         return true;
@@ -181,22 +187,11 @@ bool GUI::getGuiCommand(QString command)
         QString::compare( command, "max",Qt::CaseInsensitive ) == 0 ||
         QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         this->setWindowState(Qt::WindowMaximized);
         printToConsole("GUI", "Window maximized");
         return true;
     }
-
-    if( QString::compare( command, "Maximize",Qt::CaseInsensitive) == 0 ||
-        QString::compare( command, "Maximise",Qt::CaseInsensitive) == 0 ||
-        QString::compare( command, "MXMZ",Qt::CaseInsensitive ) == 0 )
-    {
-        printLastCommand(command);
-        this->setWindowState(Qt::WindowMaximized);
-        printToConsole("GUI", "Window maximized");
-        return true;
-    }
-
 
     if( QString::compare( command, "Close",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Terminate",Qt::CaseInsensitive) == 0 ||
@@ -212,38 +207,38 @@ bool GUI::getGuiCommand(QString command)
         QString::compare( command, "c2s",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "Server Connect",Qt::CaseInsensitive ) == 0 )
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         this->on_actionConnect_triggered();
         return true;
     }
     if( QString::compare( command, "ORLY?",Qt::CaseInsensitive) == 0)
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("Easter Egg", "YARLY!");
         return true;
     }
     if( QString::compare( command, "HERP?",Qt::CaseInsensitive) == 0)
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("Easter Egg", "DERP!");
         return true;
     }
     if( QString::compare(command, "poep") == 0)
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("Easter Egg", "Poep aan jou!");
         return true;
     }
     if( QString::compare(command, "save tonight",Qt::CaseInsensitive) == 0)
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("Easter Egg", "and fight the break of dawn!");
         return true;
     }
 
     if( QString::compare( command, "credits",Qt::CaseInsensitive) == 0)
     {
-        printLastCommand(command);
+        printLastCommand(command, true);
         printToConsole("The Almighty", "Android Crew");
         printToConsole("The Cranky", "Nick van Tilborg");
         printToConsole("The Drunk", "Bjeurn de Ruiter");
@@ -256,7 +251,7 @@ bool GUI::getGuiCommand(QString command)
     // Select Tab
     QStringList commandParts = command.split(" ");
 
-    if( QString::compare( commandParts.at(0),"TAB") == 0)
+    if( QString::compare( commandParts.at(0),"TAB", Qt::CaseInsensitive) == 0)
     {
         for(int i = 0; i < ui->AllProcessesTBX->count();i++)
         {
@@ -275,6 +270,7 @@ bool GUI::getGuiCommand(QString command)
         }
         return true;
     }
+    printLastCommand( false );
     return false;
 }
 

@@ -40,6 +40,7 @@ public slots:
     
 signals:
     void valueChanged(QString name, QString value);
+    void illegalUpdate( QString message );
 
 private:
     void createBooleanWidget( AbstractParameter* parameter );

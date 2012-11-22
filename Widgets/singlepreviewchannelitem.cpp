@@ -11,7 +11,8 @@ SinglePreviewChannelItem::SinglePreviewChannelItem()
 QRectF SinglePreviewChannelItem::boundingRect() const
 {
     qreal penWidth = 1;
-    return QRectF(0 - penWidth/2, 0-penWidth/2, PREVIEWCHANNELWIDTH + penWidth, PREVIEWCHANNELHEIGTH + penWidth);
+    QRectF boundingRect = QRectF(0 - penWidth/2, 0-penWidth/2, PREVIEWCHANNELWIDTH + penWidth, PREVIEWCHANNELHEIGTH + penWidth);
+    return boundingRect;
 }
 
 void SinglePreviewChannelItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -49,4 +50,18 @@ int SinglePreviewChannelItem::channelNumber()
 void SinglePreviewChannelItem::setMode( SinglePreviewChannelItem::Mode mode)
 {
     _mode = mode;
+}
+
+void SinglePreviewChannelItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    if( event->button() == Qt::RightButton )
+    {
+        _mode = config;
+    }
+    if( event->button() == Qt::LeftButton )
+    {
+
+    }
+
+    event->accept();
 }
