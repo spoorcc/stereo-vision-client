@@ -11,6 +11,7 @@
 // Global includes
 #include <QObject>
 #include <QStringList>
+#include <QColor>
 
 //Local includes
 #include "DataTypes/allparametertypes.h"
@@ -19,12 +20,12 @@ class ProcessStep : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProcessStep(QString name, int number, QString group, QString color = "white", QObject *parent = 0);
+    explicit ProcessStep(QString name, int number, QString group, QColor color = "white", QObject *parent = 0);
     
     //Get methods
     QString name();
     QString group();
-    QString color();
+    QColor color();
 
     QStringList inputStreams();
     QStringList outputStreams();
@@ -52,7 +53,7 @@ private:
     QString _name;
     int _stepNumber;
     QString _group;
-    QString _color;
+    QColor _color;
 
     QStringList _inputStreams;
     QStringList _outputStreams;

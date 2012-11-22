@@ -1,6 +1,6 @@
 #include "processstep.h"
 
-ProcessStep::ProcessStep(QString name, int number, QString group, QString color, QObject *parent) :
+ProcessStep::ProcessStep(QString name, int number, QString group, QColor color, QObject *parent) :
     QObject(parent)
 {
         _name = name;
@@ -18,7 +18,7 @@ QString ProcessStep::group()
     return _group;
 }
 
-QString ProcessStep::color()
+QColor ProcessStep::color()
 {
     return _color;
 }

@@ -26,7 +26,6 @@ ProcessStepWidget::ProcessStepWidget(ProcessStep *processStep, QWidget *parent) 
     setParameters( processStep );
     ui->parameterLayout->addWidget( _outputStreamWidget);
 
-
 }
 
 ProcessStepWidget::~ProcessStepWidget()
@@ -60,6 +59,7 @@ void ProcessStepWidget::createParameter(AbstractParameter *parameter)
     parWidget->setParameter( parameter );
     parWidget->setObjectName( parameter->name() );
     this->connect( parWidget, SIGNAL(valueChanged(QString,QString)), SLOT(valueChangedOfChild(QString,QString)));
+    this->connect( parWidget, SIGNAL(illegalUpdate(QString)), SLOT(illegalUpdateOfChild(QString)));
     ui->parameterLayout->addWidget( parWidget );
 }
 void ProcessStepWidget::setParameter(QString parameter, QString value)
@@ -69,14 +69,17 @@ void ProcessStepWidget::setParameter(QString parameter, QString value)
         if( ui->parameterLayout->itemAt(i)->widget()->objectName() == parameter )
         {
             QWidget* parameterWidget = (QWidget*) ui->parameterLayout->itemAt(i)->widget();
-            qDebug() << ui->nameLBL->text() << parameter << value;
             ((ParameterWidget*) parameterWidget)->setValue( value );
             return;
         }
     }
-    emit invalidUpdate( "No such parameter " + parameter );
+    emit illegalUpdate( "No such parameter " + parameter );
 }
 void ProcessStepWidget::valueChangedOfChild( QString name, QString value)
 {
     emit valueChanged( ui->nameLBL->text(), name, value);
+}
+void ProcessStepWidget::illegalUpdateOfChild( QString message )
+{
+    emit illegalUpdate( message );
 }

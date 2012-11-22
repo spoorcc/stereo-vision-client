@@ -117,7 +117,7 @@ void CommandLineWidget::focusInEvent(QFocusEvent *)
 }
 void CommandLineWidget::parseCommand()
 {
-    QStringList commandParts = lastCommand().split(" ");
+    QStringList commandParts = splitCommandInArguments( lastCommand() );
 
     if ( firstPartIs( "Preview" ) )
     {
@@ -138,7 +138,7 @@ void CommandLineWidget::parseCommand()
     {
         if( commandParts.count() == 4)
         {
-            commandParseStatus(" Setting " + commandParts.at(2) + " of processStep " + commandParts.at(1) + " to a value of " + commandParts.at(3) , true);
+            commandParseStatus("set " + commandParts.at(1) +" "+ commandParts.at(2) +" "+ commandParts.at(3) , true);
             emit set( commandParts.at(1), commandParts.at(2), commandParts.at(3) );
             return;
         }
@@ -151,12 +151,12 @@ void CommandLineWidget::parseCommand()
     }
     if ( firstPartIs("save") )
     {
-        if (QString::compare( commandParts.at(1), "preview",Qt::CaseInsensitive) == 0 )
+        if ( equals( commandParts.at(1), "preview") )
         {
             commandParseStatus("Preview Saved", true);
             return;
         }
-        if (QString::compare( commandParts.at(1), "log",Qt::CaseInsensitive) == 0 )
+        if ( equals( commandParts.at(1), "log") )
         {
             commandParseStatus("Log Saved", true);
             return;
@@ -187,9 +187,48 @@ void CommandLineWidget::parseCommand()
         emit sendCommandToServer( command );
         return;
     }
-    commandParseStatus( lastCommand(),false);
+    //commandParseStatus( lastCommand(),false);
     emit commandForGui( lastCommand() );
 }
+QStringList CommandLineWidget::splitCommandInArguments( QString command )
+{
+    QStringList commandParts;
+
+    if( command.contains("\"") )
+    {
+        commandParts = command.split( QRegExp(" "), QString::SkipEmptyParts );
+
+        bool partToJoin = false;
+        for( int i = 0; i < commandParts.count(); i++ )
+        {
+            if( commandParts.at(i).contains( "\"") )
+            {
+               partToJoin = !partToJoin;
+            }
+            if( !partToJoin )
+            {
+                i++;
+                commandParts.insert(i, ",");
+            }
+            else
+            {
+                i++;
+                commandParts.insert(i, " ");
+            }
+        }
+
+        QString commaSeparatedCommand = commandParts.join("");
+        commandParts = commaSeparatedCommand.split(",", QString::SkipEmptyParts);
+        commandParts.replaceInStrings( QString("\""),QString("") );
+    }
+    else
+    {
+        commandParts = command.split(" ");
+    }
+    return commandParts;
+
+}
+
 bool CommandLineWidget::equals( QString string1, QString string2, Qt::CaseSensitivity sensitivity)
 {
     return QString::compare( string1, string2, sensitivity) == 0;
@@ -216,6 +255,6 @@ void CommandLineWidget::commandParseStatus( QString message, bool succesfull )
     }
     message.append("</font>");
 
-    emit printToConsole("CMD", message );
+    emit printToConsole("CommandLine", message );
 }
 

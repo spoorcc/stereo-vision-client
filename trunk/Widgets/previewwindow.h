@@ -8,6 +8,7 @@
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsProxyWidget>
 #include <QComboBox>
+#include <QKeySequence>
 
 #include "singlepreviewchannelitem.h"
 
@@ -26,6 +27,7 @@ public:
     ~PreviewWindow();
 
     void addVideoStream( QString streamName );
+
 
 private slots:
     void on_configPB_clicked();
