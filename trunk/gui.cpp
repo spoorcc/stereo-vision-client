@@ -273,7 +273,7 @@ bool GUI::getGuiCommand(QString command)
         QString::compare( commandParts.at(0), "c2s",Qt::CaseInsensitive) == 0 ||
         QString::compare( commandParts.at(0), "Server Connect",Qt::CaseInsensitive ) == 0 )
     {
-        QHostAddress address = QHostAddress( "DEFAULT_SERVER_IP" );
+        QHostAddress address = QHostAddress( DEFAULT_SERVER_IP );
         quint16 port = DEFAULT_SERVER_PORT;
 
         if( commandParts.count() > 1)
