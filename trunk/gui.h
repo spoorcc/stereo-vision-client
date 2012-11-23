@@ -14,6 +14,9 @@
 // Global includes
 #include <QMainWindow>
 #include <QTime>
+#include <QDir>
+#include <QDesktopServices>
+#include <QFileDialog>
 
 //Local includes
 #include "Widgets/processstepWidget.h"
@@ -55,6 +58,7 @@ signals:
     void parseCommand( QString message );
     void makeEntry(QString entry);
     void saveLog();
+    void setTargetDirectory(QString path);
 
 private slots:
     void on_actionConnect_triggered();

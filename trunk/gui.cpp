@@ -18,6 +18,7 @@ GUI::GUI(QWidget *parent) :
     this->connect( _commandLineWidget, SIGNAL( set(QString,QString,QString)), SLOT(setValueOnGUI(QString,QString,QString)));
     this->connect( _commandLineWidget, SIGNAL( sendCommandToServer(QString)), SLOT(commandParsedAndChecked(QString)));
     this->connect( _commandLineWidget, SIGNAL( commandForGui(QString)), SLOT(getGuiCommand(QString)));
+    this->connect( _commandLineWidget, SIGNAL(saveLog()), SLOT(on_saveLogToFileBTN_clicked()));
     ui->consoleCommandLO->addWidget( _commandLineWidget );
 
     //Add the previewwindow to the GUI
@@ -303,5 +304,10 @@ bool GUI::getGuiCommand(QString command)
 
 void GUI::on_saveLogToFileBTN_clicked()
 {
+
+
+    QFileDialog *dialogWindow = new QFileDialog();
+    QString dir = dialogWindow->getExistingDirectory(this, tr("Choose folder"), qgetenv("HOME"));
+    emit setTargetDirectory(dir);
     emit saveLog();
 }

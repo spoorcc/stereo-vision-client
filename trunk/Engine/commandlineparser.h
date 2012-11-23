@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QDir>
 
 class CommandLineParser : public QObject
 {

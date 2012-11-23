@@ -158,6 +158,7 @@ void CommandLineWidget::parseCommand()
         }
         if ( equals( commandParts.at(1), "log") )
         {
+            emit saveLog();
             commandParseStatus("Log Saved", true);
             return;
         }
