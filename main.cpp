@@ -39,6 +39,7 @@ int main( int argc, char *argv[] )
 
  fileEngine.connect( &gui, SIGNAL( makeEntry( QString ) ) , SLOT( makeEntry( QString ) ) ) ;
  fileEngine.connect( &gui, SIGNAL( saveLog() ) , SLOT( saveLog() ) ) ;
+ fileEngine.connect( &gui, SIGNAL( setTargetDirectory(QString)), SLOT( setDestination(QString) ));
 
  gui.connect( &fileEngine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.connect( &engine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;

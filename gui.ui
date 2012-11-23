@@ -78,7 +78,7 @@
           <item>
            <widget class="QPushButton" name="saveLogToFileBTN">
             <property name="text">
-             <string>save log</string>
+             <string>Save log</string>
             </property>
            </widget>
           </item>

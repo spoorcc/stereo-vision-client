@@ -13,6 +13,7 @@
 // Global includes
 #include <QObject>
 #include <QMetaType>
+#include <QDesktopServices>
 
 // Local includes
 #include "DataTypes/allparametertypes.h"

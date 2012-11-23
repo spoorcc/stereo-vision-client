@@ -19,6 +19,7 @@ public:
 
 signals:
     void executeCommand( QString command);
+    void saveLog();
 
     void sendCommandToServer( QString command );
     void set( QString processStep, QString parameter, QString value);
