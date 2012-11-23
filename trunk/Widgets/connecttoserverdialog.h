@@ -16,6 +16,9 @@ public:
     explicit ConnectToServerDialog( QHostAddress currentAddress , quint16 currentPort, QWidget *parent = 0);
     ~ConnectToServerDialog();
     
+    void setAddress(QHostAddress address);
+    void setPort( quint16 port );
+
 signals:
     void connectToServer( QHostAddress adress, quint16 port );
 private slots:

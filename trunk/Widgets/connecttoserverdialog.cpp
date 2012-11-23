@@ -8,6 +8,8 @@ ConnectToServerDialog::ConnectToServerDialog(QHostAddress currentAddress, quint1
     ui->setupUi(this);
 
     setupContraints();
+    setAddress( currentAddress);
+    setPort( currentPort );
 }
 
 ConnectToServerDialog::~ConnectToServerDialog()
@@ -28,15 +30,25 @@ void ConnectToServerDialog::setupContraints()
     ui->ipByte3SP->setMinimum( 0 );
     ui->ipByte4SP->setMinimum( 0 );
 
-    ui->ipByte1SP->setValue( 145 );
-    ui->ipByte2SP->setValue( 48 );
-    ui->ipByte3SP->setValue( 115 );
-    ui->ipByte4SP->setValue( 191 );
-
-    //Por constraints
+    //Port constraints
     ui->portSP->setMinimum( 0 );
     ui->portSP->setMaximum( 65535 );
-    ui->portSP->setValue( 49679 );
+
+}
+void ConnectToServerDialog::setAddress( QHostAddress address )
+{
+    QString addressString = address.toString();
+    QStringList addressParts = addressString.split(".");
+
+    ui->ipByte1SP->setValue( addressParts.at(0).toInt() );
+    ui->ipByte2SP->setValue( addressParts.at(1).toInt() );
+    ui->ipByte3SP->setValue( addressParts.at(2).toInt() );
+    ui->ipByte4SP->setValue( addressParts.at(3).toInt() );
+}
+
+void ConnectToServerDialog::setPort(quint16 port)
+{
+    ui->portSP->setValue( port );
 }
 
 void ConnectToServerDialog::on_buttonBox_accepted()

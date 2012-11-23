@@ -128,13 +128,19 @@ void GUI::connectDialogRefused()
 void GUI::on_actionConnect_triggered()
 {
     print("Opening connect to server dialog");
-    ConnectToServerDialog* dialog = new ConnectToServerDialog( QHostAddress("127.0.0.1"),7755);
+    createConnectToServerDialog( QHostAddress("DEFAULT_SERVER_IP"), DEFAULT_SERVER_PORT );
+
+}
+void GUI::createConnectToServerDialog( QHostAddress address, quint16 port)
+{
+    ConnectToServerDialog* dialog = new ConnectToServerDialog( address, port, this );
 
     this->connect( dialog, SIGNAL( connectToServer(QHostAddress,quint16) ) , this, SLOT( connectDialogAccepted(QHostAddress,quint16) ) );
     this->connect( dialog, SIGNAL( rejected() ), this,  SLOT(connectDialogRefused()) );
 
     dialog->show();
 }
+
 void GUI::commandEnteredInCommandLine(QString command)
 {
     if( getGuiCommand(command) )
@@ -162,7 +168,6 @@ bool GUI::getGuiCommand(QString command)
         printToConsole("GUI", "Cleared console");
         return true;
     }
-
 
     if( QString::compare( command, "Fullscreen",Qt::CaseInsensitive) == 0 ||
         QString::compare( command, "FLSCRN",Qt::CaseInsensitive ) == 0 )
@@ -203,14 +208,6 @@ bool GUI::getGuiCommand(QString command)
         return true;
     }
 
-    if( QString::compare( command, "Connect to server",Qt::CaseInsensitive) == 0 ||
-        QString::compare( command, "c2s",Qt::CaseInsensitive) == 0 ||
-        QString::compare( command, "Server Connect",Qt::CaseInsensitive ) == 0 )
-    {
-        printLastCommand(command, true);
-        this->on_actionConnect_triggered();
-        return true;
-    }
     if( QString::compare( command, "ORLY?",Qt::CaseInsensitive) == 0)
     {
         printLastCommand(command, true);
@@ -270,7 +267,37 @@ bool GUI::getGuiCommand(QString command)
         }
         return true;
     }
-    printLastCommand( false );
+
+    if( QString::compare( commandParts.at(0), "Connect to server",Qt::CaseInsensitive) == 0 ||
+        QString::compare( commandParts.at(0), "c2s",Qt::CaseInsensitive) == 0 ||
+        QString::compare( commandParts.at(0), "Server Connect",Qt::CaseInsensitive ) == 0 )
+    {
+        QHostAddress address = QHostAddress( "DEFAULT_SERVER_IP" );
+        quint16 port = DEFAULT_SERVER_PORT;
+
+        if( commandParts.count() > 1)
+        {
+            if(!QHostAddress( commandParts.at(1) ).isNull())
+            {
+                address = QHostAddress( commandParts.at(1) );
+            }
+            else
+            {
+                printLastCommand( commandParts.at(1) + " is not a valid IPv4 address", false);
+            }
+        }
+        if( commandParts.count() > 2)
+        {
+            port = commandParts.at(2).toInt();
+        }
+
+        createConnectToServerDialog( address, port);
+
+        printLastCommand(command, true);
+        return true;
+    }
+
+    printLastCommand( command,  false );
     return false;
 }
 

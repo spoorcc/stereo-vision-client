@@ -12,6 +12,9 @@
 
 #include "singlepreviewchannelitem.h"
 
+#define PREVIEWCHANNELWIDTH  320
+#define PREVIEWCHANNELHEIGTH 240
+
 namespace Ui {
 class PreviewWindow;
 }

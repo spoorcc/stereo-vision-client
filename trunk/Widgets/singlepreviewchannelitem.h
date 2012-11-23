@@ -16,7 +16,7 @@ public:
 
     enum Mode { config, preview, replace};
 
-    SinglePreviewChannelItem();
+    SinglePreviewChannelItem(int width, int height, int channelNumber = 0);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem* option, QWidget *widget);
@@ -34,6 +34,7 @@ private:
     QRect _size;
     int _channelNumber;
     SinglePreviewChannelItem::Mode _mode;
+    QComboBox* _configMenu;
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 };

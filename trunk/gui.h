@@ -8,6 +8,9 @@
 
 */
 
+#define DEFAULT_SERVER_IP   127.0.0.1
+#define DEFAULT_SERVER_PORT 49679
+
 // Global includes
 #include <QMainWindow>
 #include <QTime>
@@ -34,6 +37,7 @@ public:
     ~GUI();
 
 
+
 public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );
@@ -54,6 +58,8 @@ signals:
 
 private slots:
     void on_actionConnect_triggered();
+    void createConnectToServerDialog(QHostAddress adress, quint16 port);
+
     void commandEnteredInCommandLine(QString command);
     void commandParsedAndChecked( QString command );
 

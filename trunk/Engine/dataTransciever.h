@@ -18,7 +18,10 @@
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QtNetwork>
 
-enum MessageType{ COMMAND = 0x01, RAW_IMAGE = 0x02 };
+#include <QByteArray>
+#include <QByteRef>
+
+#include "DataTypes/ClientServerProtocol.h"
 
 class DataTransciever : public QObject
 {
@@ -39,13 +42,14 @@ public slots:
     //Send methods
     void sendImage( QImage image );
     void sendCommand( QString command );
+    void setParameter( QString processStep, QString parameter, QString value);
 
 private:
     QUdpSocket* _udpSendSocket;
     QUdpSocket* _udpReceiveSocket;
 
     void processDatagram( QByteArray datagram );
-    void writeData( QByteArray datagram, MessageType type );
+    void writeData( clientDataTypes type, QByteArray datagram );
 
     QByteArray createDatagram( QString command );
 
