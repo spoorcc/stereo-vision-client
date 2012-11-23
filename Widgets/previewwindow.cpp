@@ -29,11 +29,13 @@ void PreviewWindow::createScene()
 
     _scene->setSceneRect( 0, 0, 4 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH );
 
+    int width = PREVIEWCHANNELWIDTH;
+    int height = PREVIEWCHANNELHEIGTH;
+
     for( int i = 0; i < 8; i++ )
     {
-        SinglePreviewChannelItem* previewChannel = new SinglePreviewChannelItem();
+        SinglePreviewChannelItem* previewChannel = new SinglePreviewChannelItem(width, height, i );
 
-        previewChannel->setChannelNumber( i );
         previewChannel->setPos(( i%2 )* PREVIEWCHANNELWIDTH + (i/4) * 2 * PREVIEWCHANNELWIDTH, ( (i/2)* PREVIEWCHANNELHEIGTH) % (2 * PREVIEWCHANNELHEIGTH)) ;
 
         _previewChannels.append( previewChannel );

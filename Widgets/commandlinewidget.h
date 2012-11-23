@@ -12,7 +12,7 @@ class CommandLineWidget;
 class CommandLineWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit CommandLineWidget(QWidget *parent = 0);
     ~CommandLineWidget();

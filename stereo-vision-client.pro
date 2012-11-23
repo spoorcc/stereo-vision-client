@@ -48,7 +48,8 @@ HEADERS  += gui.h \
             Engine/commandlineparser.h \
     Widgets/streamselectwidget.h \
     Widgets/singlepreviewchannelitem.h \
-    Engine/fileEngine.h
+    Engine/fileEngine.h \
+    DataTypes/ClientServerProtocol.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \

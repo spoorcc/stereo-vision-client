@@ -1,11 +1,15 @@
 #include "singlepreviewchannelitem.h"
 
 
-SinglePreviewChannelItem::SinglePreviewChannelItem()
+SinglePreviewChannelItem::SinglePreviewChannelItem( int width, int height, int channelNumber)
 {
-    _channelNumber = 0;
-    _size = QRect(0,0, PREVIEWCHANNELWIDTH,PREVIEWCHANNELHEIGTH);
+    _channelNumber = channelNumber;
+    _size = QRect(0,0, width, height);
     _mode = config;
+
+    _configMenu = new QComboBox();
+    _configMenu->setObjectName( "configMenu" );
+
 }
 
 QRectF SinglePreviewChannelItem::boundingRect() const
@@ -57,6 +61,7 @@ void SinglePreviewChannelItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if( event->button() == Qt::RightButton )
     {
         _mode = config;
+        _configMenu->setVisible( true );
     }
     if( event->button() == Qt::LeftButton )
     {
@@ -65,3 +70,4 @@ void SinglePreviewChannelItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     event->accept();
 }
+
