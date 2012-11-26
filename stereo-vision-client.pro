@@ -14,33 +14,32 @@ SOURCES +=  main.cpp\
             gui.cpp \
             Widgets/processstepWidget.cpp \
             Engine/engine.cpp \
-            DataTypes/abstractparameter.cpp \
-            DataTypes/numericparameter.cpp \
-            DataTypes/booleanparameter.cpp \
             Widgets/parameterwidget.cpp \
             DataTypes/processstep.cpp \
             Engine/dataTransciever.cpp \
             Widgets/connecttoserverdialog.cpp \
-            DataTypes/selectparameter.cpp \
             Widgets/commandlinewidget.cpp \
             Engine/configreader.cpp \
             Widgets/previewwindow.cpp \
             Engine/commandlineparser.cpp \
     Widgets/streamselectwidget.cpp \
     Widgets/singlepreviewchannelitem.cpp \
-    Engine/fileEngine.cpp
+    Engine/fileEngine.cpp \
+    Engine/mediabuffer.cpp \
+    DataTypes/ImageTypes/rawimageframe.cpp \
+    DataTypes/ImageTypes/abstractimageframe.cpp \
+    DataTypes/Parameters/selectparameter.cpp \
+    DataTypes/Parameters/numericparameter.cpp \
+    DataTypes/Parameters/booleanparameter.cpp \
+    DataTypes/Parameters/abstractparameter.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
             Engine/engine.h \
-            DataTypes/abstractparameter.h \
-            DataTypes/numericparameter.h \
-            DataTypes/booleanparameter.h \
             Widgets/parameterwidget.h \
             DataTypes/processstep.h \
             Engine/dataTransciever.h \
             Widgets/connecttoserverdialog.h \
-            DataTypes/selectparameter.h \
             Widgets/commandlinewidget.h \
             Engine/configreader.h \
             DataTypes/allparametertypes.h \
@@ -49,7 +48,16 @@ HEADERS  += gui.h \
     Widgets/streamselectwidget.h \
     Widgets/singlepreviewchannelitem.h \
     Engine/fileEngine.h \
-    DataTypes/ClientServerProtocol.h
+    DataTypes/ClientServerProtocol.h \
+    Engine/mediabuffer.h \
+    DataTypes/ImageTypes/rawimageframe.h \
+    DataTypes/ImageTypes/abstractimageframe.h \
+    DataTypes/Parameters/selectparameter.h \
+    DataTypes/Parameters/numericparameter.h \
+    DataTypes/Parameters/booleanparameter.h \
+    DataTypes/Parameters/allparametertypes.h \
+    DataTypes/Parameters/abstractparameter.h \
+    DataTypes/ImageTypes/allimagetypes.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \

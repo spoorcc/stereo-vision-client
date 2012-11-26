@@ -304,8 +304,6 @@ bool GUI::getGuiCommand(QString command)
 
 void GUI::on_saveLogToFileBTN_clicked()
 {
-
-
     QFileDialog *dialogWindow = new QFileDialog();
     QString dir = dialogWindow->getExistingDirectory(this, tr("Choose folder"), qgetenv("HOME"));
     emit setTargetDirectory(dir);

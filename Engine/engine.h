@@ -16,7 +16,7 @@
 #include <QDesktopServices>
 
 // Local includes
-#include "DataTypes/allparametertypes.h"
+#include "DataTypes/Parameters/allparametertypes.h"
 #include "DataTypes/processstep.h"
 
 #include "configreader.h"

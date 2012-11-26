@@ -15,7 +15,7 @@
 #include <QMap>
 
 // Local includes
-#include "DataTypes/allparametertypes.h"
+#include "DataTypes/Parameters/allparametertypes.h"
 #include "DataTypes/processstep.h"
 
 class ConfigReader : public QObject
