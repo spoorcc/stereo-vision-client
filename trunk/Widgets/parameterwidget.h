@@ -18,7 +18,7 @@
 #include <QDebug>
 
 //Local includes
-#include "DataTypes/allparametertypes.h"
+#include "DataTypes/Parameters/allparametertypes.h"
 
 enum parameterWidgetType{ BOOLEAN, NUMERICAL, SELECTABLE, UNKWOWN };
 

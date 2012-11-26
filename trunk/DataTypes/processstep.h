@@ -14,7 +14,7 @@
 #include <QColor>
 
 //Local includes
-#include "DataTypes/allparametertypes.h"
+#include "DataTypes/Parameters/allparametertypes.h"
 
 class ProcessStep : public QObject
 {

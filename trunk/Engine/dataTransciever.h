@@ -33,8 +33,12 @@ signals:
     void printToConsole( QString sender, QString message );
     void connectionSucces();
     void connectionFailed();
+
+    void parameterReceived( QString processStep, QString parameter, QString value);
+    void imageSliceReceived( imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, quint16 sliceLength, QByteArray data   );
     
 public slots:
+
     //Connection methods
     void connectToServer( QHostAddress hostAdress, quint16 port = 7755 );
     void readPendingDatagrams(); //Ugly code, it exposes this public method to the world

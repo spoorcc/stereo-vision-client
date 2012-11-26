@@ -39,8 +39,6 @@ public:
     explicit GUI(QWidget *parent = 0);
     ~GUI();
 
-
-
 public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );

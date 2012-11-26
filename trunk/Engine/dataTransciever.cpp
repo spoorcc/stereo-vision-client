@@ -105,11 +105,22 @@ void DataTransciever::readPendingDatagrams()
 
 void DataTransciever::processDatagram(QByteArray datagram)
 {
-    //FIXME: Just for debugging
-    //Get data from the datagram
-    QString message = QString( datagram );
-    print( QString( "Message: " + message) );
 
+    QString message = QString( datagram );
+
+    switch( QString( datagram.at(0) ).toInt() )
+    {
+    case SET_PARAMETER:
+
+        break;
+    case IMAGE_DATA:
+
+        break;
+    default:
+        print( QString( "Message: " + message) );
+
+        break;
+    }
 }
 
 void DataTransciever::writeData(clientDataTypes type, QByteArray datagram)
