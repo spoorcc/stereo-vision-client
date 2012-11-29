@@ -1,19 +1,18 @@
 #ifndef PREVIEWWINDOW_H
 #define PREVIEWWINDOW_H
 
-#include <QDebug>
-
 #include <QWidget>
 #include <QGraphicsScene>
-#include <QGraphicsSimpleTextItem>
-#include <QGraphicsProxyWidget>
-#include <QComboBox>
-#include <QKeySequence>
+#include <QMenu>
+#include <QVariant>
 
-#include "singlepreviewchannelitem.h"
+#include "previewchannel.h"
 
-#define PREVIEWCHANNELWIDTH  320
-#define PREVIEWCHANNELHEIGTH 240
+#define HORCHANNELCOUNT 4
+#define VERCHANNELCOUNT 2
+
+#define CHANNELWIDTH    640
+#define CHANNELHEIGTH   480
 
 namespace Ui {
 class PreviewWindow;
@@ -23,45 +22,36 @@ class PreviewWindow : public QWidget
 {
     Q_OBJECT
 
-    enum Mode { singleView, dualView, quadView, octoView, configMode};
-    
 public:
     explicit PreviewWindow(QWidget *parent = 0);
     ~PreviewWindow();
 
-    void addVideoStream( QString streamName );
+    void resizeEvent(QResizeEvent *);
 
+signals:
+    void requestPreviewStream( int previewChannel, QString procesStep, QString streamName, bool continous);
+
+public slots:
+    void addPreviewStream( QString processStep, QString streamName);
+    void zoomToNumberOfChannels(int number);
 
 private slots:
-    void on_configPB_clicked();
-
-    void on_previewWindowGV_customContextMenuRequested(const QPoint &pos);
+    void on_modeCB_currentIndexChanged(int index);
 
 private:
+    void disableScrollBars();
+
+    void initChannelCountBox();
+    void initPreviewScene();
+    void initPreviewChannels();
+    void initMenuBar();
+
+    void selectChannels(QList<int> channelIDs);
+
     Ui::PreviewWindow *ui;
-    QGraphicsScene* _scene;
+    QGraphicsScene* _previewScene;
 
-    PreviewWindow::Mode _mode;
-
-    QList< SinglePreviewChannelItem* > _previewChannels;
-    QList< QComboBox* > _videoStreamCB;
-
-    int _numberOfWindows;
-
-    void addImage(QPixmap image);
-    void clearAll();
-    void createScene();
-
-    void drawConfigScreen();
-
-    void drawSingleView();
-    void drawDualView();
-    void drawQuadView();
-    void drawOctoView();
-
-    void makeChannelsUnvisible(int index);
-
-    void scaleForMode(PreviewWindow::Mode previous, PreviewWindow::Mode next);
+    QList< PreviewChannel* > _previewChannels;
 };
 
 #endif // PREVIEWWINDOW_H

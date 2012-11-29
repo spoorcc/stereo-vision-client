@@ -5,230 +5,122 @@ PreviewWindow::PreviewWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PreviewWindow)
 {
-    _mode = PreviewWindow::configMode;
-
     ui->setupUi(this);
 
-    createScene();
+    disableScrollBars();
 
-    ui->previewWindowGV->setScene( _scene );
-    ui->previewWindowGV->show();
-
-   // this->connect( _previewChannels.first(), SIGNAL())
-
+    initChannelCountBox();
+    initPreviewScene();
+    initPreviewChannels();
 }
 
 PreviewWindow::~PreviewWindow()
 {
     delete ui;
 }
-
-void PreviewWindow::createScene()
+void PreviewWindow::disableScrollBars()
 {
-    _scene = new QGraphicsScene( this );
+    ui->previewWindowGV->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
+    ui->previewWindowGV->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff);
+}
 
-    _scene->setSceneRect( 0, 0, 4 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH );
+void PreviewWindow::initChannelCountBox()
+{
+    ui->modeCB->addItem("Single view", 1);
+    ui->modeCB->addItem("Dual view", 2);
+    ui->modeCB->addItem("Quad view", 4);
+    ui->modeCB->addItem("Octo view", 8);
+}
 
-    int width = PREVIEWCHANNELWIDTH;
-    int height = PREVIEWCHANNELHEIGTH;
+void PreviewWindow::initPreviewScene()
+{
+    _previewScene = new QGraphicsScene(this);
 
-    for( int i = 0; i < 8; i++ )
+    QRectF sceneRect = QRectF(-CHANNELWIDTH/2,-CHANNELHEIGTH/2, CHANNELWIDTH * (HORCHANNELCOUNT + 1), CHANNELHEIGTH * (VERCHANNELCOUNT + 1) );
+    _previewScene->setSceneRect( sceneRect );
+
+    ui->previewWindowGV->setScene( _previewScene );
+}
+
+void PreviewWindow::initPreviewChannels()
+{
+    for( int i = 0; i < (HORCHANNELCOUNT * VERCHANNELCOUNT); i++)
     {
-        SinglePreviewChannelItem* previewChannel = new SinglePreviewChannelItem(width, height, i );
+        QRectF channelDim = QRect( (i%HORCHANNELCOUNT) * CHANNELWIDTH,
+                                  (i/HORCHANNELCOUNT) * CHANNELHEIGTH,
+                                  CHANNELWIDTH, CHANNELHEIGTH);
+        QString channel = QString("Channel %1").arg(i);
+        PreviewChannel* previewChannel = new PreviewChannel( channelDim, i );
 
-        previewChannel->setPos(( i%2 )* PREVIEWCHANNELWIDTH + (i/4) * 2 * PREVIEWCHANNELWIDTH, ( (i/2)* PREVIEWCHANNELHEIGTH) % (2 * PREVIEWCHANNELHEIGTH)) ;
+        previewChannel->setText( channel  );
+        this->connect( previewChannel, SIGNAL(previewStreamRequest(int,QString,QString,bool)),SIGNAL(requestPreviewStream(int,QString,QString,bool)));
 
+        _previewScene->addItem( previewChannel );
         _previewChannels.append( previewChannel );
-
-        _scene->addItem( previewChannel );
-
-        QComboBox* streamSelectCB = new QComboBox();
-        streamSelectCB->setBaseSize(PREVIEWCHANNELWIDTH/2,PREVIEWCHANNELHEIGTH/6);
-        QPointF absPos = previewChannel->pos();
-        QPointF relPos = QPointF( PREVIEWCHANNELWIDTH/4, PREVIEWCHANNELHEIGTH/6);
-
-        _videoStreamCB.append( streamSelectCB );
-
-        QGraphicsProxyWidget* proxy = _scene->addWidget( streamSelectCB );
-        proxy->setPos( (absPos += relPos) );
     }
-
-}
-void PreviewWindow::drawConfigScreen()
-{
-    _scene->setSceneRect( 0, 0, 4 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH );
-    makeChannelsUnvisible(8);
-
-    ui->previewWindowGV->update();
-
 }
 
-void PreviewWindow::drawSingleView()
+void PreviewWindow::zoomToNumberOfChannels( int number )
 {
-    _scene->setSceneRect( 0, 0, PREVIEWCHANNELWIDTH, PREVIEWCHANNELHEIGTH);
-    makeChannelsUnvisible(1);
-}
+    QList< int > channelIDs;
 
-void PreviewWindow::drawDualView()
-{
-    _scene->setSceneRect(0,0,2 * PREVIEWCHANNELWIDTH, PREVIEWCHANNELHEIGTH);
-    makeChannelsUnvisible(2);
-}
-
-void PreviewWindow::drawQuadView()
-{
-    _scene->setSceneRect(0,0, 2 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH);
-    makeChannelsUnvisible(4);
-}
-
-void PreviewWindow::drawOctoView()
-{
-    _scene->setSceneRect(0,0,4 * PREVIEWCHANNELWIDTH, 2 * PREVIEWCHANNELHEIGTH);
-    makeChannelsUnvisible(8);
-    ui->previewWindowGV->update();
-}
-
-void PreviewWindow::makeChannelsUnvisible( int index )
-{
-    for( int i = 0; i < _previewChannels.count(); i++)
+    switch( number )
     {
-        bool visible = true;
-        if( i >= index)
-        {
-            visible = false;
-        }
-        _previewChannels.at(i)->setVisible( visible );
+    case 1:
+        channelIDs << 0;
+        break;
+    case 2:
+        channelIDs << 0 << 1;
+        break;
+    case 4:
+        channelIDs << 0 << 1 << 4 << 5;
+        break;
+    case 8:
+        channelIDs << 0 << 1 << 2 << 3 << 4 << 5 << 6 << 7;
+        break;
+    default:
+        channelIDs << 0 << 1 << 2 << 3 << 4 << 5 << 6 << 7;
+        break;
     }
+
+    selectChannels( channelIDs );
 }
 
-void PreviewWindow::addImage( QPixmap image )
+void PreviewWindow::selectChannels( QList<int> channelIDs )
 {
-    _scene->addPixmap( image );
-}
+    QRectF area;
 
-void PreviewWindow::clearAll()
-{
-    _scene->clear();
-}
-
-void PreviewWindow::scaleForMode( PreviewWindow::Mode previous, PreviewWindow::Mode next )
-{
-    double scaleX = 1.0;
-    double scaleY = 1.0;
-
-    switch( previous ){
-
-        case singleView:
-            scaleX = 0.25;
-            scaleY = 0.50;
-            break;
-
-        case dualView:
-            scaleX = 0.50;
-            scaleY = 0.50;
-            break;
-
-        case quadView:
-            scaleX = 0.50;
-            scaleY = 1.0;
-            break;
-        default:
-            scaleX = 1.0;
-            scaleY = 1.0;
-     }
-
-    ui->previewWindowGV->scale(scaleX, scaleY);
-
-    switch( next ){
-        case singleView:
-            scaleX = 4.0;
-            scaleY = 2.0;
-            break;
-
-        case dualView:
-            scaleX = 2.0;
-            scaleY = 2.0;
-            break;
-
-        case quadView:
-            scaleX = 2.0;
-            scaleY = 1.0;
-            break;
-        default:
-            scaleX = 1.0;
-            scaleY = 1.0;
-     }
-
-    ui->previewWindowGV->scale(scaleX, scaleY);
-
-}
-
-void PreviewWindow::on_configPB_clicked()
-{
-    if(_mode != configMode)
+    foreach( PreviewChannel* channel, _previewChannels )
     {
-        scaleForMode( _mode, configMode);
-        _mode = configMode;
-        ui->modeCB->setVisible(true);
-        ui->configPB->setText("Preview mode");
-
-        foreach( SinglePreviewChannelItem* item, _previewChannels)
+        if( channelIDs.contains( channel->id() ) )
         {
-            item->setMode( SinglePreviewChannelItem::config );
+            channel->setVisible( true );
+            area = area |= channel->boundingRect();
         }
-        foreach( QComboBox* streamSelectCB, _videoStreamCB )
+        else
         {
-            streamSelectCB->setVisible( true );
+            channel->setVisible(false);
         }
-        drawConfigScreen();
     }
-    else
+
+    ui->previewWindowGV->fitInView( area, Qt::KeepAspectRatio );
+}
+
+void PreviewWindow::resizeEvent(QResizeEvent *)
+{
+    int channelCount = ui->modeCB->itemData( ui->modeCB->currentIndex() ).toInt();
+    zoomToNumberOfChannels( channelCount );
+}
+
+void PreviewWindow::addPreviewStream(QString processStep, QString streamName)
+{
+    foreach( PreviewChannel* channel, _previewChannels)
     {
-        _mode = Mode( ui->modeCB->currentIndex() );
-        ui->modeCB->setVisible(false);
-
-        foreach( QComboBox* streamSelectCB, _videoStreamCB )
-        {
-            streamSelectCB->setVisible(false);
-        }
-
-        switch( _mode ){
-
-        case singleView:
-            drawSingleView();
-            break;
-        case dualView:
-            drawDualView();
-            break;
-        case quadView:
-            drawQuadView();
-            break;
-        case octoView:
-            drawOctoView();
-            break;
-        default:
-            drawOctoView();
-            break;
-        }
-
-        foreach( SinglePreviewChannelItem* item, _previewChannels)
-        {
-            item->setMode( SinglePreviewChannelItem::preview );
-        }
-
-        scaleForMode( configMode, _mode);
-        ui->configPB->setText("Config mode");
+        channel->addStream( processStep, streamName );
     }
 }
 
-void PreviewWindow::addVideoStream(QString streamName)
+void PreviewWindow::on_modeCB_currentIndexChanged(int index)
 {
-    foreach( QComboBox* streamSelectCB, _videoStreamCB)
-    {
-        streamSelectCB->addItem( streamName );
-    }
-}
-void PreviewWindow::on_previewWindowGV_customContextMenuRequested(const QPoint &pos)
-{
-    qDebug() << "Mouseclick";
+    zoomToNumberOfChannels( ui->modeCB->itemData( index ).toInt() );
 }
