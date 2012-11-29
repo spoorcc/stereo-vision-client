@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="PreviwWindowLBL">
      <property name="text">
-      <string>Preview</string>
+      <string>&lt;b&gt;Preview</string>
      </property>
     </widget>
    </item>
@@ -44,35 +44,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QComboBox" name="modeCB">
-       <item>
-        <property name="text">
-         <string>Single view</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Dual view</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Quad view</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Octo view</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="configPB">
-       <property name="text">
-        <string>Preview mode</string>
-       </property>
-      </widget>
+      <widget class="QComboBox" name="modeCB"/>
      </item>
     </layout>
    </item>

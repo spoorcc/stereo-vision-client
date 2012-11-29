@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>772</width>
-    <height>939</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,75 +33,96 @@
      </widget>
     </item>
     <item>
-     <widget class="QToolBox" name="AllProcessesTBX">
-      <widget class="QWidget" name="AllProcessesTBXPage1">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>754</width>
-         <height>385</height>
-        </rect>
+     <widget class="QSplitter" name="splitter_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QToolBox" name="AllProcessesTBX">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>300</height>
+        </size>
        </property>
-       <attribute name="label">
-        <string/>
-       </attribute>
+       <widget class="QWidget" name="AllProcessesTBXPage1">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>754</width>
+          <height>269</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string/>
+        </attribute>
+       </widget>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="previewWindowLO">
-      <item>
-       <layout class="QVBoxLayout" name="consoleCommandLO">
-        <item>
-         <layout class="QHBoxLayout" name="consoleTitleLO">
-          <item>
-           <widget class="QLabel" name="consoleLBL">
-            <property name="text">
-             <string>Console</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="saveLogToFileBTN">
-            <property name="text">
-             <string>Save log</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QTextBrowser" name="console">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(165, 165, 165);
+      <widget class="QSplitter" name="splitter">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QWidget" name="">
+        <layout class="QVBoxLayout" name="consoleCommandLO">
+         <item>
+          <layout class="QHBoxLayout" name="consoleTitleLO">
+           <item>
+            <widget class="QLabel" name="consoleLBL">
+             <property name="text">
+              <string>&lt;b&gt;Console</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="saveLogToFileBTN">
+             <property name="text">
+              <string>Save log</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTextBrowser" name="console">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(165, 165, 165);
 color: rgb(124, 83, 17);</string>
-          </property>
-          <property name="html">
-           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="">
+        <layout class="QHBoxLayout" name="previewWindowLO"/>
+       </widget>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>

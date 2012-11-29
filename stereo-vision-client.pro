@@ -22,16 +22,16 @@ SOURCES +=  main.cpp\
             Engine/configreader.cpp \
             Widgets/previewwindow.cpp \
             Engine/commandlineparser.cpp \
-    Widgets/streamselectwidget.cpp \
-    Widgets/singlepreviewchannelitem.cpp \
-    Engine/fileEngine.cpp \
-    Engine/mediabuffer.cpp \
-    DataTypes/ImageTypes/rawimageframe.cpp \
-    DataTypes/ImageTypes/abstractimageframe.cpp \
-    DataTypes/Parameters/selectparameter.cpp \
-    DataTypes/Parameters/numericparameter.cpp \
-    DataTypes/Parameters/booleanparameter.cpp \
-    DataTypes/Parameters/abstractparameter.cpp
+            Widgets/streamselectwidget.cpp \
+            Engine/fileEngine.cpp \
+            Engine/mediabuffer.cpp \
+            DataTypes/ImageTypes/rawimageframe.cpp \
+            DataTypes/ImageTypes/abstractimageframe.cpp \
+            DataTypes/Parameters/selectparameter.cpp \
+            DataTypes/Parameters/numericparameter.cpp \
+            DataTypes/Parameters/booleanparameter.cpp \
+            DataTypes/Parameters/abstractparameter.cpp \
+            Widgets/previewchannel.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -45,19 +45,19 @@ HEADERS  += gui.h \
             DataTypes/allparametertypes.h \
             Widgets/previewwindow.h \
             Engine/commandlineparser.h \
-    Widgets/streamselectwidget.h \
-    Widgets/singlepreviewchannelitem.h \
-    Engine/fileEngine.h \
-    DataTypes/ClientServerProtocol.h \
-    Engine/mediabuffer.h \
-    DataTypes/ImageTypes/rawimageframe.h \
-    DataTypes/ImageTypes/abstractimageframe.h \
-    DataTypes/Parameters/selectparameter.h \
-    DataTypes/Parameters/numericparameter.h \
-    DataTypes/Parameters/booleanparameter.h \
-    DataTypes/Parameters/allparametertypes.h \
-    DataTypes/Parameters/abstractparameter.h \
-    DataTypes/ImageTypes/allimagetypes.h
+            Widgets/streamselectwidget.h \
+            Engine/fileEngine.h \
+            DataTypes/ClientServerProtocol.h \
+            Engine/mediabuffer.h \
+            DataTypes/ImageTypes/rawimageframe.h \
+            DataTypes/ImageTypes/abstractimageframe.h \
+            DataTypes/Parameters/selectparameter.h \
+            DataTypes/Parameters/numericparameter.h \
+            DataTypes/Parameters/booleanparameter.h \
+            DataTypes/Parameters/allparametertypes.h \
+            DataTypes/Parameters/abstractparameter.h \
+            DataTypes/ImageTypes/allimagetypes.h \
+            Widgets/previewchannel.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
@@ -65,14 +65,14 @@ FORMS    += gui.ui \
             Widgets/connecttoserverdialog.ui \
             Widgets/commandlinewidget.ui \
             Widgets/previewwindow.ui \
-    Widgets/streamselectwidget.ui
+            Widgets/streamselectwidget.ui
 
 OTHER_FILES += \
             Config/ProcessSteps.xml \
-    Graphics/StereoVision.ico \
-    Graphics/StereoVisionIcon.rc \
-    Graphics/StereoVision.png \
-    Documentation/CommandList.html
+            Graphics/StereoVision.ico \
+            Graphics/StereoVisionIcon.rc \
+            Graphics/StereoVision.png \
+            Documentation/CommandList.html
 
 RESOURCES += \
     Graphics/Graphics.qrc

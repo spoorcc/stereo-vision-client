@@ -11,7 +11,7 @@ GUI::GUI(QWidget *parent) :
     //Add the windowicon
     this->setWindowIcon(QIcon(":/Icons/StereoVision.png"));
 
-    //Add the commandlind widget to the GUI
+    //Add the commandline widget to the GUI
     _commandLineWidget = new CommandLineWidget(this);
     this->connect( _commandLineWidget, SIGNAL( executeCommand( QString) ), SLOT(commandEnteredInCommandLine(QString)) );
     this->connect( _commandLineWidget, SIGNAL( printToConsole(QString, QString)), SLOT( printToConsole(QString, QString) ));
@@ -56,7 +56,7 @@ void GUI::addProcessStep(ProcessStep *processStep)
     foreach( QString stream, streamList)
     {
         stream.prepend( processStep->name() + " - ");
-        _previewWindow->addVideoStream( stream );
+        _previewWindow->addPreviewStream( processStep->name(), stream );
     }
 
     this->connect( processStepWidget, SIGNAL(valueChanged(QString,QString,QString)),SLOT(valueChangedOnGUI(QString,QString,QString)));
@@ -130,7 +130,6 @@ void GUI::on_actionConnect_triggered()
 {
     print("Opening connect to server dialog");
     createConnectToServerDialog( QHostAddress("DEFAULT_SERVER_IP"), DEFAULT_SERVER_PORT );
-
 }
 void GUI::createConnectToServerDialog( QHostAddress address, quint16 port)
 {
