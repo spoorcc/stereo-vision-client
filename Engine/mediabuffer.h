@@ -16,15 +16,22 @@ class MediaBuffer : public QObject
 public:
     explicit MediaBuffer(QObject *parent = 0);
     
-    void addSlice(imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, quint16 sliceLength, QByteArray data);
-signals:
+    void processDatagram( QByteArray* datagram );
 
-    void frameCompleted( AbstractImageFrame* frame);
+    void setPreviewChannelCount(int i);
+
+signals:
+    void imageReceived( QImage image, int channel);
+
 public slots:
 
 private:
     std::deque< AbstractImageFrame* > _imageBuffer;
 
+    std::vector< QImage* > _receiveBuffers;
+    std::vector< QImage* > _sendBuffers;
+
+    void addSlice(imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data);
 };
 
 #endif // MEDIABUFFER_H

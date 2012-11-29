@@ -23,6 +23,8 @@
 
 #include "DataTypes/ClientServerProtocol.h"
 
+#include "Engine/mediabuffer.h"
+
 class DataTransciever : public QObject
 {
     Q_OBJECT
@@ -44,7 +46,7 @@ public slots:
     void readPendingDatagrams(); //Ugly code, it exposes this public method to the world
 
     //Send methods
-    void sendImage( QImage image );
+    void sendImage( QImage *image );
     void sendCommand( QString command );
     void setParameter( QString processStep, QString parameter, QString value);
 
@@ -52,7 +54,10 @@ private:
     QUdpSocket* _udpSendSocket;
     QUdpSocket* _udpReceiveSocket;
 
-    void processDatagram( QByteArray datagram );
+    MediaBuffer* _mediaBuffer;
+
+    void processDatagram( QByteArray *datagram );
+    void processParameter(QByteArray *datagram);
     void writeData( clientDataTypes type, QByteArray datagram );
 
     QByteArray createDatagram( QString command );
