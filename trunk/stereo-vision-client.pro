@@ -31,7 +31,13 @@ SOURCES +=  main.cpp\
             DataTypes/Parameters/numericparameter.cpp \
             DataTypes/Parameters/booleanparameter.cpp \
             DataTypes/Parameters/abstractparameter.cpp \
-            Widgets/previewchannel.cpp
+            Widgets/previewchannel.cpp \
+    Widgets/Dialogs/connecttoserverdialog.cpp \
+    Widgets/PreviewWidget/previewwindow.cpp \
+    Widgets/PreviewWidget/previewchannel.cpp \
+    Widgets/ProcessesInputWidgets/streamselectwidget.cpp \
+    Widgets/ProcessesInputWidgets/processstepWidget.cpp \
+    Widgets/ProcessesInputWidgets/parameterwidget.cpp
 
 HEADERS  += gui.h \
             Widgets/processstepWidget.h \
@@ -57,7 +63,14 @@ HEADERS  += gui.h \
             DataTypes/Parameters/allparametertypes.h \
             DataTypes/Parameters/abstractparameter.h \
             DataTypes/ImageTypes/allimagetypes.h \
-            Widgets/previewchannel.h
+            Widgets/previewchannel.h \
+    Widgets/Dialogs/connecttoserverdialog.h \
+    Widgets/PreviewWidget/previewwindow.h.autosave \
+    Widgets/PreviewWidget/previewwindow.h \
+    Widgets/PreviewWidget/previewchannel.h \
+    Widgets/ProcessesInputWidgets/streamselectwidget.h \
+    Widgets/ProcessesInputWidgets/processstepWidget.h \
+    Widgets/ProcessesInputWidgets/parameterwidget.h
 
 FORMS    += gui.ui \
             Widgets/processstepWidget.ui \
@@ -65,7 +78,12 @@ FORMS    += gui.ui \
             Widgets/connecttoserverdialog.ui \
             Widgets/commandlinewidget.ui \
             Widgets/previewwindow.ui \
-            Widgets/streamselectwidget.ui
+            Widgets/streamselectwidget.ui \
+    Widgets/Dialogs/connecttoserverdialog.ui \
+    Widgets/PreviewWidget/previewwindow.ui \
+    Widgets/ProcessesInputWidgets/streamselectwidget.ui \
+    Widgets/ProcessesInputWidgets/processstepWidget.ui \
+    Widgets/ProcessesInputWidgets/parameterwidget.ui
 
 OTHER_FILES += \
             Config/ProcessSteps.xml \

@@ -12,6 +12,8 @@ DataTransciever::DataTransciever(QObject *parent) :  QObject(parent)
     _udpSendSocket = new QUdpSocket(this);
     _udpReceiveSocket = new QUdpSocket(this);
 
+    _mediaBuffer = new MediaBuffer(this);
+
     //Try to connect to local udp stream
     connect( _udpReceiveSocket, SIGNAL( readyRead() ), this, SLOT( readPendingDatagrams() ));
 }
@@ -55,15 +57,15 @@ void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 }
 
 //Data commands
-void DataTransciever::sendImage( QImage image )
+void DataTransciever::sendImage( QImage* image )
 {
    // QByteArray announceImage = QByteArray("<image>");
    // writeData( announceImage );
 
-    for( int i = 0; i < image.height(); i++ )
+    for( int i = 0; i < image->height(); i++ )
     {
         // !!!!-- Probably highly dangerous code --!!!! ////
-        QByteArray scanLine = QByteArray( (char*) image.scanLine(i) );
+        QByteArray scanLine = QByteArray( (char*) image->scanLine(i) );
         writeData( IMAGE_DATA, scanLine );
     }
 
@@ -91,36 +93,42 @@ void DataTransciever::readPendingDatagrams()
 
     while ( _udpReceiveSocket->hasPendingDatagrams() )
     {
-        QByteArray datagram;
-        datagram.resize( _udpReceiveSocket->pendingDatagramSize() );
+        QByteArray* datagram = new QByteArray();
+        datagram->resize( _udpReceiveSocket->pendingDatagramSize() );
         QHostAddress sender;
         quint16 senderPort;
 
-        _udpReceiveSocket->readDatagram( datagram.data(), datagram.size(), &sender, &senderPort);
+        _udpReceiveSocket->readDatagram( datagram->data(), datagram->size(), &sender, &senderPort);
 
         emit print( QString("Parsing message from %1 on port %2").arg( sender.toString() ).arg( senderPort ) );
         processDatagram( datagram );
     }
 }
 
-void DataTransciever::processDatagram(QByteArray datagram)
+void DataTransciever::processDatagram(QByteArray* datagram)
 {
-
-    QString message = QString( datagram );
-
-    switch( QString( datagram.at(0) ).toInt() )
+    switch( QString( datagram->at(0) ).toInt() )
     {
+
     case SET_PARAMETER:
-
+        processParameter( datagram );
         break;
+
     case IMAGE_DATA:
-
+        _mediaBuffer->processDatagram( datagram );
         break;
-    default:
-        print( QString( "Message: " + message) );
 
+    default:
+        QString message = QString( *datagram );
+        print( QString( "Unkwon Message: " + message) );
         break;
     }
+
+    delete datagram;
+}
+void DataTransciever::processParameter( QByteArray* datagram )
+{
+    emit parameterReceived( "test", "test", "test");
 }
 
 void DataTransciever::writeData(clientDataTypes type, QByteArray datagram)

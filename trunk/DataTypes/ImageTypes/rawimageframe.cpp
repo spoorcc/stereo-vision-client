@@ -22,7 +22,7 @@ RawImageFrame::~RawImageFrame()
 bool RawImageFrame::addSlice( QByteArray slice, int sliceIndex )
 {     
     //If the slice is of the expected size or smaller, add it to the buffer
-    if( _sliceSize >= slice.size() )
+    if( _sliceSize >= slice.size() && ( sliceIndex + slice.size() ) <= _rawImage.size() )
     {
         _rawImage.replace( sliceIndex, slice);
         _receivedSlices++;
