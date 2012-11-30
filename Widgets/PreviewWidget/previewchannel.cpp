@@ -6,7 +6,7 @@ PreviewChannel::PreviewChannel(QRectF dimensions, int id)
 
     _boundingRect = dimensions;
     _text = "";
-    _image = new QImage( "/home/ben/Dropbox/Studie/Avans/2012-2013/TUTORMED_StereoVision/Avans.jpg");
+    _image = new QImage("/home/ben/Dropbox/Studie/HexGridStraight.gif");
     _visible = true;
 
     initMenus();
@@ -114,5 +114,5 @@ void PreviewChannel::menuClickHandler(QAction* action)
 
     qDebug() << processStep << streamName << continous ;
 
-    emit previewStreamRequest( _id, processStep, streamName, continous );
+    emit subscribeToStream( _id, processStep, streamName, continous );
 }

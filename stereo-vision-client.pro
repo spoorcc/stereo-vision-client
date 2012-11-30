@@ -31,7 +31,9 @@ SOURCES +=  main.cpp\
     Widgets/ProcessesInputWidgets/streamselectwidget.cpp \
     Widgets/ProcessesInputWidgets/processstepWidget.cpp \
     Widgets/ProcessesInputWidgets/parameterwidget.cpp \
-    Engine/DataTransciever/dataTransciever.cpp
+    Engine/DataTransciever/dataTransciever.cpp \
+    Engine/DataTransciever/datasendsocket.cpp \
+    Engine/DataTransciever/datareceivesocket.cpp
 
 HEADERS  += gui.h \
             Engine/engine.h \
@@ -58,7 +60,9 @@ HEADERS  += gui.h \
     Widgets/ProcessesInputWidgets/processstepWidget.h \
     Widgets/ProcessesInputWidgets/parameterwidget.h \
     Widgets/PreviewWidget/previewwindowconfig.h \
-    Engine/DataTransciever/dataTransciever.h
+    Engine/DataTransciever/dataTransciever.h \
+    Engine/DataTransciever/datasendsocket.h \
+    Engine/DataTransciever/datareceivesocket.h
 
 FORMS    += gui.ui \
             Widgets/commandlinewidget.ui \

@@ -8,37 +8,41 @@ MediaBuffer::MediaBuffer(QObject *parent) :
 
 void MediaBuffer::initImageBuffers()
 {
+    QImage* image= new QImage( "/home/ben/Dropbox/Studie/Avans/2012-2013/TUTORMED_StereoVision/Avans.jpg");
 
     int numberOfChannels = HORCHANNELCOUNT * VERCHANNELCOUNT;
 
     for( int i = 0; i < numberOfChannels; i++ )
     {
+         emit imageReceived(image, i);
+
         AbstractImageFrame* bufferedImage = 0;
         _imageBuffer.push_front( bufferedImage );
 
         _subscriptions << -1;
     }
+
+    emit print( "Mediabufer initialised");
 }
 
-void MediaBuffer::processImageDatagram(QByteArray *datagram)
+void MediaBuffer::processImageDatagram(QByteArray datagram)
 {
    using namespace clientServerProtocol::imageData;
 
-   int imageType = datagram->at(IMAGETYPE);
-   int streamID = datagram->at(STREAMID);
-   int frame = datagram->at(FRAMEID);
+   int imageType = datagram.at(IMAGETYPE);
+   int streamID = datagram.at(STREAMID);
+   int frame = datagram.at(FRAMEID);
 
-   int sliceIndex  = datagram->at(SLICEINDEX_MSB)  << 8 + datagram->at( SLICEINDEX_LSB );
-   int totalSlices = datagram->at(TOTALSLICES_MSB) << 8 + datagram->at( TOTALSLICES_LSB );
-   int sliceLength = datagram->at(SLICELENGTH_MSB) << 8 + datagram->at( SLICELENGTH_LSB );
+   int sliceIndex  = datagram.at(SLICEINDEX_MSB)  << sizeof(char) + datagram.at( SLICEINDEX_LSB );
+   int totalSlices = datagram.at(TOTALSLICES_MSB) << sizeof(char) + datagram.at( TOTALSLICES_LSB );
+   int sliceLength = datagram.at(SLICELENGTH_MSB) << sizeof(char) + datagram.at( SLICELENGTH_LSB );
 
-   addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram->right(sliceLength) );
+
+   //addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram.right(sliceLength) );
 }
 
-void MediaBuffer::subscribeChannelToStream(int channelID, QString streamID)
+void MediaBuffer::subscribeChannelToStream(int channelID, int streamID)
 {
-
-
     _imageBuffer.at( channelID );
 }
 
@@ -85,7 +89,6 @@ void MediaBuffer::addSlice( clientServerProtocol::imageTypes type, quint8 stream
                 }
 
                 _imageBuffer.push_back( newFrame );
-                return;
             }
         }
         else

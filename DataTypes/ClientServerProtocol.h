@@ -4,17 +4,23 @@
 #define DEFAULT_SERVER_IP   "127.0.0.1"
 #define DEFAULT_SERVER_PORT 49679
 
-#define DATAGRAMSIZE 512
+#define DATAGRAMSIZE 500
 
 namespace clientServerProtocol
 {
     enum clientDataTypes{ GET_IMAGE          = 0x00,
-                          GET_FULL_XML       = 0x01,
+                          GET_FULL_XML       = 0x01,                          
+                          UNFORMATTED_COMMAND = 0x02,
+
                           SET_PARAMETER      = 0x20,
+
                           STOP_ALL_STREAMS   = 0x30,
-                          REQUEST_LOGIN_USER = 0x40,
+
+                          REQUEST_LOGIN_USER = 0x40,                          
                           RETURN_USER        = 0x41,
+
                           IMAGE_DATA         = 0x50,
+
                           XML_FULL_CLIENT    = 0x60
                         };
 
@@ -82,7 +88,8 @@ namespace clientServerProtocol
 
     namespace imageData{
 
-        enum image_data_bytes{ IMAGETYPE = 0x01,
+        enum image_data_bytes{ DATATYPE = 0x00,
+                               IMAGETYPE = 0x01,
                                STREAMID = 0x02,
                                FRAMEID = 0x03,
                                SLICEINDEX_MSB = 0x04,
@@ -110,7 +117,7 @@ namespace clientServerProtocol
         //IMAGE DATA - TotalSlices
 
         //IMAGE DATA - SliceLength
-        enum sliceLength{ MAX_SLICE_LENGTH = 0x01E8
+        enum sliceLength{ MAX_SLICE_LENGTH = 0x01EA
                         };
 
         //IMAGE DATA - Data bytes

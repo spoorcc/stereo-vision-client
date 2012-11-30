@@ -62,6 +62,24 @@ int ProcessStep::numberOfParameters() const
     return _parameters.count();
 }
 
+int ProcessStep::numberOfStreams() const
+{
+    return _outputStreams.count() + _inputStreams.count();
+}
+
+int ProcessStep::streamID(QString streamName) const
+{
+    int streamID = _inputStreams.indexOf( streamName );
+
+    //Not in _inputStreams
+    if( streamID == -1 )
+    {
+        streamID = _inputStreams.count() + _outputStreams.indexOf( streamName );
+    }
+
+    return streamID;
+}
+
 void ProcessStep::addParameter(BooleanParameter *parameter)
 {
     addParameter( (AbstractParameter*) parameter );
@@ -80,8 +98,7 @@ void ProcessStep::addStream(QString streamname, bool isInput)
 {
     if (isInput)
     {
-        _inputStreams.append(streamname);
-
+        _inputStreams.append(streamname);       
     }
     else
     {

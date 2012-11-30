@@ -53,7 +53,7 @@ void PreviewWindow::initPreviewChannels()
         PreviewChannel* previewChannel = new PreviewChannel( channelDim, i );
 
         previewChannel->setText( channel  );
-        this->connect( previewChannel, SIGNAL(previewStreamRequest(int,QString,QString,bool)),SIGNAL(requestPreviewStream(int,QString,QString,bool)));
+        this->connect( previewChannel, SIGNAL( subscribeToStream(int,QString,QString,bool)),SIGNAL(subscribeToStream(int,QString,QString,bool)));
 
         _previewScene->addItem( previewChannel );
         _previewChannels.append( previewChannel );
@@ -123,4 +123,8 @@ void PreviewWindow::addPreviewStream(QString processStep, QString streamName)
 void PreviewWindow::on_modeCB_currentIndexChanged(int index)
 {
     zoomToNumberOfChannels( ui->modeCB->itemData( index ).toInt() );
+}
+void PreviewWindow::imageForChannel( QImage* image, int channelID )
+{
+    _previewChannels.at(channelID)->setImage( image);
 }

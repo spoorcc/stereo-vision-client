@@ -32,7 +32,11 @@ public:
 
     AbstractParameter* parameter( QString name );
     AbstractParameter* parameter( int i );
+
     int numberOfParameters() const;
+    int numberOfStreams() const;
+
+    int streamID( QString streamName ) const;
 
 signals:
     void changedParameter();

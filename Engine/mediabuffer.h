@@ -19,14 +19,13 @@ public:
     
     void initImageBuffers();
 
-    void processImageDatagram( QByteArray* datagram );
-    void subscribeChannelToStream( int channelID, QString streamID);
-
-
 signals:
-    void imageReceived( QImage image, int channel);
+    void imageReceived( QImage* image, int channel);
+    void print( QString message );
 
 public slots:
+    void processImageDatagram( QByteArray datagram );
+    void subscribeChannelToStream( int channelID, int streamID);
 
 private:
     QList< int > _subscriptions;
