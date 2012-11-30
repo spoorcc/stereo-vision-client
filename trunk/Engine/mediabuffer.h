@@ -9,6 +9,7 @@
 // Local includes
 #include "DataTypes/ClientServerProtocol.h"
 #include "DataTypes/ImageTypes/allimagetypes.h"
+#include "Widgets/PreviewWidget/previewwindowconfig.h"
 
 class MediaBuffer : public QObject
 {
@@ -16,9 +17,11 @@ class MediaBuffer : public QObject
 public:
     explicit MediaBuffer(QObject *parent = 0);
     
-    void processDatagram( QByteArray* datagram );
+    void initImageBuffers();
 
-    void setPreviewChannelCount(int i);
+    void processImageDatagram( QByteArray* datagram );
+    void subscribeChannelToStream( int channelID, QString streamID);
+
 
 signals:
     void imageReceived( QImage image, int channel);
@@ -26,12 +29,12 @@ signals:
 public slots:
 
 private:
+    QList< int > _subscriptions;
+
     std::deque< AbstractImageFrame* > _imageBuffer;
 
-    std::vector< QImage* > _receiveBuffers;
-    std::vector< QImage* > _sendBuffers;
-
-    void addSlice(imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data);
+    void resetBuffer(int channelID);
+    void addSlice(clientServerProtocol::imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data);
 };
 
 #endif // MEDIABUFFER_H

@@ -7,12 +7,9 @@
 #include <QVariant>
 
 #include "previewchannel.h"
+#include "previewwindowconfig.h"
 
-#define HORCHANNELCOUNT 4
-#define VERCHANNELCOUNT 2
 
-#define CHANNELWIDTH    640
-#define CHANNELHEIGTH   480
 
 namespace Ui {
 class PreviewWindow;

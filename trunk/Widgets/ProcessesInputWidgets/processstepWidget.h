@@ -14,8 +14,8 @@
 
 // Local includes
 #include "DataTypes/processstep.h"
-#include "Widgets/parameterwidget.h"
-#include "Widgets/streamselectwidget.h"
+#include "Widgets/ProcessesInputWidgets/parameterwidget.h"
+#include "Widgets/ProcessesInputWidgets/streamselectwidget.h"
 
 namespace Ui {
     class ProcessStepWidget;

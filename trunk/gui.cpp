@@ -23,6 +23,7 @@ GUI::GUI(QWidget *parent) :
 
     //Add the previewwindow to the GUI
     _previewWindow = new PreviewWindow( this );
+    _previewWindow->setObjectName("previewWindow");
     ui->previewWindowLO->addWidget( _previewWindow );
 
     this->setWindowTitle( "Stereo vision client" );
@@ -55,7 +56,6 @@ void GUI::addProcessStep(ProcessStep *processStep)
 
     foreach( QString stream, streamList)
     {
-        stream.prepend( processStep->name() + " - ");
         _previewWindow->addPreviewStream( processStep->name(), stream );
     }
 
