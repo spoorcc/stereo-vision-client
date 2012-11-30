@@ -8,9 +8,6 @@
 
 */
 
-#define DEFAULT_SERVER_IP   "127.0.0.1"
-#define DEFAULT_SERVER_PORT 49679
-
 // Global includes
 #include <QMainWindow>
 #include <QTime>
@@ -19,13 +16,15 @@
 #include <QFileDialog>
 
 //Local includes
-#include "Widgets/processstepWidget.h"
-#include "Widgets/connecttoserverdialog.h"
+#include "Widgets/ProcessesInputWidgets/processstepWidget.h"
+#include "Widgets/Dialogs/connecttoserverdialog.h"
 
 #include "Widgets/commandlinewidget.h"
-#include "Widgets/previewwindow.h"
+#include "Widgets/PreviewWidget/previewwindow.h"
 
 #include "Engine/commandlineparser.h"
+
+#include "DataTypes/ClientServerProtocol.h"
 
 namespace Ui {
     class GUI;

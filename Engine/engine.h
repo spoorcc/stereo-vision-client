@@ -19,8 +19,9 @@
 #include "DataTypes/Parameters/allparametertypes.h"
 #include "DataTypes/processstep.h"
 
-#include "configreader.h"
-#include "commandlineparser.h"
+#include "Engine/dataTransciever.h"
+#include "Engine/mediabuffer.h"
+#include "Engine/configreader.h"
 
 #ifdef _WIN32
     #define CONFIG_FILE "D:\\QTgui\\ProcessSteps.xml"
@@ -38,31 +39,28 @@ public:
     void init();
     int numberOfSteps() const;
 
+
 signals:
     void ready();
     void printToConsole( QString sender, QString message );
     void addProcessStep( ProcessStep* processStep);
-    void commandForServer( QString command );
 
 public slots:
     void giveProcessSteps();
-    void parseCommand( QString command );
 
 private slots:
+    void print(QString message);
     void addParsedProcessStep( ProcessStep* processStep );
     void configParsingFailed(QString message);
-
-    void commandParseStatus(QString message, bool succesfull);
-
-    void sendCommandForServer( QString command );
 
 private:
     void initProcessSteps();
 
     QList< ProcessStep* > _processSteps;
-    ConfigReader* _configReader;
-    CommandLineParser* _commandLineParser;
 
+    DataTransciever* _dataTransciever;
+    ConfigReader* _configReader;
+    MediaBuffer* _mediaBuffer;
 };
 
 Q_DECLARE_METATYPE( ProcessStep* )

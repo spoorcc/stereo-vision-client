@@ -34,7 +34,9 @@ bool RawImageFrame::addSlice( QByteArray slice, int sliceIndex )
     }
 }
 
-imageTypes RawImageFrame::imageType()
+clientServerProtocol::imageTypes RawImageFrame::imageType()
 {
+    using namespace clientServerProtocol;
+
     return RAW;
 }

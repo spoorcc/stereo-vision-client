@@ -3,26 +3,54 @@
 MediaBuffer::MediaBuffer(QObject *parent) :
     QObject(parent)
 {
+    initImageBuffers();
 }
 
-void MediaBuffer::processDatagram(QByteArray *datagram)
-{
-   int imageType = datagram->at(1);
-   int streamID = datagram->at(2);
-   int frame = datagram->at(3);
-   int sliceIndex = datagram->at(4)<<8 + datagram->at(5);
-   int totalSlices = datagram->at(7)<<8 + datagram->at(8);
-   int sliceLength = datagram->at(9)<<8 + datagram->at(10);
-
-   addSlice( imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram->right(sliceLength) );
-}
-void MediaBuffer::setPreviewChannelCount( int i )
+void MediaBuffer::initImageBuffers()
 {
 
+    int numberOfChannels = HORCHANNELCOUNT * VERCHANNELCOUNT;
+
+    for( int i = 0; i < numberOfChannels; i++ )
+    {
+        AbstractImageFrame* bufferedImage = 0;
+        _imageBuffer.push_front( bufferedImage );
+
+        _subscriptions << -1;
+    }
 }
 
-void MediaBuffer::addSlice( imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data )
+void MediaBuffer::processImageDatagram(QByteArray *datagram)
 {
+   using namespace clientServerProtocol::imageData;
+
+   int imageType = datagram->at(IMAGETYPE);
+   int streamID = datagram->at(STREAMID);
+   int frame = datagram->at(FRAMEID);
+
+   int sliceIndex  = datagram->at(SLICEINDEX_MSB)  << 8 + datagram->at( SLICEINDEX_LSB );
+   int totalSlices = datagram->at(TOTALSLICES_MSB) << 8 + datagram->at( TOTALSLICES_LSB );
+   int sliceLength = datagram->at(SLICELENGTH_MSB) << 8 + datagram->at( SLICELENGTH_LSB );
+
+   addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram->right(sliceLength) );
+}
+
+void MediaBuffer::subscribeChannelToStream(int channelID, QString streamID)
+{
+
+
+    _imageBuffer.at( channelID );
+}
+
+void MediaBuffer::resetBuffer( int channelID )
+{
+    _imageBuffer.at( channelID );
+}
+
+void MediaBuffer::addSlice( clientServerProtocol::imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data )
+{
+    using namespace clientServerProtocol;
+
     foreach( AbstractImageFrame* bufferedImage, _imageBuffer)
     {
         if( bufferedImage->streamID() == streamID )
@@ -31,7 +59,7 @@ void MediaBuffer::addSlice( imageTypes type, quint8 streamID, quint8 frameID, qu
             {
                 bool succes = bufferedImage->addSlice( data, sliceID );
             }
-            else if( bufferedImage->frameNumber() < frameID || bufferedImage->totalNumberOfSlices() == sliceID-1 )
+            else if( bufferedImage->frameNumber() < frameID  )
             {
                 //Release the previous frame
                // emit frameCompleted( bufferedImage );
@@ -57,8 +85,14 @@ void MediaBuffer::addSlice( imageTypes type, quint8 streamID, quint8 frameID, qu
                 }
 
                 _imageBuffer.push_back( newFrame );
+                return;
             }
         }
+        else
+        {
+            //Add new stream to buffer (if neccessary)
+        }
+
     }
 }
 

@@ -20,7 +20,7 @@ public:
     int streamID();
     int frameNumber();
 
-    virtual imageTypes imageType() = 0;
+    virtual clientServerProtocol::imageTypes imageType() = 0;
 
     virtual bool addSlice(QByteArray slice, int sliceIndex) = 0;
 

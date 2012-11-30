@@ -11,10 +11,11 @@ Engine::Engine(QObject *parent) :
     this->connect( _configReader, SIGNAL(parsedNewProcessStep(ProcessStep*)), SLOT(addParsedProcessStep(ProcessStep*)));
     this->connect( _configReader, SIGNAL(configParsingFailed(QString)), SLOT(configParsingFailed(QString)));
 
-    _commandLineParser = new CommandLineParser(this);
-    _commandLineParser->setObjectName("commandLineParser");
-    this->connect( _commandLineParser, SIGNAL(lastCommand(QString,bool)),SLOT(commandParseStatus(QString,bool)));
-    this->connect( _commandLineParser, SIGNAL(sendCommandToServer(QString)), SLOT(sendCommandForServer(QString)));
+    _dataTransciever = new DataTransciever(this);
+    _dataTransciever->setObjectName("dataTransciever");
+
+    _mediaBuffer = new MediaBuffer(this);
+    _mediaBuffer->setObjectName("mediaBuffer");
 }
 
 void Engine::init()
@@ -38,36 +39,18 @@ void Engine::giveProcessSteps()
     }
 }
 
-void Engine::parseCommand(QString command)
-{
-    _commandLineParser->parseCommand( command );
-}
-
 void Engine::addParsedProcessStep(ProcessStep *processStep)
 {
     _processSteps.append( processStep );
-    emit printToConsole("Engine", "Initialised process step " + processStep->name() );
+    emit print( "Initialised process step " + processStep->name() );
 }
 void Engine::configParsingFailed( QString message)
 {
     emit printToConsole("Engine", "Parsing failed :" + message);
 }
-void Engine::commandParseStatus( QString message, bool succesfull )
-{
-    if(succesfull)
-    {
-        message.prepend("<font color=\"green\">>>");
-    }
-    else
-    {
-        message.prepend("<font color=\"red\">>>");
-    }
-    message.append("</font>");
 
-    emit printToConsole("Engine", message );
+void Engine::print( QString message )
+{
+    emit printToConsole("Engine", message);
 }
 
-void Engine::sendCommandForServer(QString command)
-{
-    emit commandForServer( command );
-}

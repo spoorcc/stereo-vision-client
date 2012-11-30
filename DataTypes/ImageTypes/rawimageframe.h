@@ -12,7 +12,7 @@ public:
     ~RawImageFrame();
 
     virtual bool addSlice(QByteArray slice, int sliceIndex);
-    virtual imageTypes imageType();
+    virtual clientServerProtocol::imageTypes imageType();
 
 private:
     QByteArray _rawImage;
