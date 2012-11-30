@@ -14,12 +14,13 @@
 #include <QObject>
 #include <QMetaType>
 #include <QDesktopServices>
+#include <QDebug>
 
 // Local includes
 #include "DataTypes/Parameters/allparametertypes.h"
 #include "DataTypes/processstep.h"
 
-#include "Engine/dataTransciever.h"
+#include "Engine/DataTransciever/dataTransciever.h"
 #include "Engine/mediabuffer.h"
 #include "Engine/configreader.h"
 
@@ -47,6 +48,8 @@ signals:
 
 public slots:
     void giveProcessSteps();
+    void subscribePreviewChannelToStream(int previewChannel, QString procesStep, QString streamName, bool continous);
+    void subscribePreviewChannelToStream(int previewChannel, int streamID, bool continous);
 
 private slots:
     void print(QString message);

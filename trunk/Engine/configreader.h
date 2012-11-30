@@ -18,6 +18,8 @@
 #include "DataTypes/Parameters/allparametertypes.h"
 #include "DataTypes/processstep.h"
 
+#include "DataTypes/ClientServerProtocol.h"
+
 class ConfigReader : public QObject
 {
     Q_OBJECT
@@ -43,6 +45,8 @@ private:
     SelectParameter*  parseSelectParameter( QXmlStreamReader &xml );
 
     bool checkAttribute(QXmlStreamAttributes &attributes, QString attributeType, QString attributeValue);
+
+    int _streamID;
 };
 
 #endif // CONFIGREADER_H

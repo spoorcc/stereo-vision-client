@@ -26,11 +26,12 @@ public:
     void resizeEvent(QResizeEvent *);
 
 signals:
-    void requestPreviewStream( int previewChannel, QString procesStep, QString streamName, bool continous);
+    void subscribeToStream( int previewChannel, QString procesStep, QString streamName, bool continous);
 
 public slots:
     void addPreviewStream( QString processStep, QString streamName);
-    void zoomToNumberOfChannels(int number);
+    void zoomToNumberOfChannels(int number);    
+    void imageForChannel(QImage *image, int channelID);
 
 private slots:
     void on_modeCB_currentIndexChanged(int index);

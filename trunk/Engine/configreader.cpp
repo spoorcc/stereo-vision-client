@@ -8,6 +8,8 @@ void ConfigReader::parseXmlFile( QString path )
 {
     emit startedParsing();
 
+    _streamID = clientServerProtocol::CAMERA_1;
+
     /* We'll parse the example.xml */
     QFile* file = new QFile( path );
 
@@ -85,7 +87,7 @@ void ConfigReader::parseProcessStep( QXmlStreamReader& xml)
         colorToSet = QColor( color );
     }
 
-    ProcessStep* step = new ProcessStep( name, 0, group, colorToSet );
+    ProcessStep* step = new ProcessStep( name, 0, group, colorToSet );     
 
     //Read until end of processtep
     while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
@@ -115,38 +117,19 @@ void ConfigReader::parseProcessStep( QXmlStreamReader& xml)
             {
                 QXmlStreamAttributes streamAttributes = xml.attributes();
 
-                if( checkAttribute(streamAttributes, QString("type"), QString("input")))
+                xml.readNext();
+
+                while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "stream"))
                 {
-                    xml.readNext();
-
-                    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "stream"))
+                    if(xml.tokenType() == QXmlStreamReader::StartElement)
                     {
-                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        if(xml.name() == "substream")
                         {
-                            if(xml.name() == "substream")
-                            {
-                               step->addStream(xml.readElementText(), true);
-                            }
+                           bool isInput = checkAttribute(streamAttributes, QString("type"), QString("input"));
+                           step->addStream(xml.readElementText(), isInput);
                         }
-                        xml.readNext();
                     }
-                }
-
-                if( checkAttribute(streamAttributes, QString("type"), QString("output")))
-                {
                     xml.readNext();
-
-                    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "stream"))
-                    {
-                        if(xml.tokenType() == QXmlStreamReader::StartElement)
-                        {
-                            if(xml.name() == "substream")
-                            {
-                               step->addStream(xml.readElementText(), false);
-                            }
-                        }
-                        xml.readNext();
-                    }
                 }
             }
         }

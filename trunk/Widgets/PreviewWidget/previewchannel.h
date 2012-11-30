@@ -29,7 +29,7 @@ public:
 
 signals:
     void replaceStreamRequest();
-    void previewStreamRequest( int id, QString processStep, QString streamName, bool continous);
+    void subscribeToStream( int channelID, QString processStep, QString streamName, bool continous );
 
 public slots:
     void addStream( QString processStep, QString streamName );
