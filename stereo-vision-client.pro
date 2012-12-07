@@ -25,15 +25,16 @@ SOURCES +=  main.cpp\
             DataTypes/Parameters/numericparameter.cpp \
             DataTypes/Parameters/booleanparameter.cpp \
             DataTypes/Parameters/abstractparameter.cpp \
-    Widgets/Dialogs/connecttoserverdialog.cpp \
-    Widgets/PreviewWidget/previewwindow.cpp \
-    Widgets/PreviewWidget/previewchannel.cpp \
-    Widgets/ProcessesInputWidgets/streamselectwidget.cpp \
-    Widgets/ProcessesInputWidgets/processstepWidget.cpp \
-    Widgets/ProcessesInputWidgets/parameterwidget.cpp \
-    Engine/DataTransciever/dataTransciever.cpp \
-    Engine/DataTransciever/datasendsocket.cpp \
-    Engine/DataTransciever/datareceivesocket.cpp
+            Widgets/Dialogs/connecttoserverdialog.cpp \
+            Widgets/PreviewWidget/previewwindow.cpp \
+            Widgets/PreviewWidget/previewchannel.cpp \
+            Widgets/ProcessesInputWidgets/streamselectwidget.cpp \
+            Widgets/ProcessesInputWidgets/processstepWidget.cpp \
+            Widgets/ProcessesInputWidgets/parameterwidget.cpp \
+            Engine/DataTransciever/dataTransciever.cpp \
+            Engine/DataTransciever/datasendsocket.cpp \
+            Engine/DataTransciever/datareceivesocket.cpp \
+    DataTypes/ImageTypes/jpegimageframe.cpp
 
 HEADERS  += gui.h \
             Engine/engine.h \
@@ -53,24 +54,25 @@ HEADERS  += gui.h \
             DataTypes/Parameters/allparametertypes.h \
             DataTypes/Parameters/abstractparameter.h \
             DataTypes/ImageTypes/allimagetypes.h \
-    Widgets/Dialogs/connecttoserverdialog.h \
-    Widgets/PreviewWidget/previewwindow.h \
-    Widgets/PreviewWidget/previewchannel.h \
-    Widgets/ProcessesInputWidgets/streamselectwidget.h \
-    Widgets/ProcessesInputWidgets/processstepWidget.h \
-    Widgets/ProcessesInputWidgets/parameterwidget.h \
-    Widgets/PreviewWidget/previewwindowconfig.h \
-    Engine/DataTransciever/dataTransciever.h \
-    Engine/DataTransciever/datasendsocket.h \
-    Engine/DataTransciever/datareceivesocket.h
+            Widgets/Dialogs/connecttoserverdialog.h \
+            Widgets/PreviewWidget/previewwindow.h \
+            Widgets/PreviewWidget/previewchannel.h \
+            Widgets/ProcessesInputWidgets/streamselectwidget.h \
+            Widgets/ProcessesInputWidgets/processstepWidget.h \
+            Widgets/ProcessesInputWidgets/parameterwidget.h \
+            Widgets/PreviewWidget/previewwindowconfig.h \
+            Engine/DataTransciever/dataTransciever.h \
+            Engine/DataTransciever/datasendsocket.h \
+            Engine/DataTransciever/datareceivesocket.h \
+    DataTypes/ImageTypes/jpegimageframe.h
 
 FORMS    += gui.ui \
             Widgets/commandlinewidget.ui \
-    Widgets/Dialogs/connecttoserverdialog.ui \
-    Widgets/PreviewWidget/previewwindow.ui \
-    Widgets/ProcessesInputWidgets/streamselectwidget.ui \
-    Widgets/ProcessesInputWidgets/processstepWidget.ui \
-    Widgets/ProcessesInputWidgets/parameterwidget.ui
+            Widgets/Dialogs/connecttoserverdialog.ui \
+            Widgets/PreviewWidget/previewwindow.ui \
+            Widgets/ProcessesInputWidgets/streamselectwidget.ui \
+            Widgets/ProcessesInputWidgets/processstepWidget.ui \
+            Widgets/ProcessesInputWidgets/parameterwidget.ui
 
 OTHER_FILES += \
             Config/ProcessSteps.xml \

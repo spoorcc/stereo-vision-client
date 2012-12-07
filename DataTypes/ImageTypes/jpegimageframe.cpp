@@ -1,6 +1,7 @@
-#include "rawimageframe.h"
+#include "jpegimageframe.h"
 
-RawImageFrame::RawImageFrame(int numberOfSlices, int streamID, int frameNumber)
+
+JPEGImageFrame::JPEGImageFrame(int numberOfSlices, int streamID, int frameNumber)
 {
     _totalNumberOfSlices = numberOfSlices;
     _receivedSlices = 0;
@@ -11,48 +12,45 @@ RawImageFrame::RawImageFrame(int numberOfSlices, int streamID, int frameNumber)
    _rawImage.open(QIODevice::ReadWrite);
 }
 
-RawImageFrame::RawImageFrame(const QString& filePath, int streamID, int frameNumber )
+JPEGImageFrame::JPEGImageFrame(const QString& filePath, int streamID, int frameNumber )
 {
-    //Construct a image with the proper contraints
     QImage image(filePath);
+
     image.convertToFormat( QImage::Format_RGB888 );
     image.scaled( _defaultWidth, _defaultHeight, Qt::KeepAspectRatio);
 
-    //Write the raw data into a buffer
     _rawImage.open( QIODevice::ReadWrite);
-    image.save( &_rawImage, "BMP");
+    image.save( &_rawImage, "JPG");
 
-    //Make sure the image acts like a completed image
     _totalNumberOfSlices = 1;
     _receivedSlices = 1;
 
-    //Set the given values
     _streamID = streamID;
     _frameNumber = frameNumber;
 }
-RawImageFrame::~RawImageFrame()
+JPEGImageFrame::~JPEGImageFrame()
 {
 
 }
 
-clientServerProtocol::imageTypes RawImageFrame::imageType()
+clientServerProtocol::imageTypes JPEGImageFrame::imageType()
 {
     using namespace clientServerProtocol;
 
-    return RAW;
+    return JPEG;
 }
 
-QImage RawImageFrame::image()
-{    
+QImage JPEGImageFrame::image()
+{
     _rawImage.open(QIODevice::ReadOnly);
     QImage image;
-    image.load( &_rawImage, "BMP");
+    image.load( &_rawImage, "JPG");
     _rawImage.close();
 
     return image;
 }
 
-bool RawImageFrame::needsAllSlicesToBeValid()
+bool JPEGImageFrame::needsAllSlicesToBeValid()
 {
-    return false;
+    return true;
 }

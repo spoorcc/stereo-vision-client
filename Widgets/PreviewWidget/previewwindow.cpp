@@ -124,7 +124,7 @@ void PreviewWindow::on_modeCB_currentIndexChanged(int index)
 {
     zoomToNumberOfChannels( ui->modeCB->itemData( index ).toInt() );
 }
-void PreviewWindow::imageForChannel( QImage* image, int channelID )
+void PreviewWindow::imageForChannel( QImage image, int channelID )
 {
     _previewChannels.at(channelID)->setImage( image);
 }

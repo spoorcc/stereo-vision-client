@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/Icons">
-        <file>StereoVision.png</file>
+        <file alias="Icon">StereoVision.png</file>
     </qresource>
 </RCC>

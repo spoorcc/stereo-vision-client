@@ -21,7 +21,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     void setText( QString text);
-    void setImage(QImage *image);
+    void setImage(QImage image);
 
     void setVisible( bool tf );
 

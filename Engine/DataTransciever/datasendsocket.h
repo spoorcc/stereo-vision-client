@@ -21,6 +21,7 @@ signals:
     void print( QString message );
     void connectionSucces();
     void connectionFailed();
+    void bytesWrittenToServer( int bytes );
 
 public slots:
     void sendImage( QImage* image, int streamID);

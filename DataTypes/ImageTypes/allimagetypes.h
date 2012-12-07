@@ -10,5 +10,6 @@
 #include "DataTypes/ImageTypes/abstractimageframe.h"
 
 #include "DataTypes/ImageTypes/rawimageframe.h"
+#include "DataTypes/ImageTypes/jpegimageframe.h"
 
 #endif // ALLIMAGETYPES_H

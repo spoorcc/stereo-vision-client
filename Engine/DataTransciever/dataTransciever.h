@@ -41,6 +41,8 @@ signals:
 
     void parameterReceived( QString processStep, QString parameter, QString value);
     void imageDataReceived( QByteArray datagram );
+
+    void dataRate( int received, int sent);
     
 public slots:
 
@@ -52,6 +54,7 @@ public slots:
     void setParameter( QString processStep, QString parameter, QString value);
 
     void getImage(int streamID, bool continous);
+    void byteCounter( int count );
 
 private slots:
 

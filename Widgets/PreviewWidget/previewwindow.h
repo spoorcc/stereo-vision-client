@@ -31,7 +31,7 @@ signals:
 public slots:
     void addPreviewStream( QString processStep, QString streamName);
     void zoomToNumberOfChannels(int number);    
-    void imageForChannel(QImage *image, int channelID);
+    void imageForChannel(QImage image, int channelID);
 
 private slots:
     void on_modeCB_currentIndexChanged(int index);

@@ -34,7 +34,8 @@ void DataReceiveSocket::readPendingDatagrams()
 
         readDatagram( datagram->data(), datagram->size(), &sender, &senderPort);
 
-        emit print( QString("Reading %3 bytes from %1 on port %2").arg( sender.toString() ).arg( senderPort ).arg(datagram->size() ) );
+        emit bytesReceived( datagram->size() );
+        //emit print( QString("Reading %3 bytes from %1 on port %2").arg( sender.toString() ).arg( senderPort ).arg(datagram->size() ) );
         processDatagram( datagram );
     }
 }

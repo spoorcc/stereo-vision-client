@@ -3,19 +3,26 @@
 
 #include <QByteArray>
 #include "abstractimageframe.h"
+#include <cmath>
 
 class RawImageFrame : public AbstractImageFrame
 {
 public:
-    RawImageFrame(int totalNumberOfSlices, int sliceSize, int streamID, int frameNumber );
-    RawImageFrame(QString filePath );
+    RawImageFrame(int totalNumberOfSlices, int streamID, int frameNumber );
+    RawImageFrame(const QString &filePath, int streamID=0 , int frameNumber=0 );
     ~RawImageFrame();
 
-    virtual bool addSlice(QByteArray slice, int sliceIndex);
     virtual clientServerProtocol::imageTypes imageType();
 
+    virtual QImage image();
+
+    virtual bool needsAllSlicesToBeValid();
+
 private:
-    QByteArray _rawImage;
+
+
+
+
 };
 
 #endif // RAWIMAGEFRAME_H

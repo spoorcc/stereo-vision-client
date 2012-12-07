@@ -25,6 +25,8 @@ signals:
     void parameterReceived( QString processStep, QString parameter, QString value);
 
     void imageDataReceived( QByteArray data );
+    void bytesReceived( int bytes);
+
 public slots:
 
 

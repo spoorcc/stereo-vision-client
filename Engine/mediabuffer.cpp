@@ -8,21 +8,17 @@ MediaBuffer::MediaBuffer(QObject *parent) :
 
 void MediaBuffer::initImageBuffers()
 {
-    QImage* image= new QImage( "/home/ben/Dropbox/Studie/Avans/2012-2013/TUTORMED_StereoVision/Avans.jpg");
+    QString defaultImage = ":/Icons/Icon";
 
     int numberOfChannels = HORCHANNELCOUNT * VERCHANNELCOUNT;
 
     for( int i = 0; i < numberOfChannels; i++ )
-    {
-         emit imageReceived(image, i);
-
-        AbstractImageFrame* bufferedImage = 0;
+    {                 
+         AbstractImageFrame* bufferedImage = new JPEGImageFrame( defaultImage );
         _imageBuffer.push_front( bufferedImage );
-
-        _subscriptions << -1;
     }
 
-    emit print( "Mediabufer initialised");
+    emit print( "Mediabuffer initialised");
 }
 
 void MediaBuffer::processImageDatagram(QByteArray datagram)
@@ -37,13 +33,25 @@ void MediaBuffer::processImageDatagram(QByteArray datagram)
    int totalSlices = datagram.at(TOTALSLICES_MSB) << sizeof(char) + datagram.at( TOTALSLICES_LSB );
    int sliceLength = datagram.at(SLICELENGTH_MSB) << sizeof(char) + datagram.at( SLICELENGTH_LSB );
 
+   addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram.right(sliceLength) );
 
-   //addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram.right(sliceLength) );
 }
 
 void MediaBuffer::subscribeChannelToStream(int channelID, int streamID)
 {
-    _imageBuffer.at( channelID );
+    QImage image = _imageBuffer.at(channelID)->image();
+
+    emit imageReceived( image, channelID);
+
+    _imageBuffer.at(channelID)->changeStream( streamID );
+}
+
+void MediaBuffer::flushBuffers()
+{
+    for( int i = 0; i < _imageBuffer.size(); i++)
+    {
+        emit imageReceived( _imageBuffer.at(i)->image(), i);
+    }
 }
 
 void MediaBuffer::resetBuffer( int channelID )
@@ -51,51 +59,48 @@ void MediaBuffer::resetBuffer( int channelID )
     _imageBuffer.at( channelID );
 }
 
-void MediaBuffer::addSlice( clientServerProtocol::imageTypes type, quint8 streamID, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data )
+void MediaBuffer::addSlice( clientServerProtocol::imageTypes type, quint8 streamId, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data )
 {
     using namespace clientServerProtocol;
 
-    foreach( AbstractImageFrame* bufferedImage, _imageBuffer)
+    int bufferSize = _imageBuffer.size();
+    for( int i = 0; i < bufferSize; i++)
     {
-        if( bufferedImage->streamID() == streamID )
+        AbstractImageFrame* bufferedImage = _imageBuffer.at(i);
+
+        // If the stream matches the stream of that previewchannel
+        if( bufferedImage->streamID() == streamId )
         {
-            if( bufferedImage->frameNumber() == frameID )
+            if( bufferedImage->frameNumber() != frameID )
             {
-                bool succes = bufferedImage->addSlice( data, sliceID );
-            }
-            else if( bufferedImage->frameNumber() < frameID  )
-            {
-                //Release the previous frame
-               // emit frameCompleted( bufferedImage );
-
-                AbstractImageFrame* newFrame = 0;
-
-                //Start a new frame
-                switch( type )
+                if( !bufferedImage->needsAllSlicesToBeValid() )
                 {
-                case JPEG:
-
-                    break;
-                case RAW:
-                    newFrame = new RawImageFrame( totalSlices, data.length(), streamID, frameID );
-                    newFrame->addSlice(data, sliceID);
-                    break;
-                case DEPTH:
-
-                    break;
-                default:
-
-                    break;
+                    emit imageReceived( bufferedImage->image(), i );
                 }
 
-                _imageBuffer.push_back( newFrame );
+                bufferedImage->nextFrame( frameID, totalSlices);
+                bufferedImage->addSlice( data, sliceID );
+            }
+            else
+            {
+                if( sliceID > bufferedImage->receivedSlices() )
+                {
+                    if( bufferedImage->needsAllSlicesToBeValid() )
+                    {
+                        // Image is corrupted
+                    }
+                    else
+                    {
+                        bool complete = bufferedImage->addSlice( data, sliceID );
+                    }
+                }
             }
         }
-        else
+        else if( i >= (bufferSize + 1) )
         {
-            //Add new stream to buffer (if neccessary)
+            emit print( QString("Stream %1 not selected in any channel").arg( streamId));
         }
-
     }
+
 }
 
