@@ -14,11 +14,16 @@ Engine::Engine(QObject *parent) :
     _dataTransciever = new DataTransciever(this);
     _dataTransciever->setObjectName("dataTransciever");
 
+    this->connect( _dataTransciever, SIGNAL(printToConsole(QString,QString)),SIGNAL(printToConsole(QString,QString)));
+    _dataTransciever->connect( this, SIGNAL(connectToServer(QHostAddress,quint16)),SLOT(connectToServer(QHostAddress,quint16)));
+    _dataTransciever->connect( this, SIGNAL(commandForServer(QString)),SLOT(sendCommand(QString)));
+
     _mediaBuffer = new MediaBuffer(this);
     _mediaBuffer->setObjectName("mediaBuffer");
     _mediaBuffer->connect( _dataTransciever, SIGNAL(imageDataReceived(QByteArray)), SLOT(processImageDatagram(QByteArray)));
+    this->connect( _mediaBuffer, SIGNAL(imageReceived(QImage,int)), SIGNAL(imageReceived(QImage,int)));
 
-    connect( _mediaBuffer, SLOT(print(QString)), SLOT(print(QString)));
+    connect( _mediaBuffer, SIGNAL(print(QString)), SLOT(print(QString)));
 }
 
 void Engine::init()

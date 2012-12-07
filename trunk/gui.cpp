@@ -23,6 +23,8 @@ GUI::GUI(QWidget *parent) :
 
     //Add the previewwindow to the GUI
     _previewWindow = new PreviewWindow( this );
+    _previewWindow->connect(this, SIGNAL(imageForPreviewWindow(QImage,int)),SLOT(imageForChannel(QImage, int)));
+    this->connect( _previewWindow, SIGNAL(subscribeToStream( int, QString, QString, bool)),SIGNAL(subscribeToStream( int, QString, QString, bool)));
     _previewWindow->setObjectName("previewWindow");
     ui->previewWindowLO->addWidget( _previewWindow );
 
@@ -129,7 +131,7 @@ void GUI::connectDialogRefused()
 void GUI::on_actionConnect_triggered()
 {
     print("Opening connect to server dialog");
-    createConnectToServerDialog( QHostAddress("DEFAULT_SERVER_IP"), DEFAULT_SERVER_PORT );
+    createConnectToServerDialog( QHostAddress(DEFAULT_SERVER_IP), DEFAULT_SERVER_PORT );
 }
 void GUI::createConnectToServerDialog( QHostAddress address, quint16 port)
 {
@@ -307,4 +309,8 @@ void GUI::on_saveLogToFileBTN_clicked()
     QString dir = dialogWindow->getExistingDirectory(this, tr("Choose folder"), qgetenv("HOME"));
     emit setTargetDirectory(dir);
     emit saveLog();
+}
+void GUI::statusBarMessage( QString message )
+{
+    ui->statusBar->showMessage( message, 5);
 }

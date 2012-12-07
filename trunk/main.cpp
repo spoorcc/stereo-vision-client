@@ -11,7 +11,7 @@
 // Local includes
 #include "gui.h"
 #include "Engine/engine.h"
-#include "Engine/dataTransciever.h"
+#include "Engine/DataTransciever/dataTransciever.h"
 #include "Engine/fileEngine.h"
 
 #ifndef _WIN32
@@ -26,13 +26,17 @@ int main( int argc, char *argv[] )
 
  FileEngine fileEngine;
  Engine engine;
- DataTransciever dataTransciever;
+
  GUI gui;
 
- dataTransciever.connect( &gui, SIGNAL( connectToServer( QHostAddress,quint16 ) ) , SLOT( connectToServer( QHostAddress,quint16 ) ) ) ;
+ engine.connect( &gui, SIGNAL( connectToServer( QHostAddress,quint16 ) ) , SIGNAL( connectToServer( QHostAddress,quint16 ) ) ) ;
+
+ gui.connect( &engine, SIGNAL(imageReceived(QImage,int)),SIGNAL(imageForPreviewWindow(QImage, int)));
+
+ engine.connect( &gui, SIGNAL(subscribeToStream( int, QString, QString, bool)), SLOT( subscribePreviewChannelToStream(int, QString, QString,  bool)));
 
  engine.connect( &gui, SIGNAL( needAllProcessSteps() ) , SLOT( giveProcessSteps() ) ) ;
- engine.connect( &gui, SIGNAL( parseCommand( QString ) ) , SLOT( parseCommand( QString ) ) ) ;
+ engine.connect( &gui,SIGNAL( commandForServer(QString)), SIGNAL(commandForServer(QString)));
 
  gui.connect( &engine, SIGNAL( ready() ) , SLOT( start() ) ) ;
  gui.connect( &engine, SIGNAL( addProcessStep( ProcessStep* ) ) , SLOT( addProcessStep( ProcessStep* ) ) ) ;
@@ -43,7 +47,6 @@ int main( int argc, char *argv[] )
 
  gui.connect( &fileEngine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.connect( &engine, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
- gui.connect( &dataTransciever, SIGNAL( printToConsole( QString, QString ) ) , SLOT( printToConsole( QString, QString ) ) ) ;
  gui.show() ;
 
  engine.init() ;

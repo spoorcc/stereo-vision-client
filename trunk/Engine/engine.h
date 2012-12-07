@@ -46,6 +46,11 @@ signals:
     void printToConsole( QString sender, QString message );
     void addProcessStep( ProcessStep* processStep);
 
+    void connectToServer( QHostAddress address, quint16 port );
+    void commandForServer( QString command );
+
+    void imageReceived(QImage,int);
+
 public slots:
     void giveProcessSteps();
     void subscribePreviewChannelToStream(int previewChannel, QString procesStep, QString streamName, bool continous);

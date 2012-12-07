@@ -3,6 +3,7 @@
 
 #include "DataTypes/ClientServerProtocol.h"
 #include <QByteArray>
+#include <QBuffer>
 #include <QImage>
 
 class AbstractImageFrame
@@ -15,21 +16,34 @@ public:
     int receivedSlices();
     int missingSlices();
 
-    int sliceSize();
-
     int streamID();
     int frameNumber();
 
     virtual clientServerProtocol::imageTypes imageType() = 0;
 
-    virtual bool addSlice(QByteArray slice, int sliceIndex) = 0;
+    bool addSlice(QByteArray slice, int sliceIndex);
+
+    virtual QImage image() = 0;
+
+    void reset( int streamId, int frameNumber, int totalNumberOfSlices );
+    void nextFrame( int frameId, int totalNumberOfSlices );
+    void changeStream( int streamID);
+
+    void clearBuffer();
+
+    bool complete();
+    virtual bool needsAllSlicesToBeValid();
 
 protected:
     int _totalNumberOfSlices;
     int _receivedSlices;
-    int _sliceSize;
     int _streamID;
     int _frameNumber;
+
+    int _defaultHeight;
+    int _defaultWidth;
+
+    QBuffer _rawImage;
 };
 
 #endif // ABSTRACTIMAGEFRAME_H

@@ -43,9 +43,10 @@ void PreviewChannel::setText(QString text)
 {
     _text = text;
 }
-void PreviewChannel::setImage( QImage* image )
+void PreviewChannel::setImage( QImage image )
 {
-    _image = image;
+    delete _image;
+    _image = new QImage(image);
 }
 
 void PreviewChannel::setVisible(bool tf)
@@ -111,8 +112,6 @@ void PreviewChannel::menuClickHandler(QAction* action)
     QString processStep = actionList.at(0).toString();
     QString streamName = actionList.at(1).toString();
     bool continous = (actionList.at(2).toString() == "Continous");
-
-    qDebug() << processStep << streamName << continous ;
 
     emit subscribeToStream( _id, processStep, streamName, continous );
 }

@@ -10,7 +10,10 @@
 DataTransciever::DataTransciever(QObject *parent) :  QObject(parent)
 {
     _sendSocket = new DataSendSocket(this);
+    _sendSocket->setObjectName("sendSocket");
+
     _receiveSocket = new DataReceiveSocket(this);
+    _receiveSocket->setObjectName("receiveSocket");
 
     connect( _sendSocket,    SIGNAL(print(QString)), SLOT(print(QString) ) );
     connect( _receiveSocket, SIGNAL(print(QString)), SLOT(print(QString) ) );
@@ -39,7 +42,28 @@ void DataTransciever::getImage( int streamID, bool continous )
 {
      clientServerProtocol::imageTypes type = clientServerProtocol::JPEG;
 
-    _sendSocket->getImage( type, streamID, continous );
+     _sendSocket->getImage( type, streamID, continous );
+}
+
+void DataTransciever::byteCounter(int count)
+{
+    //TODO: Fix this
+
+    int received = 0;
+    int sent = 0;
+
+    if( sender() == _sendSocket )
+    {
+        sent = count;
+    }
+
+    else if( sender() == _receiveSocket )
+    {
+        sent = received;
+    }
+
+    emit dataRate( received, sent);
+
 }
 
 void DataTransciever::print(QString message)

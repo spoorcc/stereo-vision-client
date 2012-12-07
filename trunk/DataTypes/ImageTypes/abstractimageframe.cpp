@@ -2,7 +2,8 @@
 
 AbstractImageFrame::AbstractImageFrame()
 {
-
+    _defaultWidth = 800;
+    _defaultHeight = 600;
 }
 
 AbstractImageFrame::~AbstractImageFrame()
@@ -24,10 +25,6 @@ int AbstractImageFrame::missingSlices()
     return _totalNumberOfSlices - _receivedSlices;
 }
 
-int AbstractImageFrame::sliceSize()
-{
-    return _sliceSize;
-}
 
 int AbstractImageFrame::streamID()
 {
@@ -38,4 +35,58 @@ int AbstractImageFrame::frameNumber()
 {
     return _frameNumber;
 }
+bool AbstractImageFrame::complete()
+{
+    return (_totalNumberOfSlices == _receivedSlices);
+}
 
+bool AbstractImageFrame::needsAllSlicesToBeValid()
+{
+    return true;
+}
+bool AbstractImageFrame::addSlice( QByteArray slice, int sliceIndex )
+{
+    _rawImage.write( slice );
+
+    _receivedSlices++;
+
+    if( _receivedSlices >= _totalNumberOfSlices )
+    {
+        _rawImage.close();
+    }
+
+    return true;
+}
+
+void AbstractImageFrame::reset(int streamId, int frameNumber, int totalNumberOfSlices)
+{
+    _streamID = streamId;
+
+    nextFrame( frameNumber, totalNumberOfSlices);
+}
+
+void AbstractImageFrame::nextFrame(int frameId, int totalNumberOfSlices)
+{
+    _rawImage.open(QIODevice::ReadWrite);
+
+    _receivedSlices = 0;
+    _frameNumber = frameId;
+    _totalNumberOfSlices = totalNumberOfSlices;
+}
+
+void AbstractImageFrame::changeStream(int streamID)
+{
+        _rawImage.close();
+
+        _streamID = streamID;
+}
+
+void AbstractImageFrame::clearBuffer()
+{
+    _rawImage.open(QIODevice::ReadWrite);
+    _rawImage.buffer().clear();
+
+    _receivedSlices = 0;
+    _totalNumberOfSlices = -1;
+
+}

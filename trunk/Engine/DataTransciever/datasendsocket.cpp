@@ -87,7 +87,8 @@ void DataSendSocket::writeDataToServer( clientServerProtocol::clientDataTypes ty
 
     write( datagram );
 
-    print( QString("Sent %1 bytes to server").arg( datagram.size() ) );
+    emit bytesWrittenToServer( datagram.size() );
+    //print( QString("Sent %1 bytes to server").arg( datagram.size() ) );
 }
 
 QByteArray DataSendSocket::createDatagram(QString command)

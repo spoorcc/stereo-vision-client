@@ -38,6 +38,7 @@ public:
     explicit GUI(QWidget *parent = 0);
     ~GUI();
 
+
 public slots:
     void start();
     void addProcessStep( ProcessStep* processStep );
@@ -47,15 +48,22 @@ public slots:
     void connectDialogAccepted( QHostAddress address, quint16 port );
     void connectDialogRefused();
 
+    void statusBarMessage(QString message);
+
 signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
     void commandForServer( QString command );
     void setValueOnServer( QString processStep, QString parameter, QString value);
-    void parseCommand( QString message );
+
     void makeEntry(QString entry);
     void saveLog();
     void setTargetDirectory(QString path);
+
+    void imageForPreviewWindow( QImage image, int channelId);
+    void subscribeToStream( int channelId, QString processStep, QString streamName, bool continous);
+
+
 
 private slots:
     void on_actionConnect_triggered();
