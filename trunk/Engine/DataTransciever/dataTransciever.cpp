@@ -38,6 +38,11 @@ void DataTransciever::setParameter(QString processStep, QString parameter, QStri
 {
     _sendSocket->setParameter( processStep, parameter, value);
 }
+
+void DataTransciever::sendImage(int streamID, AbstractImageFrame *image)
+{
+
+}
 void DataTransciever::getImage( int streamID, bool continous )
 {
      clientServerProtocol::imageTypes type = clientServerProtocol::JPEG;

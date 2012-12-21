@@ -31,6 +31,7 @@ public:
     virtual bool isBoolean() const;       //This methods must be specified in derived classes
     virtual bool isNumerical() const;     //This methods must be specified in derived classes
     virtual bool isSelect() const;
+    virtual bool isPerform() const;
     
 signals:
     

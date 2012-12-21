@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding= "UTF-8"?>
 <stereo-vision>
+
+    <processstep name="Calibration" group="Camera calibration" color="100,100,100">
+
+        <parameter name="Perform calibration" type="perform" fireOnInit="0"></parameter>
+
+        <parameter name="Number of calibrations" type="numeric" min="1" init="10" max="6" >
+            <description>Sets the number of calibrations</description>
+        </parameter>
+    </processstep>
+
     <processstep name="Cameras" group="Camera configuration" color="50,0,0">
 
         <parameter name="Camera Selection" type="selectable">

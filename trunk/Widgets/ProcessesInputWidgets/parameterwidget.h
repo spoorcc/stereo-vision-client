@@ -14,13 +14,14 @@
 #include <QComboBox>
 #include <QSpacerItem>
 #include <QSpinBox>
+#include <QPushButton>
 
 #include <QDebug>
 
 //Local includes
 #include "DataTypes/Parameters/allparametertypes.h"
 
-enum parameterWidgetType{ BOOLEAN, NUMERICAL, SELECTABLE, UNKWOWN };
+enum parameterWidgetType{ BOOLEAN, NUMERICAL, SELECTABLE, PERFORM, UNKWOWN };
 
 namespace Ui {
 class ParameterWidget;
@@ -46,10 +47,12 @@ private:
     void createBooleanWidget( AbstractParameter* parameter );
     void createNumericWidget( AbstractParameter* parameter );
     void createSelectWidget( AbstractParameter* parameter );
+    void createPerformWidget( AbstractParameter* parameter );
 
     void setBooleanValue(QString value);
     void setNumericalValue(QString value);
     void setSelectableValue(QString value);
+    void setPerformValue(QString value);
 
     void addSpacer();
 

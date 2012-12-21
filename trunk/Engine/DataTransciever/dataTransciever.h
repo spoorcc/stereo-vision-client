@@ -22,6 +22,7 @@
 #include <QByteRef>
 
 #include "DataTypes/ClientServerProtocol.h"
+#include "DataTypes/ImageTypes/allimagetypes.h"
 
 #include "datareceivesocket.h"
 #include "datasendsocket.h"
@@ -52,6 +53,7 @@ public slots:
     //Send methods
     void sendCommand( QString command );
     void setParameter( QString processStep, QString parameter, QString value);
+    void sendImage( int streamID, AbstractImageFrame* image);
 
     void getImage(int streamID, bool continous);
     void byteCounter( int count );

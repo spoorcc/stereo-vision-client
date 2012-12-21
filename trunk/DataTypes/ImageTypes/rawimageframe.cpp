@@ -30,6 +30,19 @@ RawImageFrame::RawImageFrame(const QString& filePath, int streamID, int frameNum
     _streamID = streamID;
     _frameNumber = frameNumber;
 }
+
+RawImageFrame::RawImageFrame(QByteArray imageData, int streamID, int frameNumber)
+{
+    _rawImage.open( QIODevice::WriteOnly );
+    _rawImage.write( imageData );
+    _rawImage.close();
+
+    _streamID = streamID;
+    _frameNumber = frameNumber;
+
+    _totalNumberOfSlices = 1;
+    _receivedSlices = 1;
+}
 RawImageFrame::~RawImageFrame()
 {
 

@@ -26,7 +26,10 @@ public:
     virtual QImage image() = 0;
 
     void reset( int streamId, int frameNumber, int totalNumberOfSlices );
+
     void nextFrame( int frameId, int totalNumberOfSlices );
+    void nextFrame(QByteArray imageData, int frameId);
+
     void changeStream( int streamID);
 
     void clearBuffer();

@@ -43,6 +43,7 @@ private:
     BooleanParameter* parseBooleanParameter(QXmlStreamReader &xml);
     NumericParameter* parseNumericParameter(QXmlStreamReader &xml );
     SelectParameter*  parseSelectParameter( QXmlStreamReader &xml );
+    PerformParameter*  parsePerformParameter( QXmlStreamReader &xml );
 
     bool checkAttribute(QXmlStreamAttributes &attributes, QString attributeType, QString attributeValue);
 

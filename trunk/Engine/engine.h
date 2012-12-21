@@ -28,7 +28,7 @@
     #define CONFIG_FILE "D:\\QTgui\\ProcessSteps.xml"
     //#define CONFIG_FILE "D:\\Documents\\School\\Avans\\4.1_MESD\\StereoVisionQT\\Config\\ProcessSteps.xml"
 #elif __linux
-    #define CONFIG_FILE "/home/ben/Programming/Avans/stereo-vision-client/trunk/Config/ProcessSteps.xml"
+    #define CONFIG_FILE "/home/ben/Programming/WORKING_COPIES/trunk/Config/ProcessSteps.xml"
 #endif
 
 class Engine : public QObject

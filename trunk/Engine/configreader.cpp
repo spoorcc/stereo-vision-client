@@ -112,6 +112,10 @@ void ConfigReader::parseProcessStep( QXmlStreamReader& xml)
                 {
                     step->addParameter( this->parseSelectParameter( xml ) );
                 }
+                if( checkAttribute(parameterAttributes, QString("type"), QString("perform")))
+                {
+                    step->addParameter( this->parsePerformParameter( xml ) );
+                }
             }
             if (xml.name()== "stream")
             {
@@ -238,6 +242,39 @@ SelectParameter* ConfigReader::parseSelectParameter( QXmlStreamReader& xml )
             {
                parameter->addOption( xml.readElementText() );
             }
+            if(xml.name() == "description")
+            {
+                parameter->setDesciption( xml.readElementText() );
+            }
+        }
+        xml.readNext();
+    }
+
+    return parameter;
+}
+PerformParameter* ConfigReader::parsePerformParameter( QXmlStreamReader& xml )
+{
+    QXmlStreamAttributes attributes = xml.attributes();
+
+    if( !checkAttribute(attributes, "type", "perform" ) )
+    {
+        return 0;
+    }
+
+    QString name = xml.attributes().value("name").toString();
+    QString fireOnInit = xml.attributes().value("name").toString();
+
+    bool fire = ( fireOnInit == "true" );
+
+    PerformParameter* parameter = new PerformParameter(name, fire);
+
+    xml.readNext();
+
+    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "parameter"))
+    {
+        if(xml.tokenType() == QXmlStreamReader::StartElement)
+        {
+
             if(xml.name() == "description")
             {
                 parameter->setDesciption( xml.readElementText() );

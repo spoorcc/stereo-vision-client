@@ -33,8 +33,8 @@ void MediaBuffer::processImageDatagram(QByteArray datagram)
    int totalSlices = datagram.at(TOTALSLICES_MSB) << sizeof(char) + datagram.at( TOTALSLICES_LSB );
    int sliceLength = datagram.at(SLICELENGTH_MSB) << sizeof(char) + datagram.at( SLICELENGTH_LSB );
 
-   addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram.right(sliceLength) );
-
+   //addSlice( clientServerProtocol::imageTypes(imageType), streamID, frame, sliceIndex, totalSlices, datagram.right(sliceLength) );
+   addFrame( clientServerProtocol::imageTypes(imageType), streamID, frame, datagram.right(sliceLength) );
 }
 
 void MediaBuffer::subscribeChannelToStream(int channelID, int streamID)
@@ -102,5 +102,35 @@ void MediaBuffer::addSlice( clientServerProtocol::imageTypes type, quint8 stream
         }
     }
 
+}
+
+void MediaBuffer::addFrame(clientServerProtocol::imageTypes type, quint8 streamId, quint8 frameID, QByteArray data)
+{
+    using namespace clientServerProtocol;
+
+    int bufferSize = _imageBuffer.size();
+    for( int i = 0; i < bufferSize; i++)
+    {
+        AbstractImageFrame* bufferedImage = _imageBuffer.at(i);
+
+        // If the stream matches the stream of that previewchannel
+        if( bufferedImage->streamID() == streamId )
+        {
+            if( bufferedImage->frameNumber() != frameID )
+            {
+                bufferedImage->nextFrame(data, frameID);
+                emit imageReceived( bufferedImage->image(), i );
+            }
+            else
+            {
+               bufferedImage->nextFrame(data, frameID);
+               emit imageReceived( bufferedImage->image(), i );
+            }
+        }
+        else if( i >= (bufferSize + 1) )
+        {
+            emit print( QString("Stream %1 not selected in any channel").arg( streamId));
+        }
+    }
 }
 
