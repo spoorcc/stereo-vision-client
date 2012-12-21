@@ -8,8 +8,9 @@
 class RawImageFrame : public AbstractImageFrame
 {
 public:
-    RawImageFrame(int totalNumberOfSlices, int streamID, int frameNumber );
-    RawImageFrame(const QString &filePath, int streamID=0 , int frameNumber=0 );
+    RawImageFrame( int totalNumberOfSlices, int streamID, int frameNumber );
+    RawImageFrame( const QString &filePath, int streamID=0 , int frameNumber=0 );
+    RawImageFrame( QByteArray imageData , int streamID=0 , int frameNumber=0 );
     ~RawImageFrame();
 
     virtual clientServerProtocol::imageTypes imageType();

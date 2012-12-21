@@ -62,6 +62,7 @@ void ProcessStepWidget::createParameter(AbstractParameter *parameter)
     this->connect( parWidget, SIGNAL(illegalUpdate(QString)), SLOT(illegalUpdateOfChild(QString)));
     ui->parameterLayout->addWidget( parWidget );
 }
+
 void ProcessStepWidget::setParameter(QString parameter, QString value)
 {
     for( int i = 0; i < ui->parameterLayout->count(); i++ )
@@ -75,10 +76,12 @@ void ProcessStepWidget::setParameter(QString parameter, QString value)
     }
     emit illegalUpdate( "No such parameter " + parameter );
 }
+
 void ProcessStepWidget::valueChangedOfChild( QString name, QString value)
 {
     emit valueChanged( ui->nameLBL->text(), name, value);
 }
+
 void ProcessStepWidget::illegalUpdateOfChild( QString message )
 {
     emit illegalUpdate( message );

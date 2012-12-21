@@ -34,7 +34,8 @@ SOURCES +=  main.cpp\
             Engine/DataTransciever/dataTransciever.cpp \
             Engine/DataTransciever/datasendsocket.cpp \
             Engine/DataTransciever/datareceivesocket.cpp \
-    DataTypes/ImageTypes/jpegimageframe.cpp
+    DataTypes/ImageTypes/jpegimageframe.cpp \
+    DataTypes/Parameters/performparameter.cpp
 
 HEADERS  += gui.h \
             Engine/engine.h \
@@ -64,7 +65,8 @@ HEADERS  += gui.h \
             Engine/DataTransciever/dataTransciever.h \
             Engine/DataTransciever/datasendsocket.h \
             Engine/DataTransciever/datareceivesocket.h \
-    DataTypes/ImageTypes/jpegimageframe.h
+    DataTypes/ImageTypes/jpegimageframe.h \
+    DataTypes/Parameters/performparameter.h
 
 FORMS    += gui.ui \
             Widgets/commandlinewidget.ui \

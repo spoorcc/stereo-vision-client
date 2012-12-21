@@ -47,6 +47,7 @@ public slots:
     void addParameter( BooleanParameter* parameter );
     void addParameter( NumericParameter* parameter );
     void addParameter( SelectParameter* parameter );
+    void addParameter( PerformParameter* parameter );
 
     void addStream( QString streamname, bool isInput);
 

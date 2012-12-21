@@ -94,6 +94,11 @@ void ProcessStep::addParameter(SelectParameter *parameter)
     addParameter( (AbstractParameter*) parameter );
 }
 
+void ProcessStep::addParameter(PerformParameter *parameter)
+{
+    addParameter( (AbstractParameter*) parameter );
+}
+
 void ProcessStep::addStream(QString streamname, bool isInput)
 {
     if (isInput)

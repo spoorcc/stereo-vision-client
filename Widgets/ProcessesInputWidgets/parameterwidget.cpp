@@ -29,6 +29,10 @@ void ParameterWidget::setParameter(AbstractParameter *parameter)
     {
         createSelectWidget( parameter );
     }
+    if( parameter->isPerform() )
+    {
+        createPerformWidget( parameter );
+    }
 }
 
 void ParameterWidget::setValue(QString value)
@@ -43,6 +47,9 @@ void ParameterWidget::setValue(QString value)
         break;
     case SELECTABLE:
         setSelectableValue( value );
+        break;
+    case PERFORM:
+        setPerformValue( value );
         break;
     default:
         illegalUpdate( "Parameter widget is of unknown type");
@@ -146,6 +153,29 @@ void ParameterWidget::setSelectableValue( QString value )
     comboBox->update();
 }
 
+void ParameterWidget::setPerformValue(QString value)
+{
+    QPushButton* button = findChild< QPushButton* >("performParameter");
+
+    if( button == 0 )
+    {
+        emit illegalUpdate( "No perform parameter / button was found to trigger");
+        return;
+    }
+
+    QStringList validSetStatements;
+    validSetStatements << "true" << "enable" << "check" << "enabled" << "1" << "t" << "go" << "fire" << "execute" << "perform";
+
+    foreach( QString statement, validSetStatements )
+    {
+        if( QString::compare( statement, value, Qt::CaseInsensitive ) == 0 )
+        {
+            emit valueChanged( ui->nameLBL->text(), "perform");
+            return;
+        }
+    }
+}
+
 void ParameterWidget::createBooleanWidget(AbstractParameter *parameter)
 {
     _type = BOOLEAN;
@@ -196,6 +226,22 @@ void ParameterWidget::createSelectWidget( AbstractParameter *parameter)
     }
 
     ui->parameterLO->addWidget( comboBox );
+
+    addSpacer();
+}
+
+void ParameterWidget::createPerformWidget(AbstractParameter *parameter)
+{
+    _type = PERFORM;
+
+    ui->nameLBL->setText( "" );
+
+    QPushButton* button = new QPushButton(this);
+    button->setObjectName("performParameter");
+    button->setToolTip( parameter->description() );
+    button->setText(  ((PerformParameter*) parameter)->name() );
+
+    ui->parameterLO->addWidget( button );
 
     addSpacer();
 }

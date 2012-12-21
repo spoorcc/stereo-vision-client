@@ -38,3 +38,8 @@ bool AbstractParameter::isSelect() const
 {
     return false;
 }
+
+bool AbstractParameter::isPerform() const
+{
+    return false;
+}
