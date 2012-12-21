@@ -9,6 +9,9 @@ PreviewChannel::PreviewChannel(QRectF dimensions, int id)
     _image = new QImage("/home/ben/Dropbox/Studie/HexGridStraight.gif");
     _visible = true;
 
+    _processStep = "<none>";
+    _currentStream = "<none>";
+
     initMenus();
 }
 void PreviewChannel::initMenus()
@@ -16,8 +19,13 @@ void PreviewChannel::initMenus()
     _selectStreams = new QMenu("Select Streams");
 
     _streamOptions = new QMenu("Stream options");
-    _streamOptions->addAction( "Save current image" );
-    _streamOptions->addAction("Stop current stream");
+    QAction* saveImage  = _streamOptions->addAction("Save current image" );
+    QAction* stopStream = _streamOptions->addAction("Stop current stream");
+    QAction* replaceStream = _streamOptions->addAction("Replace current stream");
+
+    QObject::connect( saveImage, SIGNAL(triggered()), this, SLOT( saveImageToFile() ));
+    QObject::connect( stopStream, SIGNAL(triggered()),this,SLOT(stopCurrentStream()));
+    QObject::connect( replaceStream, SIGNAL(triggered()),this,SLOT(replaceCurrentStream()));
 }
 
 QRectF PreviewChannel::boundingRect() const
@@ -109,9 +117,38 @@ void PreviewChannel::menuClickHandler(QAction* action)
     QVariant actionInfo = action->data();
     QList<QVariant> actionList = actionInfo.toList();
 
-    QString processStep = actionList.at(0).toString();
-    QString streamName = actionList.at(1).toString();
+    _processStep = actionList.at(0).toString();
+    _currentStream = actionList.at(1).toString();
+
     bool continous = (actionList.at(2).toString() == "Continous");
 
-    emit subscribeToStream( _id, processStep, streamName, continous );
+    _text = QString("Ch %1 - ProcessStep: %2 - Stream: %3 - [%4]").arg(_id).arg(_processStep).arg( _currentStream).arg(actionList.at(2).toString());
+
+    emit subscribeToStream( _id, _processStep, _currentStream, continous );
+}
+
+void PreviewChannel::saveImageToFile()
+{
+    QFileDialog *dialogWindow = new QFileDialog();
+    QString saveFileName =  dialogWindow->getSaveFileName(0,tr("Save image"));
+
+    QImageWriter writer;
+    writer.setFileName( saveFileName );
+    writer.write( *_image );
+}
+void PreviewChannel::replaceCurrentStream()
+{
+    QFileDialog *dialogWindow = new QFileDialog();
+    const QString& getFileName =  dialogWindow->getOpenFileName(0,tr("Open image"));
+
+    _image->load( getFileName );
+
+    _text = QString("Ch %1 - ProcessStep: %2 - Stream: %3 - [%4]").arg(_id).arg(_processStep).arg( _currentStream).arg("replaced");
+
+    //emit replaceStreamRequest( streamName, *_image);
+}
+
+void PreviewChannel::stopCurrentStream()
+{
+    emit unsubscribeFromStream( _id);
 }

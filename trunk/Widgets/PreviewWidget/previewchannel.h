@@ -8,6 +8,9 @@
 #include <QPainter>
 #include <QMenu>
 #include <QGraphicsSceneContextMenuEvent>
+#include <QDesktopServices>
+#include <QFileDialog>
+#include <QImageWriter>
 
 class PreviewChannel : public QObject, public QGraphicsItem
 {
@@ -28,14 +31,18 @@ public:
     int id();
 
 signals:
-    void replaceStreamRequest();
+    void replaceStreamRequest( QString streamName, QImage image);
     void subscribeToStream( int channelID, QString processStep, QString streamName, bool continous );
+    void unsubscribeFromStream( int channelID );
 
 public slots:
     void addStream( QString processStep, QString streamName );
 
 private slots:
     void menuClickHandler(QAction *action);
+    void saveImageToFile();
+    void replaceCurrentStream();
+    void stopCurrentStream();
 
 private:
     void initMenus();
@@ -43,6 +50,8 @@ private:
 
     QRectF _boundingRect;
     QString _text;
+    QString _currentStream;
+    QString _processStep;
     QMenu* _selectStreams;
     QMenu* _streamOptions;
 
