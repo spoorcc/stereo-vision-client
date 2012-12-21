@@ -28,9 +28,9 @@ First of all install the proper software:
   * Select _Project from Version Control_
   * In the right screen select _Subversion Checkout_
   * Press _Choose_
-  * Specify the address of the repository field _( https://stereo-vision-client.googlecode.com/svn/trunk/ )_
+  * Specify the address of the repository field _( https://stereo-vision-client.googlecode.com/svn/trunk )_
   * Specify the folder where your working copy should be stored in _Checkout path_
- * Leave the _Checkout directory_ field unchanged
+ * Leave the _Checkout directory_ field unchanged (should be automatically filled with trunk)
  * Press _next_
  * You might be asked for some building parameters, just click next/ok
    * It's also possible that you will get a warning about a user file, it will ask if you want to discard it, which is a good idea, because it's my Ubuntu user file.
