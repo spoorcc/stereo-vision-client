@@ -35,7 +35,6 @@ private:
     std::deque< AbstractImageFrame* > _imageBuffer;
 
     void resetBuffer(int channelID);
-    void addSlice(clientServerProtocol::imageTypes type, quint8 streamId, quint8 frameID, quint16 sliceID, quint16 totalSlices, QByteArray data);
     void addFrame(clientServerProtocol::imageTypes type, quint8 streamId, quint8 frameID, QByteArray data);
 };
 

@@ -21,7 +21,9 @@ namespace clientServerProtocol
 
                           IMAGE_DATA         = 0x50,
 
-                          XML_FULL_CLIENT    = 0x60
+                          XML_FULL_CLIENT    = 0x60,
+
+                          ANNOUNCE_LONG      = 0xFF
                         };
 
 
@@ -122,6 +124,11 @@ namespace clientServerProtocol
 
         //IMAGE DATA - Data bytes
     }
+
+    //---------------------------------------------------------------
+    //Datatype - ANNOUNCE_LONG
+
+    // 4 bytes are used for the message length
 
 
 }
