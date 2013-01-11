@@ -62,9 +62,9 @@ void DataSendSocket::getImage(clientServerProtocol::imageTypes type, int streamI
 {
     qDebug() << type << streamID << continous ;
 
-    QByteArray datagram;
-    datagram.append( (char) streamID  );
+    QByteArray datagram;    
     datagram.append( (char) type );
+    datagram.append( (char) streamID  );
 
     if( continous )
     {
@@ -88,7 +88,7 @@ void DataSendSocket::writeDataToServer( clientServerProtocol::clientDataTypes ty
     write( datagram );
 
     emit bytesWrittenToServer( datagram.size() );
-    //print( QString("Sent %1 bytes to server").arg( datagram.size() ) );
+    print( QString("Sent %1 bytes to server").arg( datagram.size() ) );
 }
 
 QByteArray DataSendSocket::createDatagram(QString command)

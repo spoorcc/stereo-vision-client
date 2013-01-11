@@ -24,8 +24,8 @@ void PreviewChannel::initMenus()
     QAction* replaceStream = _streamOptions->addAction("Replace current stream");
 
     QObject::connect( saveImage, SIGNAL(triggered()), this, SLOT( saveImageToFile() ));
-    QObject::connect( stopStream, SIGNAL(triggered()),this,SLOT(stopCurrentStream()));
-    QObject::connect( replaceStream, SIGNAL(triggered()),this,SLOT(replaceCurrentStream()));
+    QObject::connect( stopStream, SIGNAL(triggered()), this, SLOT(stopCurrentStream()));
+    QObject::connect( replaceStream, SIGNAL(triggered()), this, SLOT(replaceCurrentStream()));
 }
 
 QRectF PreviewChannel::boundingRect() const
@@ -55,6 +55,8 @@ void PreviewChannel::setImage( QImage image )
 {
     delete _image;
     _image = new QImage(image);
+
+    qDebug() << "Setting image width" << image.size().width() << " height " << image.size().height() << " type ";
 }
 
 void PreviewChannel::setVisible(bool tf)

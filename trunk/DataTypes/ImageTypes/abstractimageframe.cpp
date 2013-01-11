@@ -75,9 +75,7 @@ void AbstractImageFrame::nextFrame(int frameId, int totalNumberOfSlices)
 }
 void AbstractImageFrame::nextFrame(QByteArray imageData, int frameId)
 {
-    _rawImage.open( QIODevice::WriteOnly );
-    _rawImage.write( imageData );
-    _rawImage.close();
+    _rawImage.setData( imageData );
 
     _frameNumber = frameId;
 
