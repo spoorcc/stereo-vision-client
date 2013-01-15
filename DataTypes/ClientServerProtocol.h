@@ -4,6 +4,7 @@
 #define DEFAULT_SERVER_IP   "127.0.0.1"
 #define DEFAULT_SERVER_PORT 49679
 
+#define MAX_UDP_MESSAGE_SIZE 512
 #define DATAGRAMSIZE 500
 
 namespace clientServerProtocol

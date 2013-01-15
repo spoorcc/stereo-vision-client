@@ -25,6 +25,7 @@ GUI::GUI(QWidget *parent) :
     _previewWindow = new PreviewWindow( this );
     _previewWindow->connect(this, SIGNAL(imageForPreviewWindow(QImage,int)),SLOT(imageForChannel(QImage, int)));
     this->connect( _previewWindow, SIGNAL(subscribeToStream( int, QString, QString, bool)),SIGNAL(subscribeToStream( int, QString, QString, bool)));
+    this->connect( _previewWindow, SIGNAL(replaceStreamRequest(QString,QString,QImage*)), SIGNAL(replaceStreamRequest(QString,QString,QImage*)));
     _previewWindow->setObjectName("previewWindow");
     ui->previewWindowLO->addWidget( _previewWindow );
 

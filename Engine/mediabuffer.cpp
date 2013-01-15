@@ -73,18 +73,9 @@ void MediaBuffer::addFrame(clientServerProtocol::imageTypes type, quint8 streamI
 
             image.scaled(800,600,Qt::KeepAspectRatio);
 
+            bufferedImage->nextFrame(data, frameID);
             emit imageReceived( image, i );
 
-            if( bufferedImage->frameNumber() != frameID )
-            {
-                bufferedImage->nextFrame(data, frameID);
-                //emit imageReceived( bufferedImage->image(), i );
-            }
-            else
-            {
-               bufferedImage->nextFrame(data, frameID);
-               //emit imageReceived( bufferedImage->image(), i );
-            }
         }
         else if( i >= (bufferSize + 1) )
         {

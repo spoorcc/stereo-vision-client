@@ -17,6 +17,7 @@ Engine::Engine(QObject *parent) :
     this->connect( _dataTransciever, SIGNAL(printToConsole(QString,QString)),SIGNAL(printToConsole(QString,QString)));
     _dataTransciever->connect( this, SIGNAL(connectToServer(QHostAddress,quint16)),SLOT(connectToServer(QHostAddress,quint16)));
     _dataTransciever->connect( this, SIGNAL(commandForServer(QString)),SLOT(sendCommand(QString)));
+    _dataTransciever->connect( this, SIGNAL(imageForServer(QImage*,int)),SLOT(sendImage(QImage*,int)) );
 
     _mediaBuffer = new MediaBuffer(this);
     _mediaBuffer->setObjectName("mediaBuffer");
@@ -49,6 +50,25 @@ void Engine::giveProcessSteps()
 
 void Engine::subscribePreviewChannelToStream(int previewChannel, QString processStep, QString streamName, bool continous)
 {
+    int streamID = getStreamId( processStep, streamName);
+
+    subscribePreviewChannelToStream( previewChannel, streamID, continous);
+}
+void Engine::subscribePreviewChannelToStream(int previewChannel,int streamID, bool continous)
+{
+    //Let the previewchannel listen to the correct buffer
+    _mediaBuffer->subscribeChannelToStream( previewChannel, streamID );
+
+    //Ask the server for the image
+    _dataTransciever->getImage( streamID, continous);
+}
+void Engine::replaceStream(QString processStep, QString streamName, QImage* image)
+{
+    int streamId = getStreamId(processStep, streamName);
+    emit imageForServer(image, streamId);
+}
+int Engine::getStreamId( QString processStep, QString streamName )
+{
     //Start at 1 because 0 is test stream
     int streamID = 1;
 
@@ -62,16 +82,9 @@ void Engine::subscribePreviewChannelToStream(int previewChannel, QString process
         streamID += step->numberOfStreams();
     }
 
-    subscribePreviewChannelToStream( previewChannel, streamID, continous);
+    return streamID;
 }
-void Engine::subscribePreviewChannelToStream(int previewChannel,int streamID, bool continous)
-{
-    //Let the previewchannel listen to the correct buffer
-    _mediaBuffer->subscribeChannelToStream( previewChannel, streamID );
 
-    //Ask the server for the image
-    _dataTransciever->getImage( streamID, continous);
-}
 void Engine::addParsedProcessStep(ProcessStep *processStep)
 {
     _processSteps.append( processStep );

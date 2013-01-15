@@ -37,6 +37,7 @@ int main( int argc, char *argv[] )
 
  engine.connect( &gui, SIGNAL( needAllProcessSteps() ) , SLOT( giveProcessSteps() ) ) ;
  engine.connect( &gui,SIGNAL( commandForServer(QString)), SIGNAL(commandForServer(QString)));
+ engine.connect( &gui, SIGNAL(replaceStreamRequest(QString,QString,QImage*)), SLOT( replaceStream(QString, QString, QImage*) ) );
 
  gui.connect( &engine, SIGNAL( ready() ) , SLOT( start() ) ) ;
  gui.connect( &engine, SIGNAL( addProcessStep( ProcessStep* ) ) , SLOT( addProcessStep( ProcessStep* ) ) ) ;

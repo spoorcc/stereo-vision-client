@@ -4,7 +4,9 @@
 #include <QUdpSocket>
 #include <QImage>
 #include <QByteArray>
+#include <QBuffer>
 #include <QDebug>
+#include <qmath.h>
 
 #include "DataTypes/ClientServerProtocol.h"
 

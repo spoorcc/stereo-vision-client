@@ -63,7 +63,7 @@ signals:
     void imageForPreviewWindow( QImage image, int channelId);
     void subscribeToStream( int channelId, QString processStep, QString streamName, bool continous);
 
-
+    void replaceStreamRequest( QString processStep, QString streamName, QImage* image);
 
 private slots:
     void on_actionConnect_triggered();
