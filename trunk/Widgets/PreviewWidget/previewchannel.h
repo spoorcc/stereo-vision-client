@@ -31,7 +31,7 @@ public:
     int id();
 
 signals:
-    void replaceStreamRequest( QString streamName, QImage image);
+    void replaceStreamRequest( QString processStep, QString streamName, QImage* image);
     void subscribeToStream( int channelID, QString processStep, QString streamName, bool continous );
     void unsubscribeFromStream( int channelID );
 

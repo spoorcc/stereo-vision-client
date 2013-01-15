@@ -121,9 +121,14 @@ void CommandLineWidget::parseCommand()
 
     if ( firstPartIs( "Preview" ) )
     {
-        if( commandParts.count() == 4)
+        if( commandParts.count() == 4 )
         {
-            commandParseStatus(" Previewing " + commandParts.at(2) + " of processStep " + commandParts.at(1) + " on channel " + commandParts.at(3) , true);
+            QString processStep = commandParts.at(1);
+            QString streamName = commandParts.at(2);
+            int channelId = commandParts.at(3).toInt();
+
+            commandParseStatus(" Previewing " + streamName + " of processStep " + processStep + " on channel " + QString::number(channelId) , true);
+            emit subscribeToStream( channelId, processStep, streamName, false );
             return;
         }
         else
@@ -165,6 +170,15 @@ void CommandLineWidget::parseCommand()
         else
         {
             commandParseStatus("Error parsing command: <br>Save must always be followed by either &quot;preview&quot; or &quot;log&quot;" ,false);
+        }
+    }
+
+    if ( firstPartIs("view") )
+    {
+        if( commandParts.at(1).toInt() > 0 )
+        {
+            commandParseStatus("Setting preview mode to 2 views",true);
+            return;
         }
     }
 

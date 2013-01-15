@@ -54,6 +54,7 @@ void PreviewWindow::initPreviewChannels()
 
         previewChannel->setText( channel  );
         this->connect( previewChannel, SIGNAL( subscribeToStream(int,QString,QString,bool)),SIGNAL(subscribeToStream(int,QString,QString,bool)));
+        this->connect( previewChannel, SIGNAL(replaceStreamRequest(QString,QString,QImage*)), SIGNAL(replaceStreamRequest(QString,QString,QImage*)) );
 
         _previewScene->addItem( previewChannel );
         _previewChannels.append( previewChannel );

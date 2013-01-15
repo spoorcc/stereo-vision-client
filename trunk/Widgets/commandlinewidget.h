@@ -23,6 +23,7 @@ signals:
 
     void sendCommandToServer( QString command );
     void set( QString processStep, QString parameter, QString value);
+    void subscribeToStream( int channelId, QString processStep, QString streamName, bool continous);
 
     void printToConsole( QString sender, QString message );
 

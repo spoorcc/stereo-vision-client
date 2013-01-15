@@ -27,6 +27,7 @@ public:
 
 signals:
     void subscribeToStream( int previewChannel, QString procesStep, QString streamName, bool continous);
+    void replaceStreamRequest( QString processStep, QString streamName, QImage* image);
 
 public slots:
     void addPreviewStream( QString processStep, QString streamName);

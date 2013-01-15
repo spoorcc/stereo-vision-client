@@ -147,7 +147,7 @@ void PreviewChannel::replaceCurrentStream()
 
     _text = QString("Ch %1 - ProcessStep: %2 - Stream: %3 - [%4]").arg(_id).arg(_processStep).arg( _currentStream).arg("replaced");
 
-    //emit replaceStreamRequest( streamName, *_image);
+    emit replaceStreamRequest( _processStep, _currentStream, _image);
 }
 
 void PreviewChannel::stopCurrentStream()

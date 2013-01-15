@@ -54,6 +54,7 @@ public slots:
     void sendCommand( QString command );
     void setParameter( QString processStep, QString parameter, QString value);
     void sendImage( int streamID, AbstractImageFrame* image);
+    void sendImage( QImage* image, int streamID);
 
     void getImage(int streamID, bool continous);
     void byteCounter( int count );

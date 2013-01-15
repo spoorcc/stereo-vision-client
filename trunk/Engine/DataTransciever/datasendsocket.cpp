@@ -38,18 +38,15 @@ void DataSendSocket::setParameter(QString processStep, QString parameter, QStrin
 }
 void DataSendSocket::sendImage( QImage* image, int streamID )
 {
-   // QByteArray announceImage = QByteArray("<image>");
-   // writeData( announceImage );
     using namespace clientServerProtocol;
-    for( int i = 0; i < image->height(); i++ )
-    {
-        // !!!!-- Probably highly dangerous code --!!!! ////
-        QByteArray scanLine = QByteArray( (char*) image->scanLine(i) );
-        writeDataToServer( IMAGE_DATA, scanLine );
-    }
 
-    //QByteArray closeImage = QByteArray("</image>");
-    // writeData( closeImage );
+    //Convert image to JPEG in QByteArray
+    QByteArray imageData;
+    QBuffer imageBuffer(&imageData);
+    imageBuffer.open(QIODevice::WriteOnly);
+    image->save(&imageBuffer, "JPEG");
+
+    writeDataToServer( IMAGE_DATA, imageData );
 }
 
 void DataSendSocket::sendCommand(QString command)
@@ -85,7 +82,42 @@ void DataSendSocket::writeDataToServer( clientServerProtocol::clientDataTypes ty
     datagram.prepend( typeID );
     datagram.append( "\0" );
 
-    write( datagram );
+    int msgLength = datagram.size();
+
+    quint32 packetCount = qCeil( ((double) msgLength) / MAX_UDP_MESSAGE_SIZE);
+
+    if(packetCount > 1)
+    {
+        print( QString("Splitting packet into %1 packets").arg(packetCount) );
+
+        //Create a announce message to announce long message
+        QByteArray msgLengthPacket;
+        msgLengthPacket.append(clientServerProtocol::ANNOUNCE_LONG);
+        msgLengthPacket.append(u_int8_t(packetCount));
+        msgLengthPacket.append(u_int8_t(packetCount >> 8));
+        msgLengthPacket.append(u_int8_t(packetCount >> 16));
+        msgLengthPacket.append(u_int8_t(packetCount >> 24));
+
+        //Write the amount of packets first
+        write(msgLengthPacket);
+
+        for(int count = 0; count < packetCount; count++)
+        {
+            waitForBytesWritten(1000);
+
+            int done = write(datagram.mid(count * MAX_UDP_MESSAGE_SIZE, MAX_UDP_MESSAGE_SIZE));
+
+            if(done == -1)
+            {
+                print( QString("Error sending: Sent %1 packets of %2 to server").arg(count).arg( packetCount ) );
+            }
+        }
+    }
+    else
+    {
+        waitForBytesWritten(1000);
+        write(datagram);
+    }
 
     emit bytesWrittenToServer( datagram.size() );
     print( QString("Sent %1 bytes to server").arg( datagram.size() ) );

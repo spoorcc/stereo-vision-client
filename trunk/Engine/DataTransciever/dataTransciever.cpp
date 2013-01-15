@@ -41,7 +41,12 @@ void DataTransciever::setParameter(QString processStep, QString parameter, QStri
 
 void DataTransciever::sendImage(int streamID, AbstractImageFrame *image)
 {
+    _sendSocket->sendImage( new QImage(image->image()), streamID );
+}
 
+void DataTransciever::sendImage(QImage *image, int streamID)
+{
+    _sendSocket->sendImage( image, streamID);
 }
 void DataTransciever::getImage( int streamID, bool continous )
 {

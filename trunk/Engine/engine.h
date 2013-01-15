@@ -40,7 +40,6 @@ public:
     void init();
     int numberOfSteps() const;
 
-
 signals:
     void ready();
     void printToConsole( QString sender, QString message );
@@ -48,13 +47,17 @@ signals:
 
     void connectToServer( QHostAddress address, quint16 port );
     void commandForServer( QString command );
+    void imageForServer(QImage*, int);
 
     void imageReceived(QImage,int);
 
 public slots:
     void giveProcessSteps();
+
     void subscribePreviewChannelToStream(int previewChannel, QString procesStep, QString streamName, bool continous);
     void subscribePreviewChannelToStream(int previewChannel, int streamID, bool continous);
+
+    void replaceStream(QString processStep, QString streamName, QImage *image);
 
 private slots:
     void print(QString message);
@@ -63,6 +66,7 @@ private slots:
 
 private:
     void initProcessSteps();
+    int getStreamId(QString processStep, QString streamName);
 
     QList< ProcessStep* > _processSteps;
 
