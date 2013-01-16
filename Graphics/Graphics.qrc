@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/Icons">
         <file alias="Icon">StereoVision.png</file>
+        <file alias="down_arrow">down_arrow.ico</file>
     </qresource>
 </RCC>

@@ -81,7 +81,8 @@ OTHER_FILES += \
             Graphics/StereoVision.ico \
             Graphics/StereoVisionIcon.rc \
             Graphics/StereoVision.png \
-            Documentation/CommandList.html
+            Documentation/CommandList.html \
+    Graphics/down_arrow.ico
 
 RESOURCES += \
     Graphics/Graphics.qrc

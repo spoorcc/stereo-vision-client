@@ -22,10 +22,12 @@ public:
 
     void setAsInput();
     void setAsOutput();
+
 private:
     Ui::StreamSelectWidget *ui;
     void addDropdown(QString name);
     void addSpacer();
+    void addStream(QString stream);
 };
 
 #endif // STREAMSELECTWIDGET_H

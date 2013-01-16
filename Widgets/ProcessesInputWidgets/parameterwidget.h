@@ -4,7 +4,8 @@
 /*
   Project:      Stereo-vision-client
   Author:       Ben
-  Description:  The parameter widget contains one parameter and is changeable by the user, when changed it emits a signalso that the gui can send the update info to the engine
+  Description:  The parameter widget contains one parameter and is changeable by the user, when changed it emits a signal
+                so that the gui can send the update info to the engine
 
 */
 
@@ -42,6 +43,9 @@ public slots:
 signals:
     void valueChanged(QString name, QString value);
     void illegalUpdate( QString message );
+
+private slots:
+    void performWidgetClickHandler();
 
 private:
     void createBooleanWidget( AbstractParameter* parameter );
