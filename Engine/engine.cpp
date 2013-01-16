@@ -15,9 +15,12 @@ Engine::Engine(QObject *parent) :
     _dataTransciever->setObjectName("dataTransciever");
 
     this->connect( _dataTransciever, SIGNAL(printToConsole(QString,QString)),SIGNAL(printToConsole(QString,QString)));
+    this->connect( _dataTransciever, SIGNAL(xmlDataReceived(QFile*)), SLOT(initProcessSteps(QFile*)));
     _dataTransciever->connect( this, SIGNAL(connectToServer(QHostAddress,quint16)),SLOT(connectToServer(QHostAddress,quint16)));
     _dataTransciever->connect( this, SIGNAL(commandForServer(QString)),SLOT(sendCommand(QString)));
     _dataTransciever->connect( this, SIGNAL(imageForServer(QImage*,int)),SLOT(sendImage(QImage*,int)) );
+    _dataTransciever->connect( this, SIGNAL(setValueOnServer(QString,QString,QString)),SLOT(setParameter( QString, QString, QString )));
+    _dataTransciever->connect( this, SIGNAL(requestXML()),SLOT(requestXML()));
 
     _mediaBuffer = new MediaBuffer(this);
     _mediaBuffer->setObjectName("mediaBuffer");
@@ -29,16 +32,25 @@ Engine::Engine(QObject *parent) :
 
 void Engine::init()
 {
-    initProcessSteps();
     emit ready();
     emit printToConsole("Engine","initialised");
 }
 
-void Engine::initProcessSteps()
+void Engine::initProcessSteps( QFile* file)
 {    
-    _configReader->parseXmlFile( CONFIG_FILE );
-}
+    emit clearGui();
 
+    _processSteps.clear();
+
+    if( file == 0)
+    {
+        _configReader->parseXmlFile( CONFIG_FILE );
+    }
+    else
+    {
+        _configReader->parseXmlFile( file );
+    }
+}
 
 void Engine::giveProcessSteps()
 {
@@ -67,10 +79,23 @@ void Engine::replaceStream(QString processStep, QString streamName, QImage* imag
     int streamId = getStreamId(processStep, streamName);
     emit imageForServer(image, streamId);
 }
+
+void Engine::flushImageBuffers()
+{
+    _mediaBuffer->flushBuffers();
+}
 int Engine::getStreamId( QString processStep, QString streamName )
 {
+    //Test image id
+    if( processStep == "test_image" && streamName == "test_image" )
+    {
+        return clientServerProtocol::TEST_STREAM;
+    }
+
     //Start at 1 because 0 is test stream
-    int streamID = 1;
+    int streamID = clientServerProtocol::CAMERA_1;
+
+    // !-- First 8 streams are defined as camera_1 to camera_8 --!
 
     foreach( ProcessStep* step, _processSteps)
     {
@@ -92,6 +117,8 @@ void Engine::addParsedProcessStep(ProcessStep *processStep)
     //To let engine have easy access to processsteps name the object and let parent have it
     processStep->setObjectName( processStep->name() );
     processStep->setParent( this );
+
+    emit addProcessStep( processStep );
 
     emit print( "Initialised process step " + processStep->name() );
 }

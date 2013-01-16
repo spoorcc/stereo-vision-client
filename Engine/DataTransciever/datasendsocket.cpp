@@ -13,10 +13,13 @@ void DataSendSocket::connectToServer( QHostAddress hostAdress, quint16 port )
     //Try to connect
     connectToHost( hostAdress, port, QIODevice::WriteOnly );
 
+    waitForConnected(10000);
+
     //Check if succes
     if( state() )
     {
         emit print("Connected succesfully to" + peerAddress().toString() + " on port " + QString::number( peerPort() ) );
+        requestXML();
         emit connectionSucces();
     }
     else
@@ -55,10 +58,14 @@ void DataSendSocket::sendCommand(QString command)
     writeDataToServer( UNFORMATTED_COMMAND, command.toAscii() );
 }
 
+void DataSendSocket::requestXML()
+{
+    writeDataToServer(clientServerProtocol::GET_FULL_XML, "" );
+    print("Requested XML layout");
+}
+
 void DataSendSocket::getImage(clientServerProtocol::imageTypes type, int streamID, bool continous)
 {
-    qDebug() << type << streamID << continous ;
-
     QByteArray datagram;    
     datagram.append( (char) type );
     datagram.append( (char) streamID  );
@@ -103,19 +110,19 @@ void DataSendSocket::writeDataToServer( clientServerProtocol::clientDataTypes ty
 
         for(int count = 0; count < packetCount; count++)
         {
-            waitForBytesWritten(1000);
-
             int done = write(datagram.mid(count * MAX_UDP_MESSAGE_SIZE, MAX_UDP_MESSAGE_SIZE));
+
+            waitForBytesWritten();
 
             if(done == -1)
             {
                 print( QString("Error sending: Sent %1 packets of %2 to server").arg(count).arg( packetCount ) );
+                return;
             }
         }
     }
     else
     {
-        waitForBytesWritten(1000);
         write(datagram);
     }
 

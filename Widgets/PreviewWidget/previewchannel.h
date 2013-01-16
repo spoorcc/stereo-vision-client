@@ -35,6 +35,8 @@ signals:
     void subscribeToStream( int channelID, QString processStep, QString streamName, bool continous );
     void unsubscribeFromStream( int channelID );
 
+    void print( QString message );
+
 public slots:
     void addStream( QString processStep, QString streamName );
 
@@ -43,6 +45,7 @@ private slots:
     void saveImageToFile();
     void replaceCurrentStream();
     void stopCurrentStream();
+    void testImage();
 
 private:
     void initMenus();
@@ -57,7 +60,7 @@ private:
 
     bool _visible;
 
-    QImage* _image;
+    QImage _image;
 
     int _id;
 };

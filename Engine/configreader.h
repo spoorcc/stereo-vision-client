@@ -26,6 +26,7 @@ class ConfigReader : public QObject
 public:
     explicit ConfigReader(QObject *parent = 0);
 
+
 signals:
     void startedParsing();
     void invalidFilePath();
@@ -36,6 +37,7 @@ signals:
 
 public slots:
     void parseXmlFile( QString path );
+    void parseXmlFile( QFile *file );
 
 private:    
     void parseProcessStep(QXmlStreamReader &xml);

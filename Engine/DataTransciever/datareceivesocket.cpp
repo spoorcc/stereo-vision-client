@@ -34,8 +34,6 @@ void DataReceiveSocket::readPendingDatagrams()
 
         readDatagram( datagram->data(), datagram->size(), &sender, &senderPort);
 
-        emit print( QString("Received: %1").arg(datagram->data()) );
-
         // If a long message is announced
         if( (quint8) datagram->at(0) == clientServerProtocol::ANNOUNCE_LONG )
         {
@@ -86,8 +84,6 @@ void DataReceiveSocket::processDatagram(QByteArray* datagram)
 {
     using namespace clientServerProtocol;
 
-    emit print( QString("This should be a P %1 seen as a %2").arg( datagram->at(0) ).arg(QString::number((quint8) datagram->at(0))));
-
     switch( (quint8) datagram->at(0) )
     {
 
@@ -97,7 +93,10 @@ void DataReceiveSocket::processDatagram(QByteArray* datagram)
 
     case IMAGE_DATA:
         emit imageDataReceived( *datagram );
-        emit print("Image");
+        break;
+
+    case XML_FULL_CLIENT:
+        xmlDataReceived( datagram );
         break;
 
     default:
@@ -110,5 +109,34 @@ void DataReceiveSocket::processDatagram(QByteArray* datagram)
 }
 void DataReceiveSocket::processParameter( QByteArray* datagram )
 {
-    emit parameterReceived( "test", "test", "test");
+    using namespace clientServerProtocol::setParameter;
+
+    int stringLength = ( datagram->at( STRINGLENGTH_MSB ) << 8) + datagram->at( STRINGLENGTH_LSB );
+
+    QString string = QString::fromRawData( (QChar*)datagram->data() + FIRST_DATA_BYTE, stringLength );
+
+    print( QString( "Parameter: " + string) );
+
+    QStringList commandParts = string.split(";");
+
+    if( commandParts.size() == 3 )
+    {
+        emit parameterReceived( commandParts.at(0), commandParts.at(1), commandParts.at(2) );
+    }
+    else
+    {
+        print( QString( "Illegal Parameter received: " + string)  );
+    }
+}
+void DataReceiveSocket::xmlDataReceived( QByteArray* datagram )
+{
+    QString filePath = QDesktopServices::storageLocation(QDesktopServices::TempLocation);
+    QFile* file = new QFile( filePath + "/configXml_stereo-vision-client.xml" );
+
+    file->open( QIODevice::WriteOnly );
+    file->write( datagram->mid(1) );
+    file->close();
+
+    fullXMLReceived(file);
+    print( "XML received" );
 }

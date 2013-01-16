@@ -6,6 +6,8 @@
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QtNetwork>
 
+#include <QDesktopServices>
+#include <QFile>
 #include <QByteArray>
 #include <QByteRef>
 
@@ -19,11 +21,13 @@ public:
     
     void connectToServer(QHostAddress hostAdress, quint16 port);
 
+
 signals:
     void print( QString message );
 
     void parameterReceived( QString processStep, QString parameter, QString value);
 
+    void fullXMLReceived( QFile* file);
     void imageDataReceived( QByteArray data );
     void bytesReceived( int bytes);
 
@@ -35,7 +39,9 @@ private slots:
 
 private:
     void processDatagram(QByteArray *datagram);
+
     void processParameter(QByteArray *datagram);
+    void xmlDataReceived(QByteArray *datagram);
     
 };
 

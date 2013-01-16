@@ -26,6 +26,8 @@ GUI::GUI(QWidget *parent) :
     _previewWindow->connect(this, SIGNAL(imageForPreviewWindow(QImage,int)),SLOT(imageForChannel(QImage, int)));
     this->connect( _previewWindow, SIGNAL(subscribeToStream( int, QString, QString, bool)),SIGNAL(subscribeToStream( int, QString, QString, bool)));
     this->connect( _previewWindow, SIGNAL(replaceStreamRequest(QString,QString,QImage*)), SIGNAL(replaceStreamRequest(QString,QString,QImage*)));
+    this->connect( _previewWindow, SIGNAL(flushBuffers()), SIGNAL(flushImageBuffers()));
+    this->connect( _previewWindow, SIGNAL(print(QString)), SLOT(print(QString)));
     _previewWindow->setObjectName("previewWindow");
     ui->previewWindowLO->addWidget( _previewWindow );
 
@@ -314,4 +316,19 @@ void GUI::on_saveLogToFileBTN_clicked()
 void GUI::statusBarMessage( QString message )
 {
     ui->statusBar->showMessage( message, 5);
+}
+
+void GUI::clearGui()
+{
+    _previewWindow->reset();
+
+    while( ui->AllProcessesTBX->count() != 0 )
+    {
+        ui->AllProcessesTBX->removeItem( ui->AllProcessesTBX->count()-1 );
+    }
+}
+
+void GUI::on_actionRequest_config_triggered()
+{
+    emit requestXML();
 }

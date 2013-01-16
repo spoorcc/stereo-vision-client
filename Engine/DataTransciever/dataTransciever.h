@@ -18,6 +18,7 @@
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QtNetwork>
 
+#include <QFile>
 #include <QByteArray>
 #include <QByteRef>
 
@@ -42,6 +43,7 @@ signals:
 
     void parameterReceived( QString processStep, QString parameter, QString value);
     void imageDataReceived( QByteArray datagram );
+    void xmlDataReceived( QFile* file );
 
     void dataRate( int received, int sent);
     
@@ -58,6 +60,8 @@ public slots:
 
     void getImage(int streamID, bool continous);
     void byteCounter( int count );
+
+    void requestXML();
 
 private slots:
 

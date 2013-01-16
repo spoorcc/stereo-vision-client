@@ -12,6 +12,8 @@ void MediaBuffer::initImageBuffers()
 
     int numberOfChannels = HORCHANNELCOUNT * VERCHANNELCOUNT;
 
+    _imageBuffer.clear();
+
     for( int i = 0; i < numberOfChannels; i++ )
     {                 
          AbstractImageFrame* bufferedImage = new JPEGImageFrame( defaultImage );
@@ -19,6 +21,7 @@ void MediaBuffer::initImageBuffers()
     }
 
     emit print( "Mediabuffer initialised");
+
 }
 
 void MediaBuffer::processImageDatagram(QByteArray datagram)
@@ -30,7 +33,6 @@ void MediaBuffer::processImageDatagram(QByteArray datagram)
    int frame = datagram.at(FRAMEID);
 
    addFrame( clientServerProtocol::imageTypes(imageType), streamID, frame, datagram.mid(FRAMEID+1) );
-
 }
 
 void MediaBuffer::subscribeChannelToStream(int channelID, int streamID)
@@ -67,15 +69,14 @@ void MediaBuffer::addFrame(clientServerProtocol::imageTypes type, quint8 streamI
         // If the stream matches the stream of that previewchannel
         if( bufferedImage->streamID() == streamId )
         {
-            emit print( QString("Stream %1 matches received streamID").arg(i));
+            emit print( QString("Channel %1 matches received streamID").arg(i));
 
             QImage image = QImage::fromData(data);
 
             image.scaled(800,600,Qt::KeepAspectRatio);
 
             bufferedImage->nextFrame(data, frameID);
-            emit imageReceived( image, i );
-
+            emit imageReceived( bufferedImage->image(), i );
         }
         else if( i >= (bufferSize + 1) )
         {

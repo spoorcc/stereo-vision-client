@@ -50,6 +50,10 @@ signals:
     void imageForServer(QImage*, int);
 
     void imageReceived(QImage,int);
+    void requestXML();
+    void clearGui();
+
+    void setValueOnServer(QString processStep, QString parameter, QString value);
 
 public slots:
     void giveProcessSteps();
@@ -58,14 +62,15 @@ public slots:
     void subscribePreviewChannelToStream(int previewChannel, int streamID, bool continous);
 
     void replaceStream(QString processStep, QString streamName, QImage *image);
+    void flushImageBuffers();
 
 private slots:
     void print(QString message);
+    void initProcessSteps(QFile *file = 0 );
     void addParsedProcessStep( ProcessStep* processStep );
     void configParsingFailed(QString message);
 
 private:
-    void initProcessSteps();
     int getStreamId(QString processStep, QString streamName);
 
     QList< ProcessStep* > _processSteps;

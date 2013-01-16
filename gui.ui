@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>600</height>
+    <width>996</width>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QToolBox" name="AllProcessesTBX">
-       <property name="minimumSize">
+       <property name="baseSize">
         <size>
          <width>0</width>
          <height>300</height>
@@ -49,8 +49,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>754</width>
-          <height>269</height>
+          <width>978</width>
+          <height>121</height>
          </rect>
         </property>
         <attribute name="label">
@@ -62,7 +62,7 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QVBoxLayout" name="consoleCommandLO">
          <item>
           <layout class="QHBoxLayout" name="consoleTitleLO">
@@ -103,6 +103,12 @@
              <height>0</height>
             </size>
            </property>
+           <property name="baseSize">
+            <size>
+             <width>400</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: rgb(165, 165, 165);
 color: rgb(124, 83, 17);</string>
@@ -118,7 +124,7 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <layout class="QHBoxLayout" name="previewWindowLO"/>
        </widget>
       </widget>
@@ -131,7 +137,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>772</width>
+     <width>996</width>
      <height>25</height>
     </rect>
    </property>
@@ -146,6 +152,7 @@ p, li { white-space: pre-wrap; }
      <string>Server</string>
     </property>
     <addaction name="actionConnect"/>
+    <addaction name="actionRequest_config"/>
    </widget>
    <addaction name="menuServer"/>
   </widget>
@@ -161,6 +168,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionConnect">
    <property name="text">
     <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionRequest_config">
+   <property name="text">
+    <string>Request config</string>
    </property>
   </action>
  </widget>
