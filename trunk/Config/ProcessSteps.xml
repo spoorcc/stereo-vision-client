@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding= "UTF-8"?>
 <stereo-vision>
 
-    <processstep name="Calibration" group="Camera calibration" color="100,100,100">
+    <processstep name="Server" group="Camera calibration" color="100,100,100">
 
-        <parameter name="Perform calibration" type="perform" fireOnInit="0"></parameter>
-
-        <parameter name="Number of calibrations" type="numeric" min="1" init="10" max="6" >
-            <description>Sets the number of calibrations</description>
+        <parameter name="Connect to cameras" type="perform" fireOnInit="0">
+                <description>Initialises the connection with the cameras</description>
         </parameter>
+
     </processstep>
 
     <processstep name="Cameras" group="Camera configuration" color="50,0,0">
+
+        <stream type="input" >
+            <substream> Camera 1 </substream>
+            <substream> Camera 2 </substream>
+            <substream> Camera 3 </substream>
+            <substream> Camera 4 </substream>
+            <substream> Camera 5 </substream>
+            <substream> Camera 6 </substream>
+            <substream> Camera 7 </substream>
+            <substream> Camera 8 </substream>
+        </stream>
 
         <parameter name="Camera Selection" type="selectable">
             <description>The camera pair can be selected here</description>
@@ -26,7 +36,6 @@
             <option>Camera 6 and 7</option>
             <option>Camera 6 and 8</option>
             <option>Camera 7 and 8</option>
-
         </parameter>
 
         <parameter name="Shot mode" type="selectable">
@@ -38,46 +47,40 @@
             <description>Determines the horizontal size of the camera image</description>
         </parameter>
 
-        <parameter name="vSize" type="numeric" min="240" init="480" max="1080" ></parameter>
-
         <stream type="output" >
-            <substream> Output A </substream>
-            <substream> Output B </substream>
+            <substream> Camera Left </substream>
+            <substream> Camera Right </substream>
         </stream>
+
+    </processstep>
+
+    <processstep name="Calibration" group="Camera calibration" color="50,50,0">
 
         <stream type="input" >
-            <substream> Input A </substream>
-            <substream> Input B </substream>
-            <substream> Input C </substream>
+            <substream> Camera Left </substream>
+            <substream> Camera Right </substream>
+        </stream>
+
+        <parameter name="Start calibration" type="perform" fireOnInit="0">
+            <description>Starts the calibration of the selected cameras</description>
+        </parameter>
+
+        <parameter name="Stop calibration" type="perform" fireOnInit="0">
+            <description>Starts the calibration of the selected the cameras</description>
+        </parameter>
+
+        <parameter name="Send rectification matrix to FPGA" type="perform" fireOnInit="0">
+            <description>Starts the calibration of the selected the cameras</description>
+        </parameter>
+
+        <stream type="output" >
+            <substream> Camera Left - Horizontal shift</substream>
+            <substream> Camera Left - Vertical shift</substream>
+            <substream> Camera Right - Horizontal shift</substream>
+            <substream> Camera Right - Vertical shift</substream>
         </stream>
 
     </processstep>
 
-    <processstep name="Equalisation" group="Camera calibration" color="darkCyan">
-        <parameter name="Enable" type="boolean" init="disabled"></parameter>
-    </processstep>
-
-    <processstep name="Rectification" group="Camera calibration" color="50,50,0">
-        <parameter name="Enable" type="boolean" init="enabled">
-            <description>Enable the rectification step</description>
-        </parameter>
-
-        <parameter name="Quickmode" type="boolean" init="enabled">
-            <description>Enable the rectification step</description>
-        </parameter>
-
-        <parameter name="Test1" type="boolean" init="disabled">
-            <description>Enable the rectification step</description>
-        </parameter>
-
-        <parameter name="Test2" type="boolean" init="enabled">
-            <description>Enable the rectification step</description>
-        </parameter>
-
-        <parameter name="Test3" type="boolean" init="enabled">
-            <description>Enable the rectification step</description>
-        </parameter>
-
-    </processstep>
 </stereo-vision>
 

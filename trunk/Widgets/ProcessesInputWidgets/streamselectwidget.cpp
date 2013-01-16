@@ -8,6 +8,7 @@ StreamSelectWidget::StreamSelectWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
 }
 
 StreamSelectWidget::~StreamSelectWidget()
@@ -19,9 +20,23 @@ void StreamSelectWidget::setStreams(QStringList streams)
 {
     foreach( QString stream,streams)
     {
-        addDropdown(stream);
+        addStream(stream);
     }
     addSpacer();
+}
+void StreamSelectWidget::addStream( QString stream )
+{
+    //Create downarrow label
+    QLabel* arrowLbl = new QLabel(this);
+    QPixmap* arrowPixmap = new QPixmap(":/Icons/down_arrow");
+    arrowLbl->setPixmap( *arrowPixmap);
+    ui->horizontalLayout->addWidget( arrowLbl );
+
+    //Add text
+    QLabel* textLabel = new QLabel(this);
+    textLabel->setTextFormat(Qt::RichText);
+    textLabel->setText( "|<i>" +  stream +  "</i>|" );
+    ui->horizontalLayout->addWidget( textLabel );
 }
 
 void StreamSelectWidget::addDropdown(QString name)
@@ -32,7 +47,6 @@ void StreamSelectWidget::addDropdown(QString name)
     comboBox->addItem("Preview");
     comboBox->addItem("Replace");
     ui->horizontalLayout->addWidget( comboBox );
-
 }
 
 void StreamSelectWidget::addSpacer()
@@ -44,10 +58,12 @@ void StreamSelectWidget::addSpacer()
 
 void StreamSelectWidget::setAsInput()
 {
-    ui->nameLBL->setText("Input");
+    ui->nameLBL->setTextFormat(Qt::RichText);
+    ui->nameLBL->setText("<b>Inputs</b>");
 }
 
 void StreamSelectWidget::setAsOutput()
 {
-    ui->nameLBL->setText("Output");
+    ui->nameLBL->setTextFormat(Qt::RichText);
+    ui->nameLBL->setText("<b>Outputs</b>");
 }

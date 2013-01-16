@@ -241,10 +241,17 @@ void ParameterWidget::createPerformWidget(AbstractParameter *parameter)
     button->setToolTip( parameter->description() );
     button->setText(  ((PerformParameter*) parameter)->name() );
 
+    connect( button, SIGNAL( clicked() ), SLOT( performWidgetClickHandler() ));
+
     ui->parameterLO->addWidget( button );
 
     addSpacer();
 }
+void ParameterWidget::performWidgetClickHandler()
+{
+    emit valueChanged( ui->nameLBL->text(), "perform");
+}
+
 void ParameterWidget::addSpacer()
 {
     //For better layout, create a spacer
