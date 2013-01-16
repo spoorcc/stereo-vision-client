@@ -6,17 +6,22 @@ ConfigReader::ConfigReader(QObject *parent) :
 }
 void ConfigReader::parseXmlFile( QString path )
 {
+    /* We'll parse the example.xml */
+    QFile* file = new QFile( path );
+
+    parseXmlFile( file );
+}
+
+void ConfigReader::parseXmlFile( QFile* file )
+{
     emit startedParsing();
 
     _streamID = clientServerProtocol::CAMERA_1;
 
-    /* We'll parse the example.xml */
-    QFile* file = new QFile( path );
-
     //Try to open it
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        emit configParsingFailed( "Couldn't open file " + path);
+        emit configParsingFailed( "Couldn't open file " + file->fileName() );
         return;
     }
 

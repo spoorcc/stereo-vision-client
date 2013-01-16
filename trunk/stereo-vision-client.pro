@@ -16,7 +16,6 @@ SOURCES +=  main.cpp\
             DataTypes/processstep.cpp \
             Widgets/commandlinewidget.cpp \
             Engine/configreader.cpp \
-            Engine/commandlineparser.cpp \
             Engine/fileEngine.cpp \
             Engine/mediabuffer.cpp \
             DataTypes/ImageTypes/rawimageframe.cpp \
@@ -43,7 +42,6 @@ HEADERS  += gui.h \
             Widgets/commandlinewidget.h \
             Engine/configreader.h \
             DataTypes/allparametertypes.h \
-            Engine/commandlineparser.h \
             Engine/fileEngine.h \
             DataTypes/ClientServerProtocol.h \
             Engine/mediabuffer.h \

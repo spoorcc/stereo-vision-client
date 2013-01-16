@@ -249,7 +249,8 @@ void ParameterWidget::createPerformWidget(AbstractParameter *parameter)
 }
 void ParameterWidget::performWidgetClickHandler()
 {
-    emit valueChanged( ui->nameLBL->text(), "perform");
+    QPushButton* button = ui->parameterLO->findChild<QPushButton*>("performParameter");
+    emit valueChanged( button->text(), "perform");
 }
 
 void ParameterWidget::addSpacer()

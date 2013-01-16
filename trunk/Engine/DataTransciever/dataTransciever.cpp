@@ -19,18 +19,20 @@ DataTransciever::DataTransciever(QObject *parent) :  QObject(parent)
     connect( _receiveSocket, SIGNAL(print(QString)), SLOT(print(QString) ) );
 
     connect( _receiveSocket, SIGNAL(imageDataReceived(QByteArray)), SIGNAL(imageDataReceived(QByteArray)));
+    connect( _receiveSocket, SIGNAL(fullXMLReceived(QFile*)), SIGNAL(xmlDataReceived(QFile*)));
 }
 
 //Connection methods
 void DataTransciever::connectToServer( QHostAddress hostAdress, quint16 port )
 {
-    _sendSocket->connectToServer(hostAdress,port);
     _receiveSocket->connectToServer(hostAdress,port);
+    _sendSocket->connectToServer(hostAdress,port);    
 }
 
 //Data commands
 void DataTransciever::sendCommand( QString command )
 {
+    print( "Sending command: " + command );
     _sendSocket->sendCommand( command );
 }
 
@@ -74,6 +76,11 @@ void DataTransciever::byteCounter(int count)
 
     emit dataRate( received, sent);
 
+}
+
+void DataTransciever::requestXML()
+{
+    _sendSocket->requestXML();
 }
 
 void DataTransciever::print(QString message)

@@ -28,6 +28,7 @@ signals:
 public slots:
     void sendImage( QImage* image, int streamID);
     void sendCommand( QString command );
+    void requestXML();
 
     void getImage( clientServerProtocol::imageTypes type, int streamID, bool continous);
     

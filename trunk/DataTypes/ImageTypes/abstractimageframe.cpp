@@ -84,9 +84,9 @@ void AbstractImageFrame::nextFrame(QByteArray imageData, int frameId)
 }
 void AbstractImageFrame::changeStream(int streamID)
 {
-        _rawImage.close();
+    _rawImage.close();
 
-        _streamID = streamID;
+    _streamID = streamID;
 }
 
 void AbstractImageFrame::clearBuffer()

@@ -6,7 +6,8 @@ PreviewChannel::PreviewChannel(QRectF dimensions, int id)
 
     _boundingRect = dimensions;
     _text = "";
-    _image = new QImage("/home/ben/Dropbox/Studie/HexGridStraight.gif");
+    _image = QImage("/home/ben/Dropbox/Studie/HexGridStraight.gif");
+   // _image = new QImage(":/Icons/Icon");
     _visible = true;
 
     _processStep = "<none>";
@@ -22,10 +23,12 @@ void PreviewChannel::initMenus()
     QAction* saveImage  = _streamOptions->addAction("Save current image" );
     QAction* stopStream = _streamOptions->addAction("Stop current stream");
     QAction* replaceStream = _streamOptions->addAction("Replace current stream");
+    QAction* testImage = _streamOptions->addAction("Request test image");
 
     QObject::connect( saveImage, SIGNAL(triggered()), this, SLOT( saveImageToFile() ));
     QObject::connect( stopStream, SIGNAL(triggered()), this, SLOT(stopCurrentStream()));
     QObject::connect( replaceStream, SIGNAL(triggered()), this, SLOT(replaceCurrentStream()));
+    QObject::connect( testImage, SIGNAL(triggered()), this, SLOT(testImage()));
 }
 
 QRectF PreviewChannel::boundingRect() const
@@ -37,9 +40,9 @@ void PreviewChannel::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 {
     if( _visible )
     {
-        painter->drawImage( _boundingRect, *_image );
+        painter->drawImage( _boundingRect, _image );
         painter->drawText( _boundingRect , _text );
-        painter->drawRoundedRect( _boundingRect, 5, 5 );
+        painter->drawRoundedRect( _boundingRect, 5, 5 );        
     }
 }
 int PreviewChannel::id()
@@ -52,11 +55,10 @@ void PreviewChannel::setText(QString text)
     _text = text;
 }
 void PreviewChannel::setImage( QImage image )
-{
-    delete _image;
-    _image = new QImage(image);
+{      
+    _image = image;
 
-    qDebug() << "Setting image width" << image.size().width() << " height " << image.size().height() << " type ";
+    _text.append(QString(" [ %1 x %2 ]").arg( image.size().width() ).arg( image.size().height() ) );
 }
 
 void PreviewChannel::setVisible(bool tf)
@@ -79,6 +81,7 @@ void PreviewChannel::addStream(QString processStep, QString streamName)
     //If processStep is unique add it to _selectStream menu
     if( processStepMenu == 0 )
     {
+        processStepMenu = new QMenu( processStep );
         processStepMenu = _selectStreams->addMenu( processStep );
         processStepMenu->setParent( _selectStreams );
         processStepMenu->setObjectName( processStep );
@@ -89,6 +92,8 @@ void PreviewChannel::addStream(QString processStep, QString streamName)
     //If streamname is unique add it to processStepMenu
     if( streamMenu == 0 )
     {
+        QMenu* streamMenu = new QMenu( streamName );
+
         //Create the streammenu
         streamMenu = processStepMenu->addMenu( streamName );
         streamMenu->setParent( processStepMenu );
@@ -136,21 +141,27 @@ void PreviewChannel::saveImageToFile()
 
     QImageWriter writer;
     writer.setFileName( saveFileName );
-    writer.write( *_image );
+    writer.write( _image );
+
+    emit print("Saved image to " + saveFileName );
 }
 void PreviewChannel::replaceCurrentStream()
 {
     QFileDialog *dialogWindow = new QFileDialog();
     const QString& getFileName =  dialogWindow->getOpenFileName(0,tr("Open image"));
 
-    _image->load( getFileName );
+    _image.load( getFileName );
 
     _text = QString("Ch %1 - ProcessStep: %2 - Stream: %3 - [%4]").arg(_id).arg(_processStep).arg( _currentStream).arg("replaced");
 
-    emit replaceStreamRequest( _processStep, _currentStream, _image);
+    emit replaceStreamRequest( _processStep, _currentStream, &_image);
 }
 
 void PreviewChannel::stopCurrentStream()
 {
-    emit unsubscribeFromStream( _id);
+    emit unsubscribeFromStream( _id );
+}
+void PreviewChannel::testImage()
+{
+    emit subscribeToStream( _id, "test_image", "test_image", false );
 }

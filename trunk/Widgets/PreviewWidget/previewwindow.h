@@ -25,9 +25,13 @@ public:
 
     void resizeEvent(QResizeEvent *);
 
+    void reset();
 signals:
     void subscribeToStream( int previewChannel, QString procesStep, QString streamName, bool continous);
     void replaceStreamRequest( QString processStep, QString streamName, QImage* image);
+    void flushBuffers();
+
+    void print( QString message );
 
 public slots:
     void addPreviewStream( QString processStep, QString streamName);

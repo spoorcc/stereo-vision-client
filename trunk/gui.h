@@ -50,6 +50,8 @@ public slots:
 
     void statusBarMessage(QString message);
 
+    void clearGui();
+
 signals:
     void needAllProcessSteps();
     void connectToServer( QHostAddress address, quint16 port );
@@ -64,6 +66,9 @@ signals:
     void subscribeToStream( int channelId, QString processStep, QString streamName, bool continous);
 
     void replaceStreamRequest( QString processStep, QString streamName, QImage* image);
+
+    void requestXML();
+    void flushImageBuffers();
 
 private slots:
     void on_actionConnect_triggered();
@@ -83,11 +88,13 @@ private slots:
     void valueChangedOnGUI( QString processStep, QString parameter, QString value);
     void illegalUpdateOnGUI( QString message );
 
+    void on_actionRequest_config_triggered();
+
 private:
     Ui::GUI *ui;
 
     CommandLineWidget* _commandLineWidget;
-    CommandLineParser* _commandLineParser;
+    //CommandLineParser* _commandLineParser;
     PreviewWindow* _previewWindow;
 
     QTextStream _stream;

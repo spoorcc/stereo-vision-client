@@ -55,10 +55,21 @@ void PreviewWindow::initPreviewChannels()
         previewChannel->setText( channel  );
         this->connect( previewChannel, SIGNAL( subscribeToStream(int,QString,QString,bool)),SIGNAL(subscribeToStream(int,QString,QString,bool)));
         this->connect( previewChannel, SIGNAL(replaceStreamRequest(QString,QString,QImage*)), SIGNAL(replaceStreamRequest(QString,QString,QImage*)) );
+        this->connect( previewChannel, SIGNAL(print(QString)), SIGNAL(print(QString)) );
 
         _previewScene->addItem( previewChannel );
         _previewChannels.append( previewChannel );
     }
+
+}
+void PreviewWindow::reset()
+{
+    _previewScene->clear();
+    _previewChannels.clear();
+
+    initChannelCountBox();
+    initPreviewScene();
+    initPreviewChannels();
 }
 
 void PreviewWindow::zoomToNumberOfChannels( int number )
@@ -126,6 +137,8 @@ void PreviewWindow::on_modeCB_currentIndexChanged(int index)
     zoomToNumberOfChannels( ui->modeCB->itemData( index ).toInt() );
 }
 void PreviewWindow::imageForChannel( QImage image, int channelID )
-{
+{    
     _previewChannels.at(channelID)->setImage( image);
+
+    ui->previewWindowGV->update();
 }
