@@ -1,0 +1,1 @@
+A GUI based on Qt which can control the stereo-vision-server over a tcp/ip connection.
